@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h6x-X6-0un">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <scenes>
+        <!--FBRootVC-->
+        <scene sceneID="7m0-bY-YBl">
+            <objects>
+                <tableViewController storyboardIdentifier="FBRootVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="As4-bZ-AFV" userLabel="FBRootVC" customClass="FBRootVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="afu-xo-PFs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="As4-bZ-AFV" id="ryM-l4-yhQ"/>
+                            <outlet property="delegate" destination="As4-bZ-AFV" id="YYz-XV-6PZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Files" id="4vv-JS-L73">
+                        <barButtonItem key="leftBarButtonItem" title="Unlock" style="done" id="PJ2-2D-fWR">
+                            <connections>
+                                <action selector="didClickVerify:" destination="As4-bZ-AFV" id="F2C-eq-Dfw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="Kll-su-yCI">
+                            <connections>
+                                <action selector="didClickAdd:" destination="As4-bZ-AFV" id="GAa-KU-ZCP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="evbbiAdd" destination="Kll-su-yCI" id="R9G-lX-lrv"/>
+                        <outlet property="evbbiVerify" destination="PJ2-2D-fWR" id="HWt-St-n9Z"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gxz-15-0Ri" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-64" y="344"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5Wl-kN-C47">
+            <objects>
+                <navigationController id="h6x-X6-0un" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0wu-ec-Axv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="As4-bZ-AFV" kind="relationship" relationship="rootViewController" id="lh6-X8-v0k"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhf-1f-9Ta" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-884" y="344"/>
+        </scene>
+    </scenes>
+</document>

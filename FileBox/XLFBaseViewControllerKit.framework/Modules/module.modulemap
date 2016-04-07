@@ -1,0 +1,6 @@
+framework module XLFBaseViewControllerKit {
+  umbrella header "XLFBaseViewControllerKit.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module XLFPinInputViewControllerKit {
+  umbrella header "XLFPinInputViewControllerKit.h"
+
+  export *
+  module * { export * }
+}

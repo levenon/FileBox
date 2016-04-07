@@ -1,0 +1,6 @@
+framework module XLFCommonKit {
+  umbrella header "XLFCommonKit.h"
+
+  export *
+  module * { export * }
+}

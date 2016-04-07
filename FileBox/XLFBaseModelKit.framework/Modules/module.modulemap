@@ -1,0 +1,6 @@
+framework module XLFBaseModelKit {
+  umbrella header "XLFBaseModelKit.h"
+
+  export *
+  module * { export * }
+}

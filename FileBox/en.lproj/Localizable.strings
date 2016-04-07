@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  FileBox
+
+  Created by Marike Jave on 15/3/26.
+  Copyright (c) 2015年 Marike Jave. All rights reserved.
+*/
+"1"="Cancel";
+"2"="Sure";
+"3"="New Folder";
+"4"="Please input the correct folder name";
+"5"="Please input the correct file name";
+"6"="File or folder already exists";
+"7"="Folder already exists";
+"8"="File or folder's name can not be empty";
+"9"="Rename";
+"10"="No any file";
+"11"="Move";
+"12"="Delete";
+"13"="Select Folder";
+"14"="Current Folder";
+"15"="Add";
+"16"="Please input password";
+"17"="Set Password";
+"18"="Enable Password";
+"19"="Reset Password";
+"20"="Please verify fingerprint";
+"21"="Not through the verification, you will not be able to see any information";
+"22"="Go to score";
+"23"="Version";
+"24"="Author";
+"25"="Loading";
+"26"="Update";
+"27"="There is a new version, whether to update?";
+"28"="Close";
+"29"="This is the latest version";
+"30"="Please input the folder name";
+"31"="Please input password again";
+"32"="Unlock";
+"33"="Check Version";
+"34"="Extenssion";
