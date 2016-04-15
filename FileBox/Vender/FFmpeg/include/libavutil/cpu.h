@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2000, 2001, 2002 Fabrice Bellard
+ * Copyright (c)2000, 2001, 2002 Fabrice Bellard
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +23,7 @@
 
 #include "attributes.h"
 
-#define AV_CPU_FLAG_FORCE    0x80000000 /* force usage of selected flags (OR) */
+#define AV_CPU_FLAG_FORCE    0x80000000 /* force usage of selected flags (OR)*/
 
     /* lower 16 bits - CPU features */
 #define AV_CPU_FLAG_MMX          0x0001 ///< standard MMX
@@ -42,7 +42,7 @@
 #define AV_CPU_FLAG_ATOM     0x10000000 ///< Atom processor, some SSSE3 instructions are slower
 #define AV_CPU_FLAG_SSE4         0x0100 ///< Penryn SSE4.1 functions
 #define AV_CPU_FLAG_SSE42        0x0200 ///< Nehalem SSE4.2 functions
-#define AV_CPU_FLAG_AVX          0x4000 ///< AVX functions: requires OS support even if YMM registers aren't used
+#define AV_CPU_FLAG_AVX          0x4000 ///< AVX functions:requires OS support even if YMM registers aren't used
 #define AV_CPU_FLAG_XOP          0x0400 ///< Bulldozer XOP functions
 #define AV_CPU_FLAG_FMA4         0x0800 ///< Bulldozer FMA4 functions
 // #if LIBAVUTIL_VERSION_MAJOR <52
@@ -50,7 +50,7 @@
 // #else
 // #define AV_CPU_FLAG_CMOV         0x1000 ///< supports cmov instruction
 // #endif
-#define AV_CPU_FLAG_AVX2         0x8000 ///< AVX2 functions: requires OS support even if YMM registers aren't used
+#define AV_CPU_FLAG_AVX2         0x8000 ///< AVX2 functions:requires OS support even if YMM registers aren't used
 #define AV_CPU_FLAG_FMA3        0x10000 ///< Haswell FMA3 functions
 #define AV_CPU_FLAG_BMI1        0x20000 ///< Bit Manipulation Instruction Set 1
 #define AV_CPU_FLAG_BMI2        0x40000 ///< Bit Manipulation Instruction Set 2
@@ -67,8 +67,8 @@
 
 /**
  * Return the flags which specify extensions supported by the CPU.
- * The returned value is affected by av_force_cpu_flags() if that was used
- * before. So av_get_cpu_flags() can easily be used in a application to
+ * The returned value is affected by av_force_cpu_flags()if that was used
+ * before. So av_get_cpu_flags()can easily be used in a application to
  * detect the enabled cpu flags.
  */
 int av_get_cpu_flags(void);
@@ -82,7 +82,7 @@ void av_force_cpu_flags(int flags);
 /**
  * Set a mask on flags returned by av_get_cpu_flags().
  * This function is mainly useful for testing.
- * Please use av_force_cpu_flags() and av_get_cpu_flags() instead which are more flexible
+ * Please use av_force_cpu_flags()and av_get_cpu_flags()instead which are more flexible
  *
  * @warning this function is not thread safe.
  */
@@ -94,7 +94,7 @@ attribute_deprecated void av_set_cpu_flags_mask(int mask);
  * The returned flags contain the specified flags as well as related unspecified flags.
  *
  * This function exists only for compatibility with libav.
- * Please use av_parse_cpu_caps() when possible.
+ * Please use av_parse_cpu_caps()when possible.
  * @return a combination of AV_CPU_* flags, negative on error.
  */
 attribute_deprecated

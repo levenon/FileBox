@@ -3,13 +3,13 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/7.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <XLFCommonKit/XLFCommonKit.h>
 
-typedef NS_ENUM(NSInteger, FBFileType) {
+typedef NS_ENUM(NSInteger, FBFileType){
     
     FBFileTypeUnknown,
     FBFileTypeFolder,
@@ -22,10 +22,10 @@ typedef NS_ENUM(NSInteger, FBFileType) {
     
 };
 
-@interface FBFileManager : NSObject
+@interface FBFileManager :NSObject
 
-@property (nonatomic, copy) NSString *evFileDirectory;
-@property (nonatomic, strong) NSURL *evCurrentFileURL;
+@property (nonatomic, copy)NSString *evFileDirectory;
+@property (nonatomic, strong)NSURL *evCurrentFileURL;
 
 + (id)sharedInstance;
 

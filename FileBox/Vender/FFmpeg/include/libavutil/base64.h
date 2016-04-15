@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2006 Ryan Martell. (rdm4@martellventures.com)
+ * Copyright (c)2006 Ryan Martell. (rdm4@martellventures.com)
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,7 +58,7 @@ char *av_base64_encode(char *out, int out_size, const uint8_t *in, int in_size);
  * Calculate the output size needed to base64-encode x bytes to a
  * null-terminated string.
  */
-#define AV_BASE64_SIZE(x)  (((x)+2) / 3 * 4 + 1)
+#define AV_BASE64_SIZE(x)(((x)+2)/ 3 * 4 + 1)
 
  /**
   * @}

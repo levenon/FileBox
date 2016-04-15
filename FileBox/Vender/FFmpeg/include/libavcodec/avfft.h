@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,7 +54,7 @@ void av_fft_permute(FFTContext *s, FFTComplex *z);
 
 /**
  * Do a complex FFT with the parameters defined in av_fft_init(). The
- * input data must be permuted before. No 1.0/sqrt(n) normalization is done.
+ * input data must be permuted before. No 1.0/sqrt(n)normalization is done.
  */
 void av_fft_calc(FFTContext *s, FFTComplex *z);
 
@@ -101,8 +101,8 @@ enum DCTTransformType {
  * Set up DCT.
  *
  * @param nbits           size of the input array:
- *                        (1 << nbits)     for DCT-II, DCT-III and DST-I
- *                        (1 << nbits) + 1 for DCT-I
+ *                        (1 << nbits)   for DCT-II, DCT-III and DST-I
+ *                        (1 << nbits)+ 1 for DCT-I
  * @param type            the type of transform
  *
  * @note the first element of the input of DST-I is ignored

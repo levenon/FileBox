@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -90,7 +90,7 @@ typedef struct AVClass {
     /**
      * Offset in the structure where a pointer to the parent context for
      * logging is stored. For example a decoder could pass its AVCodecContext
-     * to eval as such a parent context, which an av_log() implementation
+     * to eval as such a parent context, which an av_log()implementation
      * could then leverage to display the parent context.
      * The offset can be NULL.
      */
@@ -199,7 +199,7 @@ typedef struct AVClass {
  * Requires 256color terminal support. Uses outside debugging is not
  * recommended.
  */
-#define AV_LOG_C(x) (x << 8)
+#define AV_LOG_C(x)(x << 8)
 
 /**
  * Send the specified message to the log if the level is less than or equal
@@ -212,10 +212,10 @@ typedef struct AVClass {
  *        pointer to an AVClass struct.
  * @param level The importance level of the message expressed using a @ref
  *        lavu_log_constants "Logging Constant".
- * @param fmt The format string (printf-compatible) that specifies how
+ * @param fmt The format string (printf-compatible)that specifies how
  *        subsequent arguments are converted to output.
  */
-void av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
+void av_log(void *avcl, int level, const char *fmt, ...)av_printf_format(3, 4);
 
 
 /**
@@ -229,7 +229,7 @@ void av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
  *        pointer to an AVClass struct.
  * @param level The importance level of the message expressed using a @ref
  *        lavu_log_constants "Logging Constant".
- * @param fmt The format string (printf-compatible) that specifies how
+ * @param fmt The format string (printf-compatible)that specifies how
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  */
@@ -274,7 +274,7 @@ void av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
  *        pointer to an AVClass struct.
  * @param level The importance level of the message expressed using a @ref
  *        lavu_log_constants "Logging Constant".
- * @param fmt The format string (printf-compatible) that specifies how
+ * @param fmt The format string (printf-compatible)that specifies how
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  */
@@ -307,13 +307,13 @@ void av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
  */
 
 #ifdef DEBUG
-#    define av_dlog(pctx, ...) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
+#    define av_dlog(pctx, ...)av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
 #else
-#    define av_dlog(pctx, ...) do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
+#    define av_dlog(pctx, ...)do { if (0)av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
 #endif
 
 /**
- * Skip repeated messages, this requires the user app to use av_log() instead of
+ * Skip repeated messages, this requires the user app to use av_log()instead of
  * (f)printf as the 2 would otherwise interfere and lead to
  * "Last message repeated x times" messages below (f)printf messages with some
  * bad luck.

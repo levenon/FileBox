@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2003 Ivan Kalvachev
+ * Copyright (C)2003 Ivan Kalvachev
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,7 +41,7 @@
  */
 
 #define AV_XVMC_ID                    0x1DC711C0  /**< special value to ensure that regular pixel routines haven't corrupted the struct
-                                                       the number is 1337 speak for the letters IDCT MCo (motion compensation) */
+                                                       the number is 1337 speak for the letters IDCT MCo (motion compensation)*/
 
 attribute_deprecated struct xvmc_pix_fmt {
     /** The field contains the special constant value AV_XVMC_ID.
@@ -55,14 +55,14 @@ attribute_deprecated struct xvmc_pix_fmt {
     /** Pointer to the block array allocated by XvMCCreateBlocks().
         The array has to be freed by XvMCDestroyBlocks().
         Each group of 64 values represents one data block of differential
-        pixel information (in MoCo mode) or coefficients for IDCT.
+        pixel information (in MoCo mode)or coefficients for IDCT.
         - application - set the pointer during initialization
         - libavcodec  - fills coefficients/pixel data into the array
     */
     short*          data_blocks;
 
     /** Pointer to the macroblock description array allocated by
-        XvMCCreateMacroBlocks() and freed by XvMCDestroyMacroBlocks().
+        XvMCCreateMacroBlocks()and freed by XvMCDestroyMacroBlocks().
         - application - set the pointer during initialization
         - libavcodec  - fills description data into the array
     */
@@ -96,7 +96,7 @@ attribute_deprecated struct xvmc_pix_fmt {
     int             unsigned_intra;
 
     /** Pointer to the surface allocated by XvMCCreateSurface().
-        It has to be freed by XvMCDestroySurface() on application exit.
+        It has to be freed by XvMCDestroySurface()on application exit.
         It identifies the frame and its state on the video hardware.
         - application - set during initialization
         - libavcodec  - unchanged
@@ -134,16 +134,16 @@ attribute_deprecated struct xvmc_pix_fmt {
     /** Number of macroblock descriptions in the mv_blocks array
         that have already been passed to the hardware.
         - application - zeroes it on get_buffer().
-                        A successful ff_draw_horiz_band() may increment it
+                        A successful ff_draw_horiz_band()may increment it
                         with filled_mb_block_num or zero both.
         - libavcodec  - unchanged
     */
     int             start_mv_blocks_num;
 
     /** Number of new macroblock descriptions in the mv_blocks array (after
-        start_mv_blocks_num) that are filled by libavcodec and have to be
+        start_mv_blocks_num)that are filled by libavcodec and have to be
         passed to the hardware.
-        - application - zeroes it on get_buffer() or after successful
+        - application - zeroes it on get_buffer()or after successful
                         ff_draw_horiz_band().
         - libavcodec  - increment with one of each stored MB
     */
@@ -155,7 +155,7 @@ attribute_deprecated struct xvmc_pix_fmt {
         position into the corresponding block description structure field,
         that are part of the mv_blocks array.
         - application - zeroes it on get_buffer().
-                        A successful ff_draw_horiz_band() may zero it together
+                        A successful ff_draw_horiz_band()may zero it together
                         with start_mb_blocks_num.
         - libavcodec  - each decoded macroblock increases it by the number
                         of coded blocks it contains.

@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,14 +39,14 @@
  * @note
  * AV_PIX_FMT_RGB32 is handled in an endian-specific manner. An RGBA
  * color is put together as:
- *  (A << 24) | (R << 16) | (G << 8) | B
+ *  (A << 24)| (R << 16)| (G << 8)| B
  * This is stored as BGRA on little-endian CPU architectures and ARGB on
  * big-endian CPUs.
  *
  * @par
  * When the pixel format is palettized RGB (AV_PIX_FMT_PAL8), the palettized
  * image data is stored in AVFrame.data[0]. The palette is transported in
- * AVFrame.data[1], is 1024 bytes long (256 4-byte entries) and is
+ * AVFrame.data[1], is 1024 bytes long (256 4-byte entries)and is
  * formatted the same as in AV_PIX_FMT_RGB32 described above (i.e., it is
  * also endian-specific). Note also that the individual RGB palette
  * components stored in AVFrame.data[1] should be in the range 0..255.
@@ -59,8 +59,8 @@
  * allocating the picture.
  *
  * @note
- * Make sure that all newly added big-endian formats have (pix_fmt & 1) == 1
- * and that all newly added little-endian formats have (pix_fmt & 1) == 0.
+ * Make sure that all newly added big-endian formats have (pix_fmt & 1)== 1
+ * and that all newly added little-endian formats have (pix_fmt & 1)== 0.
  * This allows simpler detection of big vs little-endian.
  */
 enum AVPixelFormat {
@@ -116,13 +116,13 @@ enum AVPixelFormat {
     AV_PIX_FMT_RGB48BE,   ///< packed RGB 16:16:16, 48bpp, 16R, 16G, 16B, the 2-byte value for each R/G/B component is stored as big-endian
     AV_PIX_FMT_RGB48LE,   ///< packed RGB 16:16:16, 48bpp, 16R, 16G, 16B, the 2-byte value for each R/G/B component is stored as little-endian
 
-    AV_PIX_FMT_RGB565BE,  ///< packed RGB 5:6:5, 16bpp, (msb)   5R 6G 5B(lsb), big-endian
-    AV_PIX_FMT_RGB565LE,  ///< packed RGB 5:6:5, 16bpp, (msb)   5R 6G 5B(lsb), little-endian
+    AV_PIX_FMT_RGB565BE,  ///< packed RGB 5:6:5, 16bpp, (msb) 5R 6G 5B(lsb), big-endian
+    AV_PIX_FMT_RGB565LE,  ///< packed RGB 5:6:5, 16bpp, (msb) 5R 6G 5B(lsb), little-endian
     AV_PIX_FMT_RGB555BE,  ///< packed RGB 5:5:5, 16bpp, (msb)1A 5R 5G 5B(lsb), big-endian, most significant bit to 0
     AV_PIX_FMT_RGB555LE,  ///< packed RGB 5:5:5, 16bpp, (msb)1A 5R 5G 5B(lsb), little-endian, most significant bit to 0
 
-    AV_PIX_FMT_BGR565BE,  ///< packed BGR 5:6:5, 16bpp, (msb)   5B 6G 5R(lsb), big-endian
-    AV_PIX_FMT_BGR565LE,  ///< packed BGR 5:6:5, 16bpp, (msb)   5B 6G 5R(lsb), little-endian
+    AV_PIX_FMT_BGR565BE,  ///< packed BGR 5:6:5, 16bpp, (msb) 5B 6G 5R(lsb), big-endian
+    AV_PIX_FMT_BGR565LE,  ///< packed BGR 5:6:5, 16bpp, (msb) 5B 6G 5R(lsb), little-endian
     AV_PIX_FMT_BGR555BE,  ///< packed BGR 5:5:5, 16bpp, (msb)1A 5B 5G 5R(lsb), big-endian, most significant bit to 1
     AV_PIX_FMT_BGR555LE,  ///< packed BGR 5:5:5, 16bpp, (msb)1A 5B 5G 5R(lsb), little-endian, most significant bit to 1
 
@@ -211,8 +211,8 @@ enum AVPixelFormat {
 
     AV_PIX_FMT_VDPAU,     ///< HW acceleration through VDPAU, Picture.data[3] contains a VdpVideoSurface
 
-    AV_PIX_FMT_XYZ12LE,      ///< packed XYZ 4:4:4, 36 bpp, (msb) 12X, 12Y, 12Z (lsb), the 2-byte value for each X/Y/Z is stored as little-endian, the 4 lower bits are set to 0
-    AV_PIX_FMT_XYZ12BE,      ///< packed XYZ 4:4:4, 36 bpp, (msb) 12X, 12Y, 12Z (lsb), the 2-byte value for each X/Y/Z is stored as big-endian, the 4 lower bits are set to 0
+    AV_PIX_FMT_XYZ12LE,      ///< packed XYZ 4:4:4, 36 bpp, (msb)12X, 12Y, 12Z (lsb), the 2-byte value for each X/Y/Z is stored as little-endian, the 4 lower bits are set to 0
+    AV_PIX_FMT_XYZ12BE,      ///< packed XYZ 4:4:4, 36 bpp, (msb)12X, 12Y, 12Z (lsb), the 2-byte value for each X/Y/Z is stored as big-endian, the 4 lower bits are set to 0
     AV_PIX_FMT_NV16,         ///< interleaved chroma YUV 4:2:2, 16bpp, (1 Cr & Cb sample per 2x1 Y samples)
     AV_PIX_FMT_NV20LE,       ///< interleaved chroma YUV 4:2:2, 20bpp, (1 Cr & Cb sample per 2x1 Y samples), little-endian
     AV_PIX_FMT_NV20BE,       ///< interleaved chroma YUV 4:2:2, 20bpp, (1 Cr & Cb sample per 2x1 Y samples), big-endian
@@ -262,7 +262,7 @@ enum AVPixelFormat {
     AV_PIX_FMT_GBRAP,       ///< planar GBRA 4:4:4:4 32bpp
     AV_PIX_FMT_GBRAP16BE,   ///< planar GBRA 4:4:4:4 64bpp, big-endian
     AV_PIX_FMT_GBRAP16LE,   ///< planar GBRA 4:4:4:4 64bpp, little-endian
-    AV_PIX_FMT_YUVJ411P,    ///< planar YUV 4:1:1, 12bpp, (1 Cr & Cb sample per 4x1 Y samples) full scale (JPEG), deprecated in favor of PIX_FMT_YUV411P and setting color_range
+    AV_PIX_FMT_YUVJ411P,    ///< planar YUV 4:1:1, 12bpp, (1 Cr & Cb sample per 4x1 Y samples)full scale (JPEG), deprecated in favor of PIX_FMT_YUV411P and setting color_range
 
     AV_PIX_FMT_BAYER_BGGR8,    ///< bayer, BGBG..(odd line), GRGR..(even line), 8-bit samples */
     AV_PIX_FMT_BAYER_RGGB8,    ///< bayer, RGRG..(odd line), GBGB..(even line), 8-bit samples */
@@ -301,9 +301,9 @@ enum AVPixelFormat {
 #define AV_PIX_FMT_GBR24P AV_PIX_FMT_GBRP
 
 #if AV_HAVE_BIGENDIAN
-#   define AV_PIX_FMT_NE(be, le) AV_PIX_FMT_##be
+#   define AV_PIX_FMT_NE(be, le)AV_PIX_FMT_##be
 #else
-#   define AV_PIX_FMT_NE(be, le) AV_PIX_FMT_##le
+#   define AV_PIX_FMT_NE(be, le)AV_PIX_FMT_##le
 #endif
 
 #define AV_PIX_FMT_RGB32   AV_PIX_FMT_NE(ARGB, BGRA)
@@ -374,7 +374,7 @@ enum AVPixelFormat {
 #define PIX_FMT_Y400A AV_PIX_FMT_Y400A
 #define PIX_FMT_GBR24P AV_PIX_FMT_GBR24P
 
-#define PIX_FMT_NE(be, le) AV_PIX_FMT_NE(be, le)
+#define PIX_FMT_NE(be, le)AV_PIX_FMT_NE(be, le)
 
 #define PIX_FMT_RGB32   AV_PIX_FMT_RGB32
 #define PIX_FMT_RGB32_1 AV_PIX_FMT_RGB32_1

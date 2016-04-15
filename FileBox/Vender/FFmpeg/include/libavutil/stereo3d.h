@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2013 Vittorio Giovara <vittorio.giovara@gmail.com>
+ * Copyright (c)2013 Vittorio Giovara <vittorio.giovara@gmail.com>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -111,10 +111,10 @@ enum AVStereo3DType {
 #define AV_STEREO3D_FLAG_INVERT     (1 << 0)
 
 /**
- * Stereo 3D type: this structure describes how two videos are packed
+ * Stereo 3D type:this structure describes how two videos are packed
  * within a single video surface, with additional information as needed.
  *
- * @note The struct must be allocated with av_stereo3d_alloc() and
+ * @note The struct must be allocated with av_stereo3d_alloc()and
  *       its size is not a part of the public ABI.
  */
 typedef struct AVStereo3D {

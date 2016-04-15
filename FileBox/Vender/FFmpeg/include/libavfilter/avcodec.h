@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -74,7 +74,7 @@ AVFilterBufferRef *avfilter_get_buffer_ref_from_frame(enum AVMediaType type,
  * @param samplesref an audio buffer reference
  * @return >= 0 in case of success, a negative AVERROR code in case of
  * failure
- * @deprecated Use avfilter_copy_buf_props() instead.
+ * @deprecated Use avfilter_copy_buf_props()instead.
  */
 attribute_deprecated
 int avfilter_fill_frame_from_audio_buffer_ref(AVFrame *frame,
@@ -87,7 +87,7 @@ int avfilter_fill_frame_from_audio_buffer_ref(AVFrame *frame,
  * @param picref a video buffer reference
  * @return >= 0 in case of success, a negative AVERROR code in case of
  * failure
- * @deprecated Use avfilter_copy_buf_props() instead.
+ * @deprecated Use avfilter_copy_buf_props()instead.
  */
 attribute_deprecated
 int avfilter_fill_frame_from_video_buffer_ref(AVFrame *frame,
@@ -100,7 +100,7 @@ int avfilter_fill_frame_from_video_buffer_ref(AVFrame *frame,
  * @param ref a video or audio buffer reference
  * @return >= 0 in case of success, a negative AVERROR code in case of
  * failure
- * @deprecated Use avfilter_copy_buf_props() instead.
+ * @deprecated Use avfilter_copy_buf_props()instead.
  */
 attribute_deprecated
 int avfilter_fill_frame_from_buffer_ref(AVFrame *frame,

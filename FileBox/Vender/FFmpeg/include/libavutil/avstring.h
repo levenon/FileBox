@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2007 Mans Rullgard
+ * Copyright (c)2007 Mans Rullgard
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -129,7 +129,7 @@ size_t av_strlcat(char *dst, const char *src, size_t size);
  * @return the length of the string that would have been generated
  *  if enough space had been available
  */
-size_t av_strlcatf(char *dst, size_t size, const char *fmt, ...) av_printf_format(3, 4);
+size_t av_strlcatf(char *dst, size_t size, const char *fmt, ...)av_printf_format(3, 4);
 
 /**
  * Get the count of continuous non zero chars starting from the beginning.
@@ -153,7 +153,7 @@ static inline size_t av_strnlen(const char *s, size_t len)
  * @return the allocated string
  * @note You have to free the string yourself with av_free().
  */
-char *av_asprintf(const char *fmt, ...) av_printf_format(1, 2);
+char *av_asprintf(const char *fmt, ...)av_printf_format(1, 2);
 
 /**
  * Convert a number to a av_malloced string.
@@ -188,12 +188,12 @@ char *av_get_token(const char **buf, const char *term);
  * should be NULL, and saveptr should be unchanged since the previous
  * call.
  *
- * This function is similar to strtok_r() defined in POSIX.1.
+ * This function is similar to strtok_r()defined in POSIX.1.
  *
  * @param s the string to parse, may be NULL
  * @param delim 0-terminated list of token delimiters, must be non-NULL
  * @param saveptr user-provided pointer which points to stored
- * information necessary for av_strtok() to continue scanning the same
+ * information necessary for av_strtok()to continue scanning the same
  * string. saveptr is updated to point to the next character after the
  * first delimiter found, or to NULL if the string was terminated
  * @return the found token, or NULL when no token is found
@@ -319,7 +319,7 @@ int av_escape(char **dst, const char *src, const char *special_chars,
     AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES|AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS|AV_UTF8_FLAG_ACCEPT_SURROGATES
 
 /**
- * Read and decode a single UTF-8 code point (character) from the
+ * Read and decode a single UTF-8 code point (character)from the
  * buffer in *buf, and update *buf to point to the next byte to
  * decode.
  *
@@ -331,7 +331,7 @@ int av_escape(char **dst, const char *src, const char *special_chars,
  * case the decoded code point does not belong to a valid range.
  *
  * @note For speed-relevant code a carefully implemented use of
- * GET_UTF8() may be preferred.
+ * GET_UTF8()may be preferred.
  *
  * @param codep   pointer used to return the parsed code in case of success.
  *                The value in *codep is set even in case the range check fails.

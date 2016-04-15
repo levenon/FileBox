@@ -1,15 +1,15 @@
 /*
- * The Video Decode and Presentation API for UNIX (VDPAU) is used for
+ * The Video Decode and Presentation API for UNIX (VDPAU)is used for
  * hardware-accelerated decoding of MPEG-1/2, H.264 and VC-1.
  *
- * Copyright (C) 2008 NVIDIA
+ * Copyright (C)2008 NVIDIA
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,8 +43,8 @@
  * parsing mechanisms and uses VDPAU for the actual decoding.
  *
  * As per the current implementation, the actual decoding
- * and rendering (API calls) are done as part of the VDPAU
- * presentation (vo_vdpau.c) module.
+ * and rendering (API calls)are done as part of the VDPAU
+ * presentation (vo_vdpau.c)module.
  *
  * @{
  */
@@ -84,7 +84,7 @@ typedef int (*AVVDPAU_Render2)(struct AVCodecContext *, struct AVFrame *,
  * decoding functions.
  *
  * The size of this structure is not a part of the public ABI and must not
- * be used outside of libavcodec. Use av_vdpau_alloc_context() to allocate an
+ * be used outside of libavcodec. Use av_vdpau_alloc_context()to allocate an
  * AVVDPAUContext.
  */
 typedef struct AVVDPAUContext {
@@ -158,7 +158,7 @@ AVVDPAUContext *av_vdpau_alloc_context(void);
 
 /**
  * Get a decoder profile that should be used for initializing a VDPAU decoder.
- * Should be called from the AVCodecContext.get_format() callback.
+ * Should be called from the AVCodecContext.get_format()callback.
  *
  * @param avctx the codec context being used for decoding the stream
  * @param profile a pointer into which the result will be written on success.
@@ -181,7 +181,7 @@ int av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *profile);
 
 /**
  * @brief This structure is used as a callback between the FFmpeg
- * decoder (vd_) and presentation (vo_) module.
+ * decoder (vd_)and presentation (vo_)module.
  * This is used for defining a video frame containing surface,
  * picture parameter, bitstream information etc which are passed
  * between the FFmpeg decoder and its clients.

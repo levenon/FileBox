@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2001-2011 Michael Niedermayer <michaelni@gmx.at>
+ * Copyright (C)2001-2011 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -187,7 +187,7 @@ void sws_freeContext(struct SwsContext *swsContext);
  * @return a pointer to an allocated context, or NULL in case of error
  * @note this function is to be removed after a saner alternative is
  *       written
- * @deprecated Use sws_getCachedContext() instead.
+ * @deprecated Use sws_getCachedContext()instead.
  */
 struct SwsContext *sws_getContext(int srcW, int srcH, enum AVPixelFormat srcFormat,
                                   int dstW, int dstH, enum AVPixelFormat dstFormat,
@@ -212,7 +212,7 @@ struct SwsContext *sws_getContext(int srcW, int srcH, enum AVPixelFormat srcForm
  *                  the source image
  * @param srcSliceY the position in the source image of the slice to
  *                  process, that is the number (counted starting from
- *                  zero) in the image of the first row of the slice
+ *                  zero)in the image of the first row of the slice
  * @param srcSliceH the height of the source slice, that is the number
  *                  of rows in the slice
  * @param dst       the array containing the pointers to the planes of
@@ -290,7 +290,7 @@ void sws_shiftVec(SwsVector *a, int shift);
 SwsVector *sws_cloneVec(SwsVector *a);
 
 /**
- * Print with av_log() a textual representation of the vector a
+ * Print with av_log()a textual representation of the vector a
  * if log_level <= av_log_level.
  */
 void sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
@@ -306,7 +306,7 @@ void sws_freeFilter(SwsFilter *filter);
 /**
  * Check if context can be reused, otherwise reallocate a new one.
  *
- * If context is NULL, just calls sws_getContext() to get a new
+ * If context is NULL, just calls sws_getContext()to get a new
  * context. Otherwise, checks if the parameters are the ones already
  * saved in context. If that is the case, returns the current
  * context. Otherwise, frees context and gets a new context with
@@ -329,7 +329,7 @@ struct SwsContext *sws_getCachedContext(struct SwsContext *context,
  * @param src        source frame buffer
  * @param dst        destination frame buffer
  * @param num_pixels number of pixels to convert
- * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
+ * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR)of src
  */
 void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 
@@ -341,7 +341,7 @@ void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pix
  * @param src        source frame buffer
  * @param dst        destination frame buffer
  * @param num_pixels number of pixels to convert
- * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
+ * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR)of src
  */
 void sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 

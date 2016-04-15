@@ -33,11 +33,6 @@
 		332EA6111CBE7DCF00FFA60E /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5E31CBE7DCF00FFA60E /* libavutil.a */; };
 		332EA6121CBE7DCF00FFA60E /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5E41CBE7DCF00FFA60E /* libswresample.a */; };
 		332EA6131CBE7DCF00FFA60E /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5E51CBE7DCF00FFA60E /* libswscale.a */; };
-		332EA6141CBE7DCF00FFA60E /* KXAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA5E81CBE7DCF00FFA60E /* KXAudioManager.m */; };
-		332EA6151CBE7DCF00FFA60E /* kxmovie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 332EA5EA1CBE7DCF00FFA60E /* kxmovie.bundle */; };
-		332EA6161CBE7DCF00FFA60E /* KXMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA5EC1CBE7DCF00FFA60E /* KXMovieDecoder.m */; };
-		332EA6171CBE7DCF00FFA60E /* KXMovieGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA5EE1CBE7DCF00FFA60E /* KXMovieGLView.m */; };
-		332EA6181CBE7DCF00FFA60E /* KXMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA5F01CBE7DCF00FFA60E /* KXMovieViewController.m */; };
 		332EA6211CBE7DCF00FFA60E /* FBFileTransferVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA5FF1CBE7DCF00FFA60E /* FBFileTransferVC.m */; };
 		332EA6221CBE7DCF00FFA60E /* FBFolderPreviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA6011CBE7DCF00FFA60E /* FBFolderPreviewVC.m */; };
 		332EA6231CBE7DCF00FFA60E /* FBFolderSelectorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA6031CBE7DCF00FFA60E /* FBFolderSelectorVC.m */; };
@@ -46,7 +41,6 @@
 		332EA6271CBE7F0900FFA60E /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA6261CBE7F0900FFA60E /* libbz2.1.0.tbd */; };
 		333260B31A81FF5A0050B267 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 333260B21A81FF5A0050B267 /* main.m */; };
 		333260B61A81FF5A0050B267 /* FBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 333260B51A81FF5A0050B267 /* FBAppDelegate.m */; };
-		333260BC1A81FF5A0050B267 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 333260BA1A81FF5A0050B267 /* Main.storyboard */; };
 		333260BE1A81FF5A0050B267 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 333260BD1A81FF5A0050B267 /* Images.xcassets */; };
 		333260C11A81FF5A0050B267 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 333260BF1A81FF5A0050B267 /* LaunchScreen.xib */; };
 		333260FB1A820D0C0050B267 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333260E61A820D0C0050B267 /* CoreText.framework */; };
@@ -60,20 +54,29 @@
 		333261091A820D0C0050B267 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333260F41A820D0C0050B267 /* Security.framework */; };
 		3332610B1A820D0C0050B267 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333260F61A820D0C0050B267 /* SystemConfiguration.framework */; };
 		3332610F1A820D0C0050B267 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333260FA1A820D0C0050B267 /* Foundation.framework */; };
-		333E91E91CBE8B150029035C /* FBFileSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 333E91E81CBE8B150029035C /* FBFileSummaryCell.m */; };
 		337884E81AC3CCEA00BF0E09 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 337884E61AC3CCEA00BF0E09 /* Localizable.strings */; };
 		337884EC1AC3D74800BF0E09 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 337884EA1AC3D74800BF0E09 /* InfoPlist.strings */; };
-		337884F51AC3DB7200BF0E09 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884F41AC3DB7200BF0E09 /* icon.png */; };
-		337884F81AC3DC3100BF0E09 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884F61AC3DC3100BF0E09 /* icon@2x.png */; };
-		337884F91AC3DC3100BF0E09 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884F71AC3DC3100BF0E09 /* icon@3x.png */; };
-		337884FD1AC3E49900BF0E09 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884FA1AC3E49900BF0E09 /* Default-568h.png */; };
-		337884FE1AC3E49900BF0E09 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884FB1AC3E49900BF0E09 /* Default.png */; };
-		337884FF1AC3E49900BF0E09 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 337884FC1AC3E49900BF0E09 /* Default@2x.png */; };
 		33A49C7B1A9872C400892454 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33A49C7A1A9872C400892454 /* MultipeerConnectivity.framework */; };
 		33B86A341A82316D00C2EDE7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B86A331A82316D00C2EDE7 /* LocalAuthentication.framework */; };
 		33C1DD721CBEA2250012F740 /* FBBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C1DD711CBEA2250012F740 /* FBBaseViewController.m */; };
 		33C1DD751CBEA2380012F740 /* FBBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C1DD741CBEA2380012F740 /* FBBaseTableViewController.m */; };
 		33C1DD781CBEA2480012F740 /* FBBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C1DD771CBEA2480012F740 /* FBBaseNavigationController.m */; };
+		B33DD7CE1CC0C2F1001F095B /* FBBrightnessView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */; };
+		B33DD7D01CC0C2F1001F095B /* FBPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */; };
+		B33DD7D11CC0C2F1001F095B /* FBFileSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7CD1CC0C2F1001F095B /* FBFileSummaryCell.m */; };
+		B33DD7D41CC0C3F3001F095B /* FBMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7D31CC0C3F3001F095B /* FBMovieViewController.m */; };
+		B33DD7D71CC0C412001F095B /* FBMovieGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7D61CC0C411001F095B /* FBMovieGLView.m */; };
+		B33DD7DA1CC0C426001F095B /* FBAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7D91CC0C426001F095B /* FBAudioPlayer.m */; };
+		B33DD7E01CC0C4CD001F095B /* FBMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7DF1CC0C4CD001F095B /* FBMovieDecoder.m */; };
+		B33DD7E91CC0C4FC001F095B /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E21CC0C4FC001F095B /* Default-568h.png */; };
+		B33DD7EA1CC0C4FC001F095B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E31CC0C4FC001F095B /* Default.png */; };
+		B33DD7EB1CC0C4FC001F095B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E41CC0C4FC001F095B /* Default@2x.png */; };
+		B33DD7EC1CC0C4FC001F095B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E51CC0C4FC001F095B /* icon.png */; };
+		B33DD7ED1CC0C4FC001F095B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E61CC0C4FC001F095B /* icon@2x.png */; };
+		B33DD7EE1CC0C4FC001F095B /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7E71CC0C4FC001F095B /* icon@3x.png */; };
+		B33DD7F11CC0C507001F095B /* FBMovie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7F01CC0C507001F095B /* FBMovie.bundle */; };
+		B33DD7F41CC0CF32001F095B /* FBBoxNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7F31CC0CF32001F095B /* FBBoxNumberView.m */; };
+		B33DD7F71CC0E03B001F095B /* FBVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7F61CC0E03B001F095B /* FBVideoPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -189,16 +192,6 @@
 		332EA5E31CBE7DCF00FFA60E /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
 		332EA5E41CBE7DCF00FFA60E /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
 		332EA5E51CBE7DCF00FFA60E /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
-		332EA5E71CBE7DCF00FFA60E /* KXAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXAudioManager.h; sourceTree = "<group>"; };
-		332EA5E81CBE7DCF00FFA60E /* KXAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXAudioManager.m; sourceTree = "<group>"; };
-		332EA5E91CBE7DCF00FFA60E /* KXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXLogger.h; sourceTree = "<group>"; };
-		332EA5EA1CBE7DCF00FFA60E /* kxmovie.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = kxmovie.bundle; sourceTree = "<group>"; };
-		332EA5EB1CBE7DCF00FFA60E /* KXMovieDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMovieDecoder.h; sourceTree = "<group>"; };
-		332EA5EC1CBE7DCF00FFA60E /* KXMovieDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMovieDecoder.m; sourceTree = "<group>"; };
-		332EA5ED1CBE7DCF00FFA60E /* KXMovieGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMovieGLView.h; sourceTree = "<group>"; };
-		332EA5EE1CBE7DCF00FFA60E /* KXMovieGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMovieGLView.m; sourceTree = "<group>"; };
-		332EA5EF1CBE7DCF00FFA60E /* KXMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMovieViewController.h; sourceTree = "<group>"; };
-		332EA5F01CBE7DCF00FFA60E /* KXMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMovieViewController.m; sourceTree = "<group>"; };
 		332EA5FE1CBE7DCF00FFA60E /* FBFileTransferVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFileTransferVC.h; sourceTree = "<group>"; };
 		332EA5FF1CBE7DCF00FFA60E /* FBFileTransferVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFileTransferVC.m; sourceTree = "<group>"; };
 		332EA6001CBE7DCF00FFA60E /* FBFolderPreviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFolderPreviewVC.h; sourceTree = "<group>"; };
@@ -215,7 +208,6 @@
 		333260B21A81FF5A0050B267 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		333260B41A81FF5A0050B267 /* FBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBAppDelegate.h; sourceTree = "<group>"; };
 		333260B51A81FF5A0050B267 /* FBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBAppDelegate.m; sourceTree = "<group>"; };
-		333260BB1A81FF5A0050B267 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		333260BD1A81FF5A0050B267 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		333260C01A81FF5A0050B267 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		333260E61A820D0C0050B267 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -230,9 +222,6 @@
 		333260F61A820D0C0050B267 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		333260F91A820D0C0050B267 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		333260FA1A820D0C0050B267 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		333E91E71CBE8B150029035C /* FBFileSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFileSummaryCell.h; sourceTree = "<group>"; };
-		333E91E81CBE8B150029035C /* FBFileSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFileSummaryCell.m; sourceTree = "<group>"; };
-		337884E41AC3C6BF00BF0E09 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		337884E51AC3C6BF00BF0E09 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		337884E71AC3CCEA00BF0E09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		337884E91AC3CCF100BF0E09 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -240,14 +229,7 @@
 		337884ED1AC3D74E00BF0E09 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		337884EE1AC3DA0A00BF0E09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		337884EF1AC3DA1400BF0E09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		337884F11AC3DA3500BF0E09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		337884F31AC3DA3B00BF0E09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		337884F41AC3DB7200BF0E09 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		337884F61AC3DC3100BF0E09 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		337884F71AC3DC3100BF0E09 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = "<group>"; };
-		337884FA1AC3E49900BF0E09 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
-		337884FB1AC3E49900BF0E09 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		337884FC1AC3E49900BF0E09 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		33A49C7A1A9872C400892454 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		33B86A331A82316D00C2EDE7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		33C1DD701CBEA2250012F740 /* FBBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBBaseViewController.h; sourceTree = "<group>"; };
@@ -258,6 +240,33 @@
 		33C1DD771CBEA2480012F740 /* FBBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBBaseNavigationController.m; sourceTree = "<group>"; };
 		4D3B7E20AEBD054CE09FB4CD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7758EB6BA14A7E7E709E94AE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		B33DD7C61CC0C2F1001F095B /* FBBrightnessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBBrightnessView.h; sourceTree = "<group>"; };
+		B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBBrightnessView.m; sourceTree = "<group>"; };
+		B33DD7C91CC0C2F1001F095B /* FBPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBPlayerControlView.h; sourceTree = "<group>"; };
+		B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBPlayerControlView.m; sourceTree = "<group>"; };
+		B33DD7CC1CC0C2F1001F095B /* FBFileSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFileSummaryCell.h; sourceTree = "<group>"; };
+		B33DD7CD1CC0C2F1001F095B /* FBFileSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFileSummaryCell.m; sourceTree = "<group>"; };
+		B33DD7D21CC0C3F3001F095B /* FBMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieViewController.h; sourceTree = "<group>"; };
+		B33DD7D31CC0C3F3001F095B /* FBMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBMovieViewController.m; sourceTree = "<group>"; };
+		B33DD7D51CC0C411001F095B /* FBMovieGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieGLView.h; sourceTree = "<group>"; };
+		B33DD7D61CC0C411001F095B /* FBMovieGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBMovieGLView.m; sourceTree = "<group>"; };
+		B33DD7D81CC0C426001F095B /* FBAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAudioPlayer.h; sourceTree = "<group>"; };
+		B33DD7D91CC0C426001F095B /* FBAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAudioPlayer.m; sourceTree = "<group>"; };
+		B33DD7DD1CC0C4B6001F095B /* FBLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogger.h; sourceTree = "<group>"; };
+		B33DD7DE1CC0C4CD001F095B /* FBMovieDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieDecoder.h; sourceTree = "<group>"; };
+		B33DD7DF1CC0C4CD001F095B /* FBMovieDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBMovieDecoder.m; sourceTree = "<group>"; };
+		B33DD7E21CC0C4FC001F095B /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
+		B33DD7E31CC0C4FC001F095B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B33DD7E41CC0C4FC001F095B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B33DD7E51CC0C4FC001F095B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		B33DD7E61CC0C4FC001F095B /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		B33DD7E71CC0C4FC001F095B /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = "<group>"; };
+		B33DD7F01CC0C507001F095B /* FBMovie.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBMovie.bundle; sourceTree = "<group>"; };
+		B33DD7F21CC0CF32001F095B /* FBBoxNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBBoxNumberView.h; sourceTree = "<group>"; };
+		B33DD7F31CC0CF32001F095B /* FBBoxNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBBoxNumberView.m; sourceTree = "<group>"; };
+		B33DD7F51CC0E03B001F095B /* FBVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideoPlayer.h; sourceTree = "<group>"; };
+		B33DD7F61CC0E03B001F095B /* FBVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBVideoPlayer.m; sourceTree = "<group>"; };
+		B33DD7F81CC0E3A9001F095B /* FBMovieRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieRenderView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,35 +320,25 @@
 		332EA5791CBE7DCF00FFA60E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				B33DD7D81CC0C426001F095B /* FBAudioPlayer.h */,
+				B33DD7D91CC0C426001F095B /* FBAudioPlayer.m */,
 				332EA57A1CBE7DCF00FFA60E /* FBBluetoothManager.h */,
 				332EA57B1CBE7DCF00FFA60E /* FBBluetoothManager.m */,
 				332EA57C1CBE7DCF00FFA60E /* FBFileManager.h */,
 				332EA57D1CBE7DCF00FFA60E /* FBFileManager.m */,
 				332EA57E1CBE7DCF00FFA60E /* FBLockManager.h */,
 				332EA57F1CBE7DCF00FFA60E /* FBLockManager.m */,
+				B33DD7F51CC0E03B001F095B /* FBVideoPlayer.h */,
+				B33DD7F61CC0E03B001F095B /* FBVideoPlayer.m */,
+				B33DD7F81CC0E3A9001F095B /* FBMovieRenderView.h */,
 			);
 			path = Manager;
-			sourceTree = "<group>";
-		};
-		332EA5801CBE7DCF00FFA60E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		332EA5811CBE7DCF00FFA60E /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		332EA5821CBE7DCF00FFA60E /* Vender */ = {
 			isa = PBXGroup;
 			children = (
 				332EA5831CBE7DCF00FFA60E /* FFmpeg */,
-				332EA5E61CBE7DCF00FFA60E /* kxmovie */,
 			);
 			path = Vender;
 			sourceTree = "<group>";
@@ -512,27 +511,12 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		332EA5E61CBE7DCF00FFA60E /* kxmovie */ = {
-			isa = PBXGroup;
-			children = (
-				332EA5E71CBE7DCF00FFA60E /* KXAudioManager.h */,
-				332EA5E81CBE7DCF00FFA60E /* KXAudioManager.m */,
-				332EA5E91CBE7DCF00FFA60E /* KXLogger.h */,
-				332EA5EA1CBE7DCF00FFA60E /* kxmovie.bundle */,
-				332EA5EB1CBE7DCF00FFA60E /* KXMovieDecoder.h */,
-				332EA5EC1CBE7DCF00FFA60E /* KXMovieDecoder.m */,
-				332EA5ED1CBE7DCF00FFA60E /* KXMovieGLView.h */,
-				332EA5EE1CBE7DCF00FFA60E /* KXMovieGLView.m */,
-				332EA5EF1CBE7DCF00FFA60E /* KXMovieViewController.h */,
-				332EA5F01CBE7DCF00FFA60E /* KXMovieViewController.m */,
-			);
-			path = kxmovie;
-			sourceTree = "<group>";
-		};
 		332EA5FD1CBE7DCF00FFA60E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				33C1DD6F1CBEA2100012F740 /* BaseViewControllers */,
+				B33DD7D21CC0C3F3001F095B /* FBMovieViewController.h */,
+				B33DD7D31CC0C3F3001F095B /* FBMovieViewController.m */,
 				332EA5FE1CBE7DCF00FFA60E /* FBFileTransferVC.h */,
 				332EA5FF1CBE7DCF00FFA60E /* FBFileTransferVC.m */,
 				332EA6001CBE7DCF00FFA60E /* FBFolderPreviewVC.h */,
@@ -557,8 +541,8 @@
 		332EA6091CBE7DCF00FFA60E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				333E91E71CBE8B150029035C /* FBFileSummaryCell.h */,
-				333E91E81CBE8B150029035C /* FBFileSummaryCell.m */,
+				B33DD7C51CC0C2F1001F095B /* NormalViews */,
+				B33DD7CB1CC0C2F1001F095B /* TableViewCells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -584,9 +568,10 @@
 		333260AF1A81FF5A0050B267 /* FileBox */ = {
 			isa = PBXGroup;
 			children = (
+				B33DD7E11CC0C4FC001F095B /* Resources */,
+				B33DD7DB1CC0C4B6001F095B /* Models */,
+				B33DD7DC1CC0C4B6001F095B /* Utils */,
 				332EA5791CBE7DCF00FFA60E /* Manager */,
-				332EA5801CBE7DCF00FFA60E /* Models */,
-				332EA5811CBE7DCF00FFA60E /* Utils */,
 				332EA5821CBE7DCF00FFA60E /* Vender */,
 				332EA5FD1CBE7DCF00FFA60E /* ViewControllers */,
 				332EA6081CBE7DCF00FFA60E /* ViewModels */,
@@ -594,7 +579,6 @@
 				333260B41A81FF5A0050B267 /* FBAppDelegate.h */,
 				333260B51A81FF5A0050B267 /* FBAppDelegate.m */,
 				333260B01A81FF5A0050B267 /* Supporting Files */,
-				333260BA1A81FF5A0050B267 /* Main.storyboard */,
 				333260BD1A81FF5A0050B267 /* Images.xcassets */,
 				333260BF1A81FF5A0050B267 /* LaunchScreen.xib */,
 			);
@@ -604,12 +588,6 @@
 		333260B01A81FF5A0050B267 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				337884FA1AC3E49900BF0E09 /* Default-568h.png */,
-				337884FB1AC3E49900BF0E09 /* Default.png */,
-				337884FC1AC3E49900BF0E09 /* Default@2x.png */,
-				337884F61AC3DC3100BF0E09 /* icon@2x.png */,
-				337884F71AC3DC3100BF0E09 /* icon@3x.png */,
-				337884F41AC3DB7200BF0E09 /* icon.png */,
 				337884EA1AC3D74800BF0E09 /* InfoPlist.strings */,
 				337884E61AC3CCEA00BF0E09 /* Localizable.strings */,
 				333260B11A81FF5A0050B267 /* Info.plist */,
@@ -668,6 +646,61 @@
 				33C1DD771CBEA2480012F740 /* FBBaseNavigationController.m */,
 			);
 			path = BaseViewControllers;
+			sourceTree = "<group>";
+		};
+		B33DD7C51CC0C2F1001F095B /* NormalViews */ = {
+			isa = PBXGroup;
+			children = (
+				B33DD7D51CC0C411001F095B /* FBMovieGLView.h */,
+				B33DD7D61CC0C411001F095B /* FBMovieGLView.m */,
+				B33DD7C61CC0C2F1001F095B /* FBBrightnessView.h */,
+				B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */,
+				B33DD7C91CC0C2F1001F095B /* FBPlayerControlView.h */,
+				B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */,
+				B33DD7F21CC0CF32001F095B /* FBBoxNumberView.h */,
+				B33DD7F31CC0CF32001F095B /* FBBoxNumberView.m */,
+			);
+			path = NormalViews;
+			sourceTree = "<group>";
+		};
+		B33DD7CB1CC0C2F1001F095B /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				B33DD7CC1CC0C2F1001F095B /* FBFileSummaryCell.h */,
+				B33DD7CD1CC0C2F1001F095B /* FBFileSummaryCell.m */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		B33DD7DB1CC0C4B6001F095B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B33DD7DC1CC0C4B6001F095B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B33DD7DE1CC0C4CD001F095B /* FBMovieDecoder.h */,
+				B33DD7DF1CC0C4CD001F095B /* FBMovieDecoder.m */,
+				B33DD7DD1CC0C4B6001F095B /* FBLogger.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B33DD7E11CC0C4FC001F095B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B33DD7F01CC0C507001F095B /* FBMovie.bundle */,
+				B33DD7E21CC0C4FC001F095B /* Default-568h.png */,
+				B33DD7E31CC0C4FC001F095B /* Default.png */,
+				B33DD7E41CC0C4FC001F095B /* Default@2x.png */,
+				B33DD7E51CC0C4FC001F095B /* icon.png */,
+				B33DD7E61CC0C4FC001F095B /* icon@2x.png */,
+				B33DD7E71CC0C4FC001F095B /* icon@3x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F51236A2BCC9C5F8A30211F6 /* Pods */ = {
@@ -747,18 +780,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				337884F81AC3DC3100BF0E09 /* icon@2x.png in Resources */,
-				333260BC1A81FF5A0050B267 /* Main.storyboard in Resources */,
-				337884F91AC3DC3100BF0E09 /* icon@3x.png in Resources */,
+				B33DD7EB1CC0C4FC001F095B /* Default@2x.png in Resources */,
 				337884E81AC3CCEA00BF0E09 /* Localizable.strings in Resources */,
-				337884F51AC3DB7200BF0E09 /* icon.png in Resources */,
-				337884FF1AC3E49900BF0E09 /* Default@2x.png in Resources */,
+				B33DD7F11CC0C507001F095B /* FBMovie.bundle in Resources */,
+				B33DD7EE1CC0C4FC001F095B /* icon@3x.png in Resources */,
+				B33DD7EC1CC0C4FC001F095B /* icon.png in Resources */,
 				333260C11A81FF5A0050B267 /* LaunchScreen.xib in Resources */,
 				333260BE1A81FF5A0050B267 /* Images.xcassets in Resources */,
-				337884FD1AC3E49900BF0E09 /* Default-568h.png in Resources */,
-				332EA6151CBE7DCF00FFA60E /* kxmovie.bundle in Resources */,
+				B33DD7EA1CC0C4FC001F095B /* Default.png in Resources */,
+				B33DD7E91CC0C4FC001F095B /* Default-568h.png in Resources */,
 				337884EC1AC3D74800BF0E09 /* InfoPlist.strings in Resources */,
-				337884FE1AC3E49900BF0E09 /* Default.png in Resources */,
+				B33DD7ED1CC0C4FC001F095B /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,19 +852,23 @@
 				332EA6251CBE7DCF00FFA60E /* FBSystemSettingsVC.m in Sources */,
 				332EA6231CBE7DCF00FFA60E /* FBFolderSelectorVC.m in Sources */,
 				332EA60A1CBE7DCF00FFA60E /* FBBluetoothManager.m in Sources */,
+				B33DD7D01CC0C2F1001F095B /* FBPlayerControlView.m in Sources */,
+				B33DD7E01CC0C4CD001F095B /* FBMovieDecoder.m in Sources */,
 				33C1DD721CBEA2250012F740 /* FBBaseViewController.m in Sources */,
 				33C1DD751CBEA2380012F740 /* FBBaseTableViewController.m in Sources */,
-				333E91E91CBE8B150029035C /* FBFileSummaryCell.m in Sources */,
-				332EA6141CBE7DCF00FFA60E /* KXAudioManager.m in Sources */,
+				B33DD7F41CC0CF32001F095B /* FBBoxNumberView.m in Sources */,
+				B33DD7D71CC0C412001F095B /* FBMovieGLView.m in Sources */,
 				332EA60B1CBE7DCF00FFA60E /* FBFileManager.m in Sources */,
-				332EA6171CBE7DCF00FFA60E /* KXMovieGLView.m in Sources */,
-				332EA6161CBE7DCF00FFA60E /* KXMovieDecoder.m in Sources */,
+				B33DD7D11CC0C2F1001F095B /* FBFileSummaryCell.m in Sources */,
+				B33DD7D41CC0C3F3001F095B /* FBMovieViewController.m in Sources */,
+				B33DD7CE1CC0C2F1001F095B /* FBBrightnessView.m in Sources */,
 				333260B61A81FF5A0050B267 /* FBAppDelegate.m in Sources */,
 				332EA6221CBE7DCF00FFA60E /* FBFolderPreviewVC.m in Sources */,
 				332EA6241CBE7DCF00FFA60E /* FBRootVC.m in Sources */,
+				B33DD7DA1CC0C426001F095B /* FBAudioPlayer.m in Sources */,
 				333260B31A81FF5A0050B267 /* main.m in Sources */,
+				B33DD7F71CC0E03B001F095B /* FBVideoPlayer.m in Sources */,
 				33C1DD781CBEA2480012F740 /* FBBaseNavigationController.m in Sources */,
-				332EA6181CBE7DCF00FFA60E /* KXMovieViewController.m in Sources */,
 				332EA60C1CBE7DCF00FFA60E /* FBLockManager.m in Sources */,
 				332EA6211CBE7DCF00FFA60E /* FBFileTransferVC.m in Sources */,
 			);
@@ -841,16 +877,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		333260BA1A81FF5A0050B267 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				333260BB1A81FF5A0050B267 /* Base */,
-				337884E41AC3C6BF00BF0E09 /* zh-Hans */,
-				337884F11AC3DA3500BF0E09 /* en */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		333260BF1A81FF5A0050B267 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

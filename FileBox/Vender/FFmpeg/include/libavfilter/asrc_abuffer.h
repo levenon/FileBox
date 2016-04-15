@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,7 +41,7 @@
  * @param pts presentation timestamp of the audio buffer
  * @param flags unused
  *
- * @deprecated use av_buffersrc_add_ref() instead.
+ * @deprecated use av_buffersrc_add_ref()instead.
  */
 attribute_deprecated
 int av_asrc_buffer_add_samples(AVFilterContext *abuffersrc,
@@ -65,7 +65,7 @@ int av_asrc_buffer_add_samples(AVFilterContext *abuffersrc,
  * @param pts presentation timestamp of the audio buffer
  * @param flags unused
  *
- * @deprecated use av_buffersrc_add_ref() instead.
+ * @deprecated use av_buffersrc_add_ref()instead.
  */
 attribute_deprecated
 int av_asrc_buffer_add_buffer(AVFilterContext *abuffersrc,
@@ -81,7 +81,7 @@ int av_asrc_buffer_add_buffer(AVFilterContext *abuffersrc,
  * @param samplesref buffer ref to queue
  * @param flags unused
  *
- * @deprecated use av_buffersrc_add_ref() instead.
+ * @deprecated use av_buffersrc_add_ref()instead.
  */
 attribute_deprecated
 int av_asrc_buffer_add_audio_buffer_ref(AVFilterContext *abuffersrc,

@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2005 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2005 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -33,12 +33,12 @@ typedef struct AVExtFloat  {
     uint8_t mantissa[8];
 } AVExtFloat;
 
-attribute_deprecated double av_int2dbl(int64_t v) av_const;
-attribute_deprecated float av_int2flt(int32_t v) av_const;
-attribute_deprecated double av_ext2dbl(const AVExtFloat ext) av_const;
-attribute_deprecated int64_t av_dbl2int(double d) av_const;
-attribute_deprecated int32_t av_flt2int(float d) av_const;
-attribute_deprecated AVExtFloat av_dbl2ext(double d) av_const;
+attribute_deprecated double av_int2dbl(int64_t v)av_const;
+attribute_deprecated float av_int2flt(int32_t v)av_const;
+attribute_deprecated double av_ext2dbl(const AVExtFloat ext)av_const;
+attribute_deprecated int64_t av_dbl2int(double d)av_const;
+attribute_deprecated int32_t av_flt2int(float d)av_const;
+attribute_deprecated AVExtFloat av_dbl2ext(double d)av_const;
 #endif /* FF_API_INTFLOAT */
 
 #endif /* AVUTIL_INTFLOAT_READWRITE_H */

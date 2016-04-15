@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2001 Fabrice Bellard
+ * copyright (c)2001 Fabrice Bellard
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,7 +58,7 @@ typedef struct AVIOInterruptCB {
  * New fields can be added to the end with minor version bumps.
  * Removal, reordering and changes to existing fields require a major
  * version bump.
- * sizeof(AVIOContext) must not be used outside libav*.
+ * sizeof(AVIOContext)must not be used outside libav*.
  *
  * @note None of the function pointers in AVIOContext should be called
  *       directly, they should only be set by the client application
@@ -185,7 +185,7 @@ int avio_check(const char *url, int flags);
  * freed with av_free().
  *
  * @param buffer Memory block for input/output operations via AVIOContext.
- *        The buffer must be allocated with av_malloc() and friends.
+ *        The buffer must be allocated with av_malloc()and friends.
  * @param buffer_size The buffer size is very important for performance.
  *        For protocols with fixed blocksize it should be set to this blocksize.
  *        For others a typical size is a cache page, e.g. 4kb.
@@ -239,14 +239,14 @@ int avio_put_str16le(AVIOContext *s, const char *str);
 
 /**
  * Oring this flag as into the "whence" parameter to a seek function causes it to
- * seek by any means (like reopening and linear reading) or other normally unreasonable
+ * seek by any means (like reopening and linear reading)or other normally unreasonable
  * means that can be extremely slow.
  * This may be ignored by the seek code.
  */
 #define AVSEEK_FORCE 0x20000
 
 /**
- * fseek() equivalent for AVIOContext.
+ * fseek()equivalent for AVIOContext.
  * @return new position or AVERROR.
  */
 int64_t avio_seek(AVIOContext *s, int64_t offset, int whence);
@@ -258,7 +258,7 @@ int64_t avio_seek(AVIOContext *s, int64_t offset, int whence);
 int64_t avio_skip(AVIOContext *s, int64_t offset);
 
 /**
- * ftell() equivalent for AVIOContext.
+ * ftell()equivalent for AVIOContext.
  * @return position or AVERROR.
  */
 static av_always_inline int64_t avio_tell(AVIOContext *s)
@@ -273,13 +273,13 @@ static av_always_inline int64_t avio_tell(AVIOContext *s)
 int64_t avio_size(AVIOContext *s);
 
 /**
- * feof() equivalent for AVIOContext.
+ * feof()equivalent for AVIOContext.
  * @return non zero if and only if end of file
  */
 int url_feof(AVIOContext *s);
 
 /** @warning currently size is limited */
-int avio_printf(AVIOContext *s, const char *fmt, ...) av_printf_format(2, 3);
+int avio_printf(AVIOContext *s, const char *fmt, ...)av_printf_format(2, 3);
 
 /**
  * Force flushing of buffered data to the output s.
@@ -347,7 +347,7 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  */
 #define AVIO_FLAG_READ  1                                      /**< read-only */
 #define AVIO_FLAG_WRITE 2                                      /**< write-only */
-#define AVIO_FLAG_READ_WRITE (AVIO_FLAG_READ|AVIO_FLAG_WRITE)  /**< read-write pseudo flag */
+#define AVIO_FLAG_READ_WRITE (AVIO_FLAG_READ|AVIO_FLAG_WRITE)/**< read-write pseudo flag */
 /**
  * @}
  */
@@ -355,13 +355,13 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
 /**
  * Use non-blocking mode.
  * If this flag is set, operations on the context will return
- * AVERROR(EAGAIN) if they can not be performed immediately.
+ * AVERROR(EAGAIN)if they can not be performed immediately.
  * If this flag is not set, operations on the context will never return
  * AVERROR(EAGAIN).
  * Note that this flag does not affect the opening/connecting of the
  * context. Connecting a protocol will always block if necessary (e.g. on
- * network protocols) but never hang (e.g. on busy devices).
- * Warning: non-blocking protocols is work-in-progress; this flag may be
+ * network protocols)but never hang (e.g. on busy devices).
+ * Warning:non-blocking protocols is work-in-progress; this flag may be
  * silently ignored.
  */
 #define AVIO_FLAG_NONBLOCK 8
@@ -484,7 +484,7 @@ int     avio_pause(AVIOContext *h, int pause);
  *
  * @param h IO context from which to call the seek function pointers
  * @param stream_index The stream index that the timestamp is relative to.
- *        If stream_index is (-1) the timestamp should be in AV_TIME_BASE
+ *        If stream_index is (-1)the timestamp should be in AV_TIME_BASE
  *        units from the beginning of the presentation.
  *        If a stream_index >= 0 is used and the protocol does not support
  *        seeking based on component streams, the call will fail.

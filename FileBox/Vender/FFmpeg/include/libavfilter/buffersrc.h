@@ -5,7 +5,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -93,7 +93,7 @@ unsigned av_buffersrc_get_nb_failed_requests(AVFilterContext *buffer_src);
  * This function will take ownership of buf, the user must not free it.
  * A NULL buf signals EOF -- i.e. no more frames will be sent to this filter.
  *
- * @deprecated use av_buffersrc_write_frame() or av_buffersrc_add_frame()
+ * @deprecated use av_buffersrc_write_frame()or av_buffersrc_add_frame()
  */
 attribute_deprecated
 int av_buffersrc_buffer(AVFilterContext *ctx, AVFilterBufferRef *buf);
@@ -109,7 +109,7 @@ int av_buffersrc_buffer(AVFilterContext *ctx, AVFilterBufferRef *buf);
  *
  * @return 0 on success, a negative AVERROR on error
  *
- * This function is equivalent to av_buffersrc_add_frame_flags() with the
+ * This function is equivalent to av_buffersrc_add_frame_flags()with the
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  */
 int av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
@@ -119,17 +119,17 @@ int av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
  *
  * @param ctx   an instance of the buffersrc filter
  * @param frame frame to be added. If the frame is reference counted, this
- * function will take ownership of the reference(s) and reset the frame.
+ * function will take ownership of the reference(s)and reset the frame.
  * Otherwise the frame data will be copied. If this function returns an error,
  * the input frame is not touched.
  *
  * @return 0 on success, a negative AVERROR on error.
  *
- * @note the difference between this function and av_buffersrc_write_frame() is
- * that av_buffersrc_write_frame() creates a new reference to the input frame,
+ * @note the difference between this function and av_buffersrc_write_frame()is
+ * that av_buffersrc_write_frame()creates a new reference to the input frame,
  * while this function takes ownership of the reference passed to it.
  *
- * This function is equivalent to av_buffersrc_add_frame_flags() without the
+ * This function is equivalent to av_buffersrc_add_frame_flags()without the
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  */
 int av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
@@ -138,7 +138,7 @@ int av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
  * Add a frame to the buffer source.
  *
  * By default, if the frame is reference-counted, this function will take
- * ownership of the reference(s) and reset the frame. This can be controled
+ * ownership of the reference(s)and reset the frame. This can be controled
  * using the flags.
  *
  * If this function returns an error, the input frame is not touched.

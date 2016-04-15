@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2010 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2010 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,7 +20,7 @@
 
 /**
  * @file
- * simple assert() macros that are a bit more flexible than ISO C assert().
+ * simple assert()macros that are a bit more flexible than ISO C assert().
  * @author Michael Niedermayer <michaelni@gmx.at>
  */
 
@@ -32,10 +32,10 @@
 #include "log.h"
 
 /**
- * assert() equivalent, that is always enabled.
+ * assert()equivalent, that is always enabled.
  */
-#define av_assert0(cond) do {                                           \
-    if (!(cond)) {                                                      \
+#define av_assert0(cond)do {                                           \
+    if (!(cond)){                                                      \
         av_log(NULL, AV_LOG_PANIC, "Assertion %s failed at %s:%d\n",    \
                AV_STRINGIFY(cond), __FILE__, __LINE__);                 \
         abort();                                                        \
@@ -44,23 +44,23 @@
 
 
 /**
- * assert() equivalent, that does not lie in speed critical code.
- * These asserts() thus can be enabled without fearing speedloss.
+ * assert()equivalent, that does not lie in speed critical code.
+ * These asserts()thus can be enabled without fearing speedloss.
  */
-#if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 0
-#define av_assert1(cond) av_assert0(cond)
+#if defined(ASSERT_LEVEL)&& ASSERT_LEVEL > 0
+#define av_assert1(cond)av_assert0(cond)
 #else
-#define av_assert1(cond) ((void)0)
+#define av_assert1(cond)((void)0)
 #endif
 
 
 /**
- * assert() equivalent, that does lie in speed critical code.
+ * assert()equivalent, that does lie in speed critical code.
  */
-#if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 1
-#define av_assert2(cond) av_assert0(cond)
+#if defined(ASSERT_LEVEL)&& ASSERT_LEVEL > 1
+#define av_assert2(cond)av_assert0(cond)
 #else
-#define av_assert2(cond) ((void)0)
+#define av_assert2(cond)((void)0)
 #endif
 
 #endif /* AVUTIL_AVASSERT_H */

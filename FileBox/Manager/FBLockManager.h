@@ -3,7 +3,7 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/9.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,16 +13,16 @@ typedef void(^VerifySuccessBlock)(BOOL success);
 
 extern NSString * const kNotificationVerifyHasChanged;
 
-@interface FBLockManager : NSObject
+@interface FBLockManager :NSObject
 
-@property (nonatomic, strong, readonly) NSDictionary *evLockKey;
-@property (nonatomic, assign, getter=evIsVerifySuccess, readonly) BOOL evVerifySuccess;
-@property (nonatomic, assign, getter=evNeedSetPassword, readonly) BOOL evNeedSetPassword;
-@property (nonatomic, assign, getter=evIsPasswordEnable) BOOL evPasswordEnable;
+@property (nonatomic, strong, readonly)NSDictionary *evLockKey;
+@property (nonatomic, assign, getter=evIsVerifySuccess, readonly)BOOL evVerifySuccess;
+@property (nonatomic, assign, getter=evNeedSetPassword, readonly)BOOL evNeedSetPassword;
+@property (nonatomic, assign, getter=evIsPasswordEnable)BOOL evPasswordEnable;
 
-@property (nonatomic, assign, readonly) BOOL evCanEvaluatePolicy;
+@property (nonatomic, assign, readonly)BOOL evCanEvaluatePolicy;
 
-@property (nonatomic, copy, readonly) NSString *evPassword;
+@property (nonatomic, copy, readonly)NSString *evPassword;
 
 + (FBLockManager*)sharedInstance;
 

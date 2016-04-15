@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2006 Smartjog S.A.S, Baptiste Coudurier <baptiste.coudurier@gmail.com>
- * Copyright (c) 2011-2012 Smartjog S.A.S, Clément Bœsch <clement.boesch@smartjog.com>
+ * Copyright (c)2006 Smartjog S.A.S, Baptiste Coudurier <baptiste.coudurier@gmail.com>
+ * Copyright (c)2011-2012 Smartjog S.A.S, Clément Bœsch <clement.boesch@smartjog.com>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -65,8 +65,8 @@ int av_timecode_adjust_ntsc_framenum2(int framenum, int fps);
  * @note Frame number adjustment is automatically done in case of drop timecode,
  *       you do NOT have to call av_timecode_adjust_ntsc_framenum2().
  * @note The frame number is relative to tc->start.
- * @note Color frame (CF), binary group flags (BGF) and biphase mark polarity
- *       correction (PC) bits are set to zero.
+ * @note Color frame (CF), binary group flags (BGF)and biphase mark polarity
+ *       correction (PC)bits are set to zero.
  */
 uint32_t av_timecode_get_smpte_from_framenum(const AVTimecode *tc, int framenum);
 

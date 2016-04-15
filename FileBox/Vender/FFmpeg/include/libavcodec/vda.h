@@ -1,14 +1,14 @@
 /*
  * VDA HW acceleration
  *
- * copyright (c) 2011 Sebastien Zwickert
+ * copyright (c)2011 Sebastien Zwickert
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -64,80 +64,80 @@ struct vda_context {
     /**
      * VDA decoder object.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by libavcodec.
+     * - encoding:unused
+     * - decoding:Set/Unset by libavcodec.
      */
     VDADecoder          decoder;
 
     /**
      * The Core Video pixel buffer that contains the current image data.
      *
-     * encoding: unused
-     * decoding: Set by libavcodec. Unset by user.
+     * encoding:unused
+     * decoding:Set by libavcodec. Unset by user.
      */
     CVPixelBufferRef    cv_buffer;
 
     /**
      * Use the hardware decoder in synchronous mode.
      *
-     * encoding: unused
-     * decoding: Set by user.
+     * encoding:unused
+     * decoding:Set by user.
      */
     int                 use_sync_decoding;
 
     /**
      * The frame width.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by user.
+     * - encoding:unused
+     * - decoding:Set/Unset by user.
      */
     int                 width;
 
     /**
      * The frame height.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by user.
+     * - encoding:unused
+     * - decoding:Set/Unset by user.
      */
     int                 height;
 
     /**
      * The frame format.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by user.
+     * - encoding:unused
+     * - decoding:Set/Unset by user.
      */
     int                 format;
 
     /**
      * The pixel format for output image buffers.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by user.
+     * - encoding:unused
+     * - decoding:Set/Unset by user.
      */
     OSType              cv_pix_fmt_type;
 
     /**
      * The current bitstream buffer.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by libavcodec.
+     * - encoding:unused
+     * - decoding:Set/Unset by libavcodec.
      */
     uint8_t             *priv_bitstream;
 
     /**
      * The current size of the bitstream.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by libavcodec.
+     * - encoding:unused
+     * - decoding:Set/Unset by libavcodec.
      */
     int                 priv_bitstream_size;
 
     /**
      * The reference size used for fast reallocation.
      *
-     * - encoding: unused
-     * - decoding: Set/Unset by libavcodec.
+     * - encoding:unused
+     * - decoding:Set/Unset by libavcodec.
      */
     int                 priv_allocated_size;
 
@@ -147,8 +147,8 @@ struct vda_context {
      * be released automatically, so you have to retain them if necessary.
      * Not setting this flag may cause memory leak.
      *
-     * encoding: unused
-     * decoding: Set by user.
+     * encoding:unused
+     * decoding:Set by user.
      */
     int                 use_ref_buffer;
 };

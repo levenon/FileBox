@@ -3,7 +3,7 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/9.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 
 #import "FBBaseTableViewController.h"
@@ -16,12 +16,12 @@
 
 @end
 
-@interface FBFolderSelectorVC : FBBaseTableViewController
+@interface FBFolderSelectorVC :FBBaseTableViewController
 
-@property(nonatomic, assign) id<FBFolderSelectorVCDelegate> evDelegate;
+@property(nonatomic, assign)id<FBFolderSelectorVCDelegate> evDelegate;
 
-@property(nonatomic, copy) NSString *evCurrentPath;
-@property(nonatomic, copy) NSString *evWillMoveFilePath;
+@property(nonatomic, copy)NSString *evCurrentPath;
+@property(nonatomic, copy)NSString *evWillMoveFilePath;
 
 @end
 

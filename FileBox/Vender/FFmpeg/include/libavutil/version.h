@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2003 Fabrice Bellard
+ * copyright (c)2003 Fabrice Bellard
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,9 +32,9 @@
  * @{
  */
 
-#define AV_VERSION_INT(a, b, c) (a<<16 | b<<8 | c)
-#define AV_VERSION_DOT(a, b, c) a ##.## b ##.## c
-#define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
+#define AV_VERSION_INT(a, b, c)(a<<16 | b<<8 | c)
+#define AV_VERSION_DOT(a, b, c)a ##.## b ##.## c
+#define AV_VERSION(a, b, c)AV_VERSION_DOT(a, b, c)
 
 /**
  * @}

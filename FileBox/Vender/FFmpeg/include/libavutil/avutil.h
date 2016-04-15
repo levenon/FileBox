@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -294,7 +294,7 @@ char av_get_picture_type_char(enum AVPictureType pict_type);
  */
 static inline void *av_x_if_null(const void *p, const void *x)
 {
-    return (void *)(intptr_t)(p ? p : x);
+    return (void *)(intptr_t)(p ? p :x);
 }
 
 /**
@@ -306,7 +306,7 @@ static inline void *av_x_if_null(const void *p, const void *x)
  * @return  length of the list, in elements, not counting the terminator
  */
 unsigned av_int_list_length_for_size(unsigned elsize,
-                                     const void *list, uint64_t term) av_pure;
+                                     const void *list, uint64_t term)av_pure;
 
 /**
  * Compute the length of an integer list.
@@ -315,7 +315,7 @@ unsigned av_int_list_length_for_size(unsigned elsize,
  * @param list  pointer to the list
  * @return  length of the list, in elements, not counting the terminator
  */
-#define av_int_list_length(list, term) \
+#define av_int_list_length(list, term)\
     av_int_list_length_for_size(sizeof(*(list)), list, term)
 
 /**

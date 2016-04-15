@@ -8,6 +8,6 @@
 
 #import <XLFBaseViewControllerKit/XLFBaseViewControllerKit.h>
 
-@interface FBBaseNavigationController : XLFBaseNavigationController
+@interface FBBaseNavigationController :XLFBaseNavigationController
 
 @end

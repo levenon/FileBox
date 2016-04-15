@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -380,7 +380,7 @@
     CODEC_ID_REALTEXT   = MKBETAG('R','T','X','T'),
     CODEC_ID_SUBVIEWER  = MKBETAG('S','u','b','V'),
 
-    /* other specific kind of codecs (generally used for attachments) */
+    /* other specific kind of codecs (generally used for attachments)*/
     CODEC_ID_FIRST_UNKNOWN = 0x18000,           ///< A dummy ID pointing at the start of various fake codecs.
     CODEC_ID_TTF = 0x18000,
     CODEC_ID_BINTEXT    = MKBETAG('B','T','X','T'),
@@ -388,12 +388,12 @@
     CODEC_ID_IDF        = MKBETAG( 0 ,'I','D','F'),
     CODEC_ID_OTF        = MKBETAG( 0 ,'O','T','F'),
 
-    CODEC_ID_PROBE = 0x19000, ///< codec_id is not known (like CODEC_ID_NONE) but lavf should attempt to identify it
+    CODEC_ID_PROBE = 0x19000, ///< codec_id is not known (like CODEC_ID_NONE)but lavf should attempt to identify it
 
     CODEC_ID_MPEG2TS = 0x20000, /**< _FAKE_ codec to indicate a raw MPEG-2 TS
-                                * stream (only used by libavformat) */
+                                * stream (only used by libavformat)*/
     CODEC_ID_MPEG4SYSTEMS = 0x20001, /**< _FAKE_ codec to indicate a MPEG-4 Systems
-                                * stream (only used by libavformat) */
+                                * stream (only used by libavformat)*/
     CODEC_ID_FFMETADATA = 0x21000,   ///< Dummy codec for streams containing only metadata information.
 
 #endif /* AVCODEC_OLD_CODEC_IDS_H */

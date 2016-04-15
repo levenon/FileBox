@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2012 Nicolas George
+ * Copyright (c)2012 Nicolas George
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -30,7 +30,7 @@
  * Define a structure with extra padding to a fixed size
  * This helps ensuring binary compatibility with future versions.
  */
-#define FF_PAD_STRUCTURE(size, ...) \
+#define FF_PAD_STRUCTURE(size, ...)\
     __VA_ARGS__ \
     char reserved_padding[size - sizeof(struct { __VA_ARGS__ })];
 
@@ -46,7 +46,7 @@
  * after the structure goes out of scope). This is almost as lightweight as
  * declaring a local "char buf[512]".
  *
- * The length of the string can go beyond the allocated size: the buffer is
+ * The length of the string can go beyond the allocated size:the buffer is
  * then truncated, but the functions still keep account of the actual total
  * length.
  *
@@ -54,17 +54,17 @@
  * total length of what would have been to the buffer if there had been
  * enough memory.
  *
- * Append operations do not need to be tested for failure: if a memory
+ * Append operations do not need to be tested for failure:if a memory
  * allocation fails, data stop being appended to the buffer, but the length
  * is still updated. This situation can be tested with
  * av_bprint_is_complete().
  *
  * The size_max field determines several possible behaviours:
  *
- * size_max = -1 (= UINT_MAX) or any large value will let the buffer be
+ * size_max = -1 (= UINT_MAX)or any large value will let the buffer be
  * reallocated as necessary, with an amortized linear cost.
  *
- * size_max = 0 prevents writing anything to the buffer: only the total
+ * size_max = 0 prevents writing anything to the buffer:only the total
  * length is computed. The write operations can then possibly be repeated in
  * a buffer with exactly the necessary size
  * (using size_init = size_max = len + 1).
@@ -85,7 +85,7 @@ typedef struct AVBPrint {
 } AVBPrint;
 
 /**
- * Convenience macros for special values for av_bprint_init() size_max
+ * Convenience macros for special values for av_bprint_init()size_max
  * parameter.
  */
 #define AV_BPRINT_SIZE_UNLIMITED  ((unsigned)-1)
@@ -121,7 +121,7 @@ void av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
 /**
  * Append a formatted string to a print buffer.
  */
-void av_bprintf(AVBPrint *buf, const char *fmt, ...) av_printf_format(2, 3);
+void av_bprintf(AVBPrint *buf, const char *fmt, ...)av_printf_format(2, 3);
 
 /**
  * Append a formatted string to a print buffer.

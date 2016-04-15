@@ -3,7 +3,7 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/9.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 
 #import "FBFolderSelectorVC.h"
@@ -12,15 +12,15 @@
 
 @interface FBFolderSelectorVC ()<FBFolderSelectorVCDelegate>
 
-@property (nonatomic, strong) NSMutableArray *evFolders;
+@property (nonatomic, strong)NSMutableArray *evFolders;
 
-@property (nonatomic, strong) UILabel *evlbPrompt;
+@property (nonatomic, strong)UILabel *evlbPrompt;
 
-@property (nonatomic, strong) UIBarButtonItem *evbbiSelectCurrentFolder;
+@property (nonatomic, strong)UIBarButtonItem *evbbiSelectCurrentFolder;
 
-@property (nonatomic, strong) UIBarButtonItem *evbbiAddFolder;
+@property (nonatomic, strong)UIBarButtonItem *evbbiAddFolder;
 
-@property (nonatomic, strong) UIAlertView *evatAlert;
+@property (nonatomic, strong)UIAlertView *evatAlert;
 
 @end
 
@@ -35,7 +35,7 @@
     [self setTitle:select([[self evCurrentPath] isEqualToString:SDDocumentDirectory], NSLocalizedString(@"13", @"Select Folder"), [[self evCurrentPath] lastPathComponent])];
 
     [self setEvbbiAddFolder:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didClickAdd:)]];
-    [self setEvbbiSelectCurrentFolder:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"14", @"Current Folder") style:UIBarButtonItemStyleDone target:self action:@selector(didClickSelectCurrentPath:)]];
+    [self setEvbbiSelectCurrentFolder:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"14", @"Current Folder")style:UIBarButtonItemStyleDone target:self action:@selector(didClickSelectCurrentPath:)]];
 
     [self efSetBarButtonItems:@[[self evbbiAddFolder],[self evbbiSelectCurrentFolder]] type:XLFNavButtonTypeRight];
 
@@ -56,7 +56,7 @@
 
     NSError *etError = nil;
 
-    if (![NSFileManager fileExistsAtPath:[self evCurrentPath]]) {
+    if (![NSFileManager fileExistsAtPath:[self evCurrentPath]]){
         [NSFileManager createDirectoryAtPath:[self evCurrentPath] withIntermediateDirectories:YES attributes:nil error:&etError];
 
         NSAssert(!etError, [etError description]);
@@ -64,7 +64,7 @@
 
     NSArray* etFolders = nil;
     
-    if ([[self evCurrentPath] isEqualToString:[[self evWillMoveFilePath] stringByDeletingLastPathComponent]]) {
+    if ([[self evCurrentPath] isEqualToString:[[self evWillMoveFilePath] stringByDeletingLastPathComponent]]){
 
         etFolders = [NSFileManager foldersOfDirectoryAtPath:[self evCurrentPath] notIncludeFolderName:[[self evWillMoveFilePath] lastPathComponent] error:&etError];
     }
@@ -77,14 +77,14 @@
 
     [[self evFolders] removeAllObjects];
 
-    for (NSString *etFileName in etFolders) {
+    for (NSString *etFileName in etFolders){
 
-        if (![FBLockManager efNeedLockForFilePath:[[self evCurrentPath] stringByAppendingPathComponent:etFileName]]) {
+        if (![FBLockManager efNeedLockForFilePath:[[self evCurrentPath] stringByAppendingPathComponent:etFileName]]){
             [[self evFolders] addObject:etFileName];
         }
     }
 
-    if ([[self evCurrentPath] isEqualToString:SDDocumentDirectory]) {
+    if ([[self evCurrentPath] isEqualToString:SDDocumentDirectory]){
         [[self evFolders] removeObject:@"Inbox"];
     }
 }
@@ -95,7 +95,7 @@
 
     [[self evlbPrompt] removeFromSuperview];
 
-    if (![[self evFolders] count]) {
+    if (![[self evFolders] count]){
 
         [[self tableView] addSubview:[self evlbPrompt]];
     }
@@ -105,12 +105,12 @@
 
     NSArray *childFolders = [NSFileManager foldersOfDirectoryAtPath:folderPath error:nil];
 
-    if (childFolders && [childFolders count]) {
+    if (childFolders && [childFolders count]){
 
         BOOL etIsDirectory = NO;
         BOOL etIsExist = [NSFileManager fileExistsAtPath:folderPath isDirectory:&etIsDirectory];
 
-        if (etIsExist && etIsDirectory) {
+        if (etIsExist && etIsDirectory){
 
             FBFolderSelectorVC *etFolderSelectorVC = [[FBFolderSelectorVC alloc] init];
             [etFolderSelectorVC setEvWillMoveFilePath:[self evWillMoveFilePath]];
@@ -130,9 +130,9 @@
     BOOL etIsDirectory = NO;
     BOOL etIsExist = [NSFileManager fileExistsAtPath:folderPath isDirectory:&etIsDirectory];
 
-    if (etIsExist && etIsDirectory) {
+    if (etIsExist && etIsDirectory){
 
-        if ([self evDelegate] && [[self evDelegate] respondsToSelector:@selector(epFolderSelectorVC:didSelectedFolderPath:)]) {
+        if ([self evDelegate] && [[self evDelegate] respondsToSelector:@selector(epFolderSelectorVC:didSelectedFolderPath:)]){
             [[self evDelegate] epFolderSelectorVC:self didSelectedFolderPath:folderPath];
             return YES;
         }
@@ -142,7 +142,7 @@
 
 - (void)efShowAddFolderAlert:(NSString*)title{
 
-    UIAlertView *etAlert = [[UIAlertView alloc] initWithTitle:title message:NSLocalizedString(@"4", @"Please input the correct folder name") delegate:self cancelButtonTitle:NSLocalizedString(@"1", @"Cancel") otherButtonTitles:NSLocalizedString(@"15", @"Add"), nil];
+    UIAlertView *etAlert = [[UIAlertView alloc] initWithTitle:title message:NSLocalizedString(@"4", @"Please input the correct folder name")delegate:self cancelButtonTitle:NSLocalizedString(@"1", @"Cancel")otherButtonTitles:NSLocalizedString(@"15", @"Add"), nil];
     [etAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [etAlert show];
 
@@ -153,7 +153,7 @@
 #pragma mark - accessory
 
 - (NSMutableArray*)evFolders{
-    if (!_evFolders) {
+    if (!_evFolders){
 
         _evFolders = [NSMutableArray array];
     }
@@ -161,7 +161,7 @@
 }
 
 - (UILabel*)evlbPrompt{
-    if (!_evlbPrompt) {
+    if (!_evlbPrompt){
 
         _evlbPrompt = [[UILabel alloc] initWithFrame:[[self tableView] bounds]];
         [_evlbPrompt setText:NSLocalizedString(@"10", @"No any file")];
@@ -173,7 +173,7 @@
 
 - (void)setEvatAlert:(UIAlertView *)evatAlert{
 
-    if (_evatAlert != evatAlert) {
+    if (_evatAlert != evatAlert){
 
         [_evatAlert dismissWithClickedButtonIndex:[_evatAlert cancelButtonIndex] animated:NO];
 
@@ -208,7 +208,7 @@
     [[etCell imageView] setImage:[UIImage imageNamed:@"folder"]];
 
     if ([etFolderPath isEqualToString:etWillMoveFolderPath] ||
-        ![[NSFileManager foldersOfDirectoryAtPath:etFolderPath notIncludeFolderName:etWillMoveFolderName error:nil] count]) {
+        ![[NSFileManager foldersOfDirectoryAtPath:etFolderPath notIncludeFolderName:etWillMoveFolderName error:nil] count]){
 
         [etCell setAccessoryType:UITableViewCellAccessoryNone];
     }
@@ -231,7 +231,7 @@
     NSString *etWillMoveFolderName = [etWillMoveFolderPath lastPathComponent];
 
     if (![etFolderPath isEqualToString:etWillMoveFolderPath] &&
-        ![[NSFileManager foldersOfDirectoryAtPath:etFolderPath notIncludeFolderName:etWillMoveFolderName error:nil] count]) {
+        ![[NSFileManager foldersOfDirectoryAtPath:etFolderPath notIncludeFolderName:etWillMoveFolderName error:nil] count]){
 
         [self efSelectFolder:etFolderPath];
     }
@@ -243,7 +243,7 @@
 
 - (void)epFolderSelectorVC:(FBFolderSelectorVC*)vc didSelectedFolderPath:(NSString*)folderPath;{
 
-    if ([self evDelegate] && [[self evDelegate] respondsToSelector:@selector(epFolderSelectorVC:didSelectedFolderPath:)]) {
+    if ([self evDelegate] && [[self evDelegate] respondsToSelector:@selector(epFolderSelectorVC:didSelectedFolderPath:)]){
 
         [[self evDelegate] epFolderSelectorVC:self didSelectedFolderPath:folderPath];
     }
@@ -265,16 +265,16 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
-    if (buttonIndex != [alertView cancelButtonIndex]) {
+    if (buttonIndex != [alertView cancelButtonIndex]){
 
         NSString *etFolderName = [[alertView textFieldAtIndex:0] text];
         NSString *etFolderPath = [[self evCurrentPath] stringByAppendingPathComponent:etFolderName];
 
-        if ([etFolderName length]) {
+        if ([etFolderName length]){
 
             BOOL etIsDirectory = NO;
-            if ((![NSFileManager fileExistsAtPath:etFolderPath isDirectory:&etIsDirectory] ||! etIsDirectory) &&
-                [NSFileManager createDirectoryAtPath:etFolderPath withIntermediateDirectories:YES attributes:nil error:nil]) {
+            if ((![NSFileManager fileExistsAtPath:etFolderPath isDirectory:&etIsDirectory] ||! etIsDirectory)&&
+                [NSFileManager createDirectoryAtPath:etFolderPath withIntermediateDirectories:YES attributes:nil error:nil]){
 
                 [[self evFolders] insertObject:etFolderName atIndex:0];
                 [[self tableView] insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];

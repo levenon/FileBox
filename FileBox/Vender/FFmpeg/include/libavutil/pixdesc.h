@@ -1,13 +1,13 @@
 /*
  * pixel format descriptor
- * Copyright (c) 2009 Michael Niedermayer <michaelni@gmx.at>
+ * Copyright (c)2009 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,7 +51,7 @@ typedef struct AVComponentDescriptor{
  * subsampling factors and number of components.
  *
  * @note This is separate of the colorspace (RGB, YCbCr, YPbPr, JPEG-style YUV
- *       and all the YUV variants) AVPixFmtDescriptor just stores how values
+ *       and all the YUV variants)AVPixFmtDescriptor just stores how values
  *       are stored not what these values represent.
  */
 typedef struct AVPixFmtDescriptor{
@@ -61,7 +61,7 @@ typedef struct AVPixFmtDescriptor{
     /**
      * Amount to shift the luma width right to find the chroma width.
      * For YV12 this is 1 for example.
-     * chroma_width = -((-luma_width) >> log2_chroma_w)
+     * chroma_width = -((-luma_width)>> log2_chroma_w)
      * The note above is needed to ensure rounding up.
      * This value only refers to the chroma components.
      */
@@ -70,7 +70,7 @@ typedef struct AVPixFmtDescriptor{
     /**
      * Amount to shift the luma height right to find the chroma height.
      * For YV12 this is 1 for example.
-     * chroma_height= -((-luma_height) >> log2_chroma_h)
+     * chroma_height= -((-luma_height)>> log2_chroma_h)
      * The note above is needed to ensure rounding up.
      * This value only refers to the chroma components.
      */
@@ -255,7 +255,7 @@ enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
  * Utility function to access log2_chroma_w log2_chroma_h from
  * the pixel format AVPixFmtDescriptor.
  *
- * See avcodec_get_chroma_sub_sample() for a function that asserts a
+ * See avcodec_get_chroma_sub_sample()for a function that asserts a
  * valid pixel format instead of returning an error code.
  * Its recommanded that you use avcodec_get_chroma_sub_sample unless
  * you do check the return code!
@@ -264,7 +264,7 @@ enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
  * @param[out] h_shift store log2_chroma_w
  * @param[out] v_shift store log2_chroma_h
  *
- * @return 0 on success, AVERROR(ENOSYS) on invalid or unknown pixel format
+ * @return 0 on success, AVERROR(ENOSYS)on invalid or unknown pixel format
  */
 int av_pix_fmt_get_chroma_sub_sample(enum AVPixelFormat pix_fmt,
                                      int *h_shift, int *v_shift);

@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -160,7 +160,7 @@ int av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, 
 /**
  * Copy image data from an image into a buffer.
  *
- * av_image_get_buffer_size() can be used to compute the required size
+ * av_image_get_buffer_size()can be used to compute the required size
  * for the buffer to fill.
  *
  * @param dst           a buffer into which picture data will be copied
@@ -172,7 +172,7 @@ int av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, 
  * @param height        the height of the source image in pixels
  * @param align         the assumed linesize alignment for dst
  * @return the number of bytes written to dst, or a negative value
- * (error code) on error
+ * (error code)on error
  */
 int av_image_copy_to_buffer(uint8_t *dst, int dst_size,
                             const uint8_t * const src_data[4], const int src_linesize[4],

@@ -1,0 +1,4 @@
+FileBox/Vender/FFmpeg/lib/*.a
+FileBox/Vender/FFmpeg/sourcecode/thin/*
+FileBox/Vender/FFmpeg/sourcecode/FFmpeg-iOS/*
+FileBox/Vender/FFmpeg/sourcecode/scratch/*

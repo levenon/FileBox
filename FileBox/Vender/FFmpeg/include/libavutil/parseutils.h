@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,14 +31,14 @@
 /**
  * Parse str and store the parsed ratio in q.
  *
- * Note that a ratio with infinite (1/0) or negative value is
+ * Note that a ratio with infinite (1/0)or negative value is
  * considered valid, so you should check on the returned value if you
  * want to exclude those values.
  *
  * The undefined value can be expressed using the "0:0" string.
  *
  * @param[in,out] q pointer to the AVRational which will contain the ratio
- * @param[in] str the string to parse: it has to be a string in the format
+ * @param[in] str the string to parse:it has to be a string in the format
  * num:den, a float number or an expression
  * @param[in] max the maximum allowed numerator and denominator
  * @param[in] log_offset log level offset which is applied to the log
@@ -49,7 +49,7 @@
 int av_parse_ratio(AVRational *q, const char *str, int max,
                    int log_offset, void *log_ctx);
 
-#define av_parse_ratio_quiet(rate, str, max) \
+#define av_parse_ratio_quiet(rate, str, max)\
     av_parse_ratio(rate, str, max, AV_LOG_MAX_OFFSET, NULL)
 
 /**
@@ -59,7 +59,7 @@ int av_parse_ratio(AVRational *q, const char *str, int max,
  * width value
  * @param[in,out] height_ptr pointer to the variable which will contain the detected
  * height value
- * @param[in] str the string to parse: it has to be a string in the format
+ * @param[in] str the string to parse:it has to be a string in the format
  * width x height or a valid video size abbreviation.
  * @return >= 0 on success, a negative error code otherwise
  */
@@ -70,7 +70,7 @@ int av_parse_video_size(int *width_ptr, int *height_ptr, const char *str);
  *
  * @param[in,out] rate pointer to the AVRational which will contain the detected
  * frame rate
- * @param[in] str the string to parse: it has to be a string in the format
+ * @param[in] str the string to parse:it has to be a string in the format
  * rate_num / rate_den, a float number or a valid video rate abbreviation
  * @return >= 0 on success, a negative error code otherwise
  */
@@ -80,7 +80,7 @@ int av_parse_video_rate(AVRational *rate, const char *str);
  * Put the RGBA values that correspond to color_string in rgba_color.
  *
  * @param color_string a string specifying a color. It can be the name of
- * a color (case insensitive match) or a [0x|#]RRGGBB[AA] sequence,
+ * a color (case insensitive match)or a [0x|#]RRGGBB[AA] sequence,
  * possibly followed by "@" and a string representing the alpha
  * component.
  * The alpha component may be a string composed by "0x" followed by an
@@ -152,18 +152,18 @@ int av_parse_time(int64_t *timeval, const char *timestr, int duration);
  * by the standard strptime().
  *
  * In particular it actually supports the parameters:
- * - %H: the hour as a decimal number, using a 24-hour clock, in the
+ * - %H:the hour as a decimal number, using a 24-hour clock, in the
  * range '00' through '23'
- * - %J: hours as a decimal number, in the range '0' through INT_MAX
- * - %M: the minute as a decimal number, using a 24-hour clock, in the
+ * - %J:hours as a decimal number, in the range '0' through INT_MAX
+ * - %M:the minute as a decimal number, using a 24-hour clock, in the
  * range '00' through '59'
- * - %S: the second as a decimal number, using a 24-hour clock, in the
+ * - %S:the second as a decimal number, using a 24-hour clock, in the
  * range '00' through '59'
- * - %Y: the year as a decimal number, using the Gregorian calendar
- * - %m: the month as a decimal number, in the range '1' through '12'
- * - %d: the day of the month as a decimal number, in the range '1'
+ * - %Y:the year as a decimal number, using the Gregorian calendar
+ * - %m:the month as a decimal number, in the range '1' through '12'
+ * - %d:the day of the month as a decimal number, in the range '1'
  * through '31'
- * - %%: a literal '%'
+ * - %%:a literal '%'
  *
  * @return a pointer to the first character not processed in this
  * function call, or NULL in case the function fails to match all of
@@ -174,7 +174,7 @@ char *av_small_strptime(const char *p, const char *fmt, struct tm *dt);
 /**
  * Attempt to find a specific tag in a URL.
  *
- * syntax: '?tag1=val1&tag2=val2...'. Little URL decoding is done.
+ * syntax:'?tag1=val1&tag2=val2...'. Little URL decoding is done.
  * Return 1 if found.
  */
 int av_find_info_tag(char *arg, int arg_size, const char *tag1, const char *info);

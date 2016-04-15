@@ -7,6 +7,6 @@
 //
 
 
-@interface FBBaseViewController : XLFBaseModalViewController
+@interface FBBaseViewController :XLFBaseModalViewController
 
 @end

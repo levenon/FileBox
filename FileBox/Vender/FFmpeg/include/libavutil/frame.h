@@ -5,7 +5,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -53,7 +53,7 @@ enum AVColorSpace{
 
 enum AVColorRange{
     AVCOL_RANGE_UNSPECIFIED = 0,
-    AVCOL_RANGE_MPEG        = 1, ///< the normal 219*2^(n-8) "MPEG" YUV ranges
+    AVCOL_RANGE_MPEG        = 1, ///< the normal 219*2^(n-8)"MPEG" YUV ranges
     AVCOL_RANGE_JPEG        = 2, ///< the normal     2^n-1   "JPEG" YUV ranges
     AVCOL_RANGE_NB             , ///< Not part of ABI
 };
@@ -106,7 +106,7 @@ typedef struct AVFrameSideData {
 } AVFrameSideData;
 
 /**
- * This structure describes decoded (raw) audio or video data.
+ * This structure describes decoded (raw)audio or video data.
  *
  * AVFrame must be allocated using av_frame_alloc(). Note that this only
  * allocates the AVFrame itself, the buffers for the data must be managed
@@ -115,7 +115,7 @@ typedef struct AVFrameSideData {
  *
  * AVFrame is typically allocated once and then reused multiple times to hold
  * different data (e.g. a single AVFrame to hold frames received from a
- * decoder). In such a case, av_frame_unref() will free any references held by
+ * decoder). In such a case, av_frame_unref()will free any references held by
  * the frame and reset it to its original clean state before it
  * is reused again.
  *
@@ -128,10 +128,10 @@ typedef struct AVFrameSideData {
  * There may be a single buffer for all the data, or one separate buffer for
  * each plane, or anything in between.
  *
- * sizeof(AVFrame) is not a part of the public ABI, so new fields may be added
+ * sizeof(AVFrame)is not a part of the public ABI, so new fields may be added
  * to the end with a minor bump.
  * Similarly fields that are marked as to be only accessed by
- * av_opt_ptr() can be reordered. This allows 2 forks to add fields
+ * av_opt_ptr()can be reordered. This allows 2 forks to add fields
  * without breaking compatibility with each other.
  */
 typedef struct AVFrame {
@@ -174,7 +174,7 @@ typedef struct AVFrame {
      * For packed audio, there is just one data pointer, and linesize[0]
      * contains the total size of the buffer for all channels.
      *
-     * Note: Both data and extended_data should always be set in a valid frame,
+     * Note:Both data and extended_data should always be set in a valid frame,
      * but for planar audio with more channels that can fit in data,
      * extended_data must be used in order to access all channels.
      */
@@ -186,7 +186,7 @@ typedef struct AVFrame {
     int width, height;
 
     /**
-     * number of audio samples (per channel) described by this frame
+     * number of audio samples (per channel)described by this frame
      */
     int nb_samples;
 
@@ -244,7 +244,7 @@ typedef struct AVFrame {
     int display_picture_number;
 
     /**
-     * quality (between 1 (good) and FF_LAMBDA_MAX (bad))
+     * quality (between 1 (good)and FF_LAMBDA_MAX (bad))
      */
     int quality;
 
@@ -279,7 +279,7 @@ typedef struct AVFrame {
      * example:
      * int mv_sample_log2= 4 - motion_subsample_log2;
      * int mb_width= (width+15)>>4;
-     * int mv_stride= (mb_width << mv_sample_log2) + 1;
+     * int mv_stride= (mb_width << mv_sample_log2)+ 1;
      * motion_val[direction][x + y*mv_stride][0->mv_x, 1->mv_y];
      * @endcode
      */
@@ -413,7 +413,7 @@ typedef struct AVFrame {
      * contains all the pointers. This array only contains the extra pointers,
      * which cannot fit into AVFrame.buf.
      *
-     * This array is always allocated using av_malloc() by whoever constructs
+     * This array is always allocated using av_malloc()by whoever constructs
      * the frame. It is freed in av_frame_unref().
      */
     AVBufferRef **extended_buf;
@@ -449,8 +449,8 @@ typedef struct AVFrame {
      * frame timestamp estimated using various heuristics, in stream time base
      * Code outside libavcodec should access this field using:
      * av_frame_get_best_effort_timestamp(frame)
-     * - encoding: unused
-     * - decoding: set by libavcodec, read by user.
+     * - encoding:unused
+     * - decoding:set by libavcodec, read by user.
      */
     int64_t best_effort_timestamp;
 
@@ -458,8 +458,8 @@ typedef struct AVFrame {
      * reordered pos from the last AVPacket that has been input into the decoder
      * Code outside libavcodec should access this field using:
      * av_frame_get_pkt_pos(frame)
-     * - encoding: unused
-     * - decoding: Read by user.
+     * - encoding:unused
+     * - decoding:Read by user.
      */
     int64_t pkt_pos;
 
@@ -468,8 +468,8 @@ typedef struct AVFrame {
      * AVStream->time_base units, 0 if unknown.
      * Code outside libavcodec should access this field using:
      * av_frame_get_pkt_duration(frame)
-     * - encoding: unused
-     * - decoding: Read by user.
+     * - encoding:unused
+     * - decoding:Read by user.
      */
     int64_t pkt_duration;
 
@@ -477,8 +477,8 @@ typedef struct AVFrame {
      * metadata.
      * Code outside libavcodec should access this field using:
      * av_frame_get_metadata(frame)
-     * - encoding: Set by user.
-     * - decoding: Set by libavcodec.
+     * - encoding:Set by user.
+     * - decoding:Set by libavcodec.
      */
     AVDictionary *metadata;
 
@@ -488,8 +488,8 @@ typedef struct AVFrame {
      * were errors during the decoding.
      * Code outside libavcodec should access this field using:
      * av_frame_get_decode_error_flags(frame)
-     * - encoding: unused
-     * - decoding: set by libavcodec, read by user.
+     * - encoding:unused
+     * - decoding:set by libavcodec, read by user.
      */
     int decode_error_flags;
 #define FF_DECODE_ERROR_INVALID_BITSTREAM   1
@@ -499,36 +499,36 @@ typedef struct AVFrame {
      * number of audio channels, only used for audio.
      * Code outside libavcodec should access this field using:
      * av_frame_get_channels(frame)
-     * - encoding: unused
-     * - decoding: Read by user.
+     * - encoding:unused
+     * - decoding:Read by user.
      */
     int channels;
 
     /**
      * size of the corresponding packet containing the compressed
-     * frame. It must be accessed using av_frame_get_pkt_size() and
+     * frame. It must be accessed using av_frame_get_pkt_size()and
      * av_frame_set_pkt_size().
      * It is set to a negative value if unknown.
-     * - encoding: unused
-     * - decoding: set by libavcodec, read by user.
+     * - encoding:unused
+     * - decoding:set by libavcodec, read by user.
      */
     int pkt_size;
 
     /**
      * YUV colorspace type.
-     * It must be accessed using av_frame_get_colorspace() and
+     * It must be accessed using av_frame_get_colorspace()and
      * av_frame_set_colorspace().
-     * - encoding: Set by user
-     * - decoding: Set by libavcodec
+     * - encoding:Set by user
+     * - decoding:Set by libavcodec
      */
     enum AVColorSpace colorspace;
 
     /**
      * MPEG vs JPEG YUV range.
-     * It must be accessed using av_frame_get_color_range() and
+     * It must be accessed using av_frame_get_color_range()and
      * av_frame_set_color_range().
-     * - encoding: Set by user
-     * - decoding: Set by libavcodec
+     * - encoding:Set by user
+     * - decoding:Set by libavcodec
      */
     enum AVColorRange color_range;
 
@@ -583,7 +583,7 @@ const char *av_get_colorspace_name(enum AVColorSpace val);
  * @return An AVFrame filled with default values or NULL on failure.
  *
  * @note this only allocates the AVFrame itself, not the data buffers. Those
- * must be allocated through other means, e.g. with av_frame_get_buffer() or
+ * must be allocated through other means, e.g. with av_frame_get_buffer()or
  * manually.
  */
 AVFrame *av_frame_alloc(void);
@@ -630,7 +630,7 @@ void av_frame_unref(AVFrame *frame);
 void av_frame_move_ref(AVFrame *dst, AVFrame *src);
 
 /**
- * Allocate new buffer(s) for audio or video data.
+ * Allocate new buffer(s)for audio or video data.
  *
  * The following fields must be set on frame before calling this function:
  * - format (pixel format for video, sample format for audio)
@@ -655,8 +655,8 @@ int av_frame_get_buffer(AVFrame *frame, int align);
  * only if each of the underlying buffers has only one reference, namely the one
  * stored in this frame). Return 0 otherwise.
  *
- * If 1 is returned the answer is valid until av_buffer_ref() is called on any
- * of the underlying AVBufferRefs (e.g. through av_frame_ref() or directly).
+ * If 1 is returned the answer is valid until av_buffer_ref()is called on any
+ * of the underlying AVBufferRefs (e.g. through av_frame_ref()or directly).
  *
  * @see av_frame_make_writable(), av_buffer_is_writable()
  */
@@ -692,7 +692,7 @@ int av_frame_copy(AVFrame *dst, const AVFrame *src);
  * Copy only "metadata" fields from src to dst.
  *
  * Metadata for the purpose of this function are those fields that do not affect
- * the data layout in the buffers.  E.g. pts, sample rate (for audio) or sample
+ * the data layout in the buffers.  E.g. pts, sample rate (for audio)or sample
  * aspect ratio (for video), but not width/height or channel layout.
  * Side data is also copied.
  */

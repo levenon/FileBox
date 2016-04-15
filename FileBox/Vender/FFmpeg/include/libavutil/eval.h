@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2002 Michael Niedermayer <michaelni@gmx.at>
+ * Copyright (c)2002 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -59,7 +59,7 @@ int av_expr_parse_and_eval(double *res, const char *s,
  *
  * @param expr a pointer where is put an AVExpr containing the parsed
  * value in case of successful parsing, or NULL otherwise.
- * The pointed to AVExpr must be freed with av_expr_free() by the user
+ * The pointed to AVExpr must be freed with av_expr_free()by the user
  * when it is not needed anymore.
  * @param s expression as a zero terminated string, for example "1+2^3+5*5+sin(2/3)"
  * @param const_names NULL terminated array of zero terminated strings of constant identifiers, for example {"PI", "E", 0}
@@ -80,7 +80,7 @@ int av_expr_parse(AVExpr **expr, const char *s,
 /**
  * Evaluate a previously parsed expression.
  *
- * @param const_values a zero terminated array of values for the identifiers from av_expr_parse() const_names
+ * @param const_values a zero terminated array of values for the identifiers from av_expr_parse()const_names
  * @param opaque a pointer which will be passed to all functions from funcs1 and funcs2
  * @return the value of the expression
  */

@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,8 +37,8 @@
  * [-1.0, 1.0]. Any values outside this range are beyond full volume level.
  *
  * @par
- * The data layout as used in av_samples_fill_arrays() and elsewhere in FFmpeg
- * (such as AVFrame in libavcodec) is as follows:
+ * The data layout as used in av_samples_fill_arrays()and elsewhere in FFmpeg
+ * (such as AVFrame in libavcodec)is as follows:
  *
  * For planar sample formats, each audio channel is in a separate data plane,
  * and linesize is the buffer size, in bytes, for a single plane. All data
@@ -121,7 +121,7 @@ char *av_get_sample_fmt_string(char *buf, int buf_size, enum AVSampleFormat samp
 
 #if FF_API_GET_BITS_PER_SAMPLE_FMT
 /**
- * @deprecated Use av_get_bytes_per_sample() instead.
+ * @deprecated Use av_get_bytes_per_sample()instead.
  */
 attribute_deprecated
 int av_get_bits_per_sample_fmt(enum AVSampleFormat sample_fmt);
@@ -170,7 +170,7 @@ int av_samples_get_buffer_size(int *linesize, int nb_channels, int nb_samples,
  * buffer for all channels for packed layout.
  *
  * The buffer in buf must be big enough to contain all the samples
- * (use av_samples_get_buffer_size() to compute its minimum size),
+ * (use av_samples_get_buffer_size()to compute its minimum size),
  * otherwise the audio_data pointers will point to invalid data.
  *
  * @see enum AVSampleFormat

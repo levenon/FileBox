@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2011-2013 Michael Niedermayer (michaelni@gmx.at)
+ * Copyright (C)2011-2013 Michael Niedermayer (michaelni@gmx.at)
  *
  * This file is part of libswresample
  *
  * libswresample is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * libswresample is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,11 +31,11 @@
  * @defgroup lswr Libswresample
  * @{
  *
- * Libswresample (lswr) is a library that handles audio resampling, sample
+ * Libswresample (lswr)is a library that handles audio resampling, sample
  * format conversion and mixing.
  *
  * Interaction with lswr is done through SwrContext, which is
- * allocated with swr_alloc() or swr_alloc_set_opts(). It is opaque, so all parameters
+ * allocated with swr_alloc()or swr_alloc_set_opts(). It is opaque, so all parameters
  * must be set with the @ref avoptions API.
  *
  * For example the following code will setup conversion from planar float sample
@@ -61,22 +61,22 @@
  * Note that the samples may get buffered in swr if you provide insufficient
  * output space or if sample rate conversion is done, which requires "future"
  * samples. Samples that do not require future input can be retrieved at any
- * time by using swr_convert() (in_count can be set to 0).
+ * time by using swr_convert()(in_count can be set to 0).
  * At the end of conversion the resampling buffer can be flushed by calling
- * swr_convert() with NULL in and 0 in_count.
+ * swr_convert()with NULL in and 0 in_count.
  *
  * The delay between input and output, can at any time be found by using
  * swr_get_delay().
  *
  * The following code demonstrates the conversion loop assuming the parameters
- * from above and caller-defined functions get_input() and handle_output():
+ * from above and caller-defined functions get_input()and handle_output():
  * @code
  * uint8_t **input;
  * int in_samples;
  *
- * while (get_input(&input, &in_samples)) {
+ * while (get_input(&input, &in_samples)){
  *     uint8_t *output;
- *     int out_samples = av_rescale_rnd(swr_get_delay(swr, 48000) +
+ *     int out_samples = av_rescale_rnd(swr_get_delay(swr, 48000)+
  *                                      in_samples, 44100, 48000, AV_ROUND_UP);
  *     av_samples_alloc(&output, NULL, 2, out_samples,
  *                      AV_SAMPLE_FMT_S16, 0);
@@ -151,7 +151,7 @@ const AVClass *swr_get_class(void);
  * Allocate SwrContext.
  *
  * If you use this function you will need to set the parameters (manually or
- * with swr_alloc_set_opts()) before calling swr_init().
+ * with swr_alloc_set_opts())before calling swr_init().
  *
  * @see swr_alloc_set_opts(), swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
@@ -176,7 +176,7 @@ int swr_is_initialized(struct SwrContext *s);
  * Allocate SwrContext if needed and set/reset common parameters.
  *
  * This function does not require s to be allocated with swr_alloc(). On the
- * other hand, swr_alloc() can use swr_alloc_set_opts() to set the parameters
+ * other hand, swr_alloc()can use swr_alloc_set_opts()to set the parameters
  * on the allocated context.
  *
  * @param s               Swr context, can be NULL
@@ -225,7 +225,7 @@ int swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
 
 /**
  * Convert the next timestamp from input to output
- * timestamps are in 1/(in_sample_rate * out_sample_rate) units.
+ * timestamps are in 1/(in_sample_rate * out_sample_rate)units.
  *
  * @note There are 2 slightly differently behaving modes.
  *       First is when automatic timestamp compensation is not used, (min_compensation >= FLT_MAX)

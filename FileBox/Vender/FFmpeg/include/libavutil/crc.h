@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -74,10 +74,10 @@ const AVCRC *av_crc_get_table(AVCRCId crc_id);
  * @param crc CRC of previous blocks if any or initial value for CRC
  * @return CRC updated with the data from the given block
  *
- * @see av_crc_init() "le" parameter
+ * @see av_crc_init()"le" parameter
  */
 uint32_t av_crc(const AVCRC *ctx, uint32_t crc,
-                const uint8_t *buffer, size_t length) av_pure;
+                const uint8_t *buffer, size_t length)av_pure;
 
 /**
  * @}

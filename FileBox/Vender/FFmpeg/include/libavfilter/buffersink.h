@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -95,7 +95,7 @@ int av_buffersink_read_samples(AVFilterContext *ctx, AVFilterBufferRef **buf,
  *
  * @param ctx    pointer to a buffersink or abuffersink filter context.
  * @param frame  pointer to an allocated frame that will be filled with data.
- *               The data must be freed using av_frame_unref() / av_frame_free()
+ *               The data must be freed using av_frame_unref()/ av_frame_free()
  * @param flags  a combination of AV_BUFFERSINK_FLAG_* flags
  *
  * @return  >= 0 in for success, a negative AVERROR code for failure.
@@ -103,14 +103,14 @@ int av_buffersink_read_samples(AVFilterContext *ctx, AVFilterBufferRef **buf,
 int av_buffersink_get_frame_flags(AVFilterContext *ctx, AVFrame *frame, int flags);
 
 /**
- * Tell av_buffersink_get_buffer_ref() to read video/samples buffer
+ * Tell av_buffersink_get_buffer_ref()to read video/samples buffer
  * reference, but not remove it from the buffer. This is useful if you
  * need only to read a video/samples buffer, without to fetch it.
  */
 #define AV_BUFFERSINK_FLAG_PEEK 1
 
 /**
- * Tell av_buffersink_get_buffer_ref() not to request a frame from its input.
+ * Tell av_buffersink_get_buffer_ref()not to request a frame from its input.
  * If a frame is already buffered, it is read (and removed from the buffer),
  * but if no frame is present, return AVERROR(EAGAIN).
  */
@@ -152,7 +152,7 @@ AVABufferSinkParams *av_abuffersink_params_alloc(void);
  * Set the frame size for an audio buffer sink.
  *
  * All calls to av_buffersink_get_buffer_ref will return a buffer with
- * exactly the specified number of samples, or AVERROR(EAGAIN) if there is
+ * exactly the specified number of samples, or AVERROR(EAGAIN)if there is
  * not enough. The last buffer at EOF will be padded with 0.
  */
 void av_buffersink_set_frame_size(AVFilterContext *ctx, unsigned frame_size);
@@ -167,11 +167,11 @@ AVRational av_buffersink_get_frame_rate(AVFilterContext *ctx);
  *
  * @param ctx pointer to a context of a buffersink or abuffersink AVFilter.
  * @param frame pointer to an allocated frame that will be filled with data.
- *              The data must be freed using av_frame_unref() / av_frame_free()
+ *              The data must be freed using av_frame_unref()/ av_frame_free()
  *
  * @return
  *         - >= 0 if a frame was successfully returned.
- *         - AVERROR(EAGAIN) if no frames are available at this point; more
+ *         - AVERROR(EAGAIN)if no frames are available at this point; more
  *           input frames must be added to the filtergraph to get more output.
  *         - AVERROR_EOF if there will be no more output frames on this sink.
  *         - A different negative AVERROR code in other failure cases.
@@ -185,7 +185,7 @@ int av_buffersink_get_frame(AVFilterContext *ctx, AVFrame *frame);
  *
  * @param ctx pointer to a context of the abuffersink AVFilter.
  * @param frame pointer to an allocated frame that will be filled with data.
- *              The data must be freed using av_frame_unref() / av_frame_free()
+ *              The data must be freed using av_frame_unref()/ av_frame_free()
  *              frame will contain exactly nb_samples audio samples, except at
  *              the end of stream, when it can contain less than nb_samples.
  *

@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -33,16 +33,16 @@
  * @{
  */
 
-#define AV_STRINGIFY(s)         AV_TOSTRING(s)
-#define AV_TOSTRING(s) #s
+#define AV_STRINGIFY(s)       AV_TOSTRING(s)
+#define AV_TOSTRING(s)#s
 
-#define AV_GLUE(a, b) a ## b
-#define AV_JOIN(a, b) AV_GLUE(a, b)
+#define AV_GLUE(a, b)a ## b
+#define AV_JOIN(a, b)AV_GLUE(a, b)
 
 /**
  * @}
  */
 
-#define AV_PRAGMA(s) _Pragma(#s)
+#define AV_PRAGMA(s)_Pragma(#s)
 
 #endif /* AVUTIL_MACROS_H */

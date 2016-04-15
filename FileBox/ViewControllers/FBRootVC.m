@@ -3,7 +3,7 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/4.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 #import <QuickLook/QuickLook.h>
 #import <LocalAuthentication/LocalAuthentication.h>
@@ -12,7 +12,7 @@
 #import "FBFolderPreviewVC.h"
 #import "FBFolderSelectorVC.h"
 #import "FBSystemSettingsVC.h"
-#import "KXMovieViewController.h"
+#import "FBMovieViewController.h"
 
 #import "FBFileManager.h"
 #import "FBLockManager.h"
@@ -21,10 +21,11 @@
 
 static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnningAlertForVerifyFailed";
 
-@interface FBRootVC ()<QLPreviewControllerDataSource, QLPreviewControllerDelegate, UIAlertViewDelegate, FBFolderSelectorVCDelegate>
+@interface FBRootVC ()<UITableViewDelegate, UITableViewDataSource, QLPreviewControllerDataSource, QLPreviewControllerDelegate, UIAlertViewDelegate, FBFolderSelectorVCDelegate>
 
 @property (nonatomic, strong) NSMutableArray *evFiles;
 
+@property (nonatomic, strong) UITableView *evtbvContainer;
 @property (nonatomic, strong) UILabel *evlbPrompt;
 @property (nonatomic, strong) UIAlertView *evaltvPasswordInput;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *evbbiVerify;
@@ -43,11 +44,11 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)loadView{
     [super loadView];
-
-    [[self tableView] setTableFooterView:[UIView emptyFrameView]];
-    [[self tableView] setRowHeight:60];
-    [self setEvbbiSetting:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cog"] style:UIBarButtonItemStylePlain target:self action:@selector(didClickSetting:)]];
-    [[self evbbiVerify] setPossibleTitles:[NSSet setWithObjects:NSLocalizedString(@"32", @"Unlock"), NSLocalizedString(@"17", @"Set Password"), nil]];
+    
+    [[self view] addSubview:[self evtbvContainer]];
+    [[self view] addSubview:[self evlbPrompt]];
+    
+    [self _efInstallConstraints];
 }
 
 - (void)viewDidLoad {
@@ -57,7 +58,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     [self efRegisterNotification];
     
 #if !DEBUG
-    [self performSelector:@selector(_efVerifyPassword) withObject:nil afterDelay:0.5f];
+    [self performSelector:@selector(_efVerifyPassword)withObject:nil afterDelay:0.5f];
 #endif
 }
 
@@ -65,7 +66,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     [super viewWillAppear:animated];
     
 #if !DEBUG
-    if ([[FBLockManager sharedInstance] evIsVerifySuccess]) {
+    if ([[FBLockManager sharedInstance] evIsVerifySuccess]){
         [self _efLoadFiles];
     }
 #else
@@ -74,22 +75,101 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     [self _efReloadData];
 }
 
+#pragma mark - accessory
+
 - (UIBarButtonItem *)evbbiDefaultBack{
     return nil;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSMutableArray*)evFiles{
+    if (!_evFiles){
+        
+        _evFiles = [NSMutableArray array];
+    }
+    return _evFiles;
 }
 
+- (UITableView *)evtbvContainer{
+    
+    if (!_evtbvContainer) {
+        
+        _evtbvContainer = [UITableView emptyFrameView];
+        [_evtbvContainer setRowHeight:60];
+        [_evtbvContainer setDelegate:self];
+        [_evtbvContainer setDataSource:self];
+        [_evtbvContainer setTableFooterView:[UIView emptyFrameView]];
+    }
+    return _evtbvContainer;
+}
+
+- (UILabel*)evlbPrompt{
+    if (!_evlbPrompt){
+        
+        _evlbPrompt = [UILabel emptyFrameView];
+        [_evlbPrompt setText:NSLocalizedString(@"10", @"No any file")];
+        [_evlbPrompt setTextAlignment:NSTextAlignmentCenter];
+        [_evlbPrompt setTextColor:[UIColor lightGrayColor]];
+    }
+    return _evlbPrompt;
+}
+
+- (UIBarButtonItem *)evbbiSetting{
+    
+    if (!_evbbiSetting) {
+        
+        _evbbiSetting = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cog"] style:UIBarButtonItemStylePlain target:self action:@selector(didClickSetting:)];
+    }
+    return _evbbiSetting;
+}
+
+- (UIBarButtonItem *)evbbiVerify{
+    
+    if (!_evbbiVerify) {
+        _evbbiVerify = [[UIBarButtonItem alloc] initWithTitle:@"Unlock" style:UIBarButtonItemStyleDone target:self action:@selector(didClickVerify:)];
+        
+        [_evbbiVerify setPossibleTitles:[NSSet setWithObjects:NSLocalizedString(@"32", @"Unlock"), NSLocalizedString(@"17", @"Set Password"), nil]];
+    }
+    return _evbbiVerify;
+}
+
+- (UIBarButtonItem *)evbbiAdd{
+    
+    if (!_evbbiAdd) {
+        
+        _evbbiAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didClickAdd:)];
+    }
+    return _evbbiAdd;
+}
+
+- (void)setEvaltvPasswordInput:(UIAlertView *)evaltvPasswordInput{
+    
+    if (_evaltvPasswordInput != evaltvPasswordInput){
+        
+        if (_evaltvPasswordInput){
+            
+            [_evaltvPasswordInput dismissWithClickedButtonIndex:0 animated:NO];
+        }
+        
+        _evaltvPasswordInput = evaltvPasswordInput;
+    }
+}
+
+- (void)setEvatAlert:(UIAlertView *)evatAlert{
+    
+    if (_evatAlert != evatAlert){
+        
+        [_evatAlert dismissWithClickedButtonIndex:[_evatAlert cancelButtonIndex] animated:NO];
+        
+        _evatAlert = evatAlert;
+    }
+}
 
 #pragma mark - register notification
 
 - (void)efRegisterNotification{
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationVerifyHasChanged:) name:kNotificationVerifyHasChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationVerifyHasChanged:)name:kNotificationVerifyHasChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidEnterBackground:)name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void)efDeregisterNotification{
@@ -97,13 +177,28 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - normal
+#pragma mark - private
+
+- (void)_efInstallConstraints{
+    
+    @weakify(self);
+    
+    [[self evtbvContainer] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsZero);
+    }];
+    
+    [[self evlbPrompt] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsZero);
+    }];
+}
 
 - (void)_efLoadFiles;{
 
     NSError *etError = nil;
 
-    if (![NSFileManager fileExistsAtPath:SDDocumentDirectory]) {
+    if (![NSFileManager fileExistsAtPath:SDDocumentDirectory]){
         [NSFileManager createDirectoryAtPath:SDDocumentDirectory withIntermediateDirectories:YES attributes:nil error:&etError];
 
         NSAssert(!etError, [etError description]);
@@ -120,7 +215,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)_efVerifyPassword;{
 
-    [FBLockManager efVerifyWithResultBlock:^(BOOL success) {
+    [FBLockManager efVerifyWithResultBlock:^(BOOL success){
 
         [self _efUpdateVerify:success];
     }];
@@ -137,7 +232,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)_efShowEidtFolderAlert:(NSString*)title message:(NSString*)message placeholder:(NSString*)placeholder userInfo:(id)userInfo{
 
-    UIAlertView *etAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"1", @"Cancel") otherButtonTitles:NSLocalizedString(@"2", @"Sure"), nil];
+    UIAlertView *etAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"1", @"Cancel")otherButtonTitles:NSLocalizedString(@"2", @"Sure"), nil];
     [etAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [etAlert setEvUserInfo:userInfo];
     [[etAlert textFieldAtIndex:0] setText:placeholder];
@@ -149,12 +244,12 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)_efReloadData{
     
-    [[self tableView] reloadData];
+    [[self evtbvContainer] reloadData];
     [self _efUpdatePrompInfo];
 
     if (![[FBLockManager sharedInstance] evCanEvaluatePolicy]){
 
-        if ([[FBLockManager sharedInstance] evNeedSetPassword]) {
+        if ([[FBLockManager sharedInstance] evNeedSetPassword]){
 
             [[self evbbiVerify] setTitle:NSLocalizedString(@"17", @"Set Password")];
         }
@@ -164,7 +259,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
         }
     }
 
-    if ([[FBLockManager sharedInstance] evIsVerifySuccess] || (![[FBLockManager sharedInstance] evCanEvaluatePolicy] && ![[FBLockManager sharedInstance] evIsPasswordEnable])) {
+    if ([[FBLockManager sharedInstance] evIsVerifySuccess] || (![[FBLockManager sharedInstance] evCanEvaluatePolicy] && ![[FBLockManager sharedInstance] evIsPasswordEnable])){
 
         [self efSetBarButtonItem:[self evbbiSetting] type:XLFNavButtonTypeLeft];
     }
@@ -176,12 +271,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)_efUpdatePrompInfo;{
 
-    [[self evlbPrompt] removeFromSuperview];
-
-    if (![[self evFiles] count]) {
-
-        [[self tableView] addSubview:[self evlbPrompt]];
-    }
+    [[self evlbPrompt] setHidden:[[self evFiles] count]];
 }
 
 - (void)_efUpdateVerify:(BOOL)success;{
@@ -196,12 +286,12 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
     BOOL etIsDirectory = NO;
 
-    if (![NSFileManager fileExistsAtPath:SDDocumentFile(folderName) isDirectory:&etIsDirectory] || !etIsDirectory) {
+    if (![NSFileManager fileExistsAtPath:SDDocumentFile(folderName)isDirectory:&etIsDirectory] || !etIsDirectory){
 
-        if ([NSFileManager createDirectoryAtPath:SDDocumentFile(folderName) withIntermediateDirectories:YES attributes:nil error:nil]){
+        if ([NSFileManager createDirectoryAtPath:SDDocumentFile(folderName)withIntermediateDirectories:YES attributes:nil error:nil]){
 
             [[self evFiles] insertObject:folderName atIndex:0];
-            [[self tableView] insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [[self evtbvContainer] insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self _efUpdatePrompInfo];
 
         }
@@ -209,14 +299,14 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
             [[self evatAlert] dismissWithClickedButtonIndex:[[self evatAlert] cancelButtonIndex] animated:NO];
 
-            [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder") message:NSLocalizedString(@"4", @"Please input the correct folder name") placeholder:folderName userInfo:nil];
+            [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder")message:NSLocalizedString(@"4", @"Please input the correct folder name")placeholder:folderName userInfo:nil];
         }
     }
     else{
 
         [[self evatAlert] dismissWithClickedButtonIndex:[[self evatAlert] cancelButtonIndex] animated:NO];
 
-        [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder") message:NSLocalizedString(@"7", @"folder already exists") placeholder:folderName userInfo:nil];
+        [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder")message:NSLocalizedString(@"7", @"folder already exists")placeholder:folderName userInfo:nil];
     }
 }
 
@@ -226,64 +316,20 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     NSString *etSourceFileName = [[self evFiles] objectAtIndex:[indexPath row]];
     NSString *etResultFileName = [fileName mutableCopy];
 
-    if (![NSFileManager fileExistsAtPath:SDDocumentFile(etResultFileName) isDirectory:&etIsDirectory] || etIsDirectory) {
+    if (![NSFileManager fileExistsAtPath:SDDocumentFile(etResultFileName)isDirectory:&etIsDirectory] || etIsDirectory){
 
-        if ([NSFileManager moveItemAtPath:SDDocumentFile(etSourceFileName) toPath:SDDocumentFile(etResultFileName) error:nil]) {
+        if ([NSFileManager moveItemAtPath:SDDocumentFile(etSourceFileName)toPath:SDDocumentFile(etResultFileName)error:nil]){
 
-            [NSFileManager removeItemAtPath:SDDocumentFile(etSourceFileName) error:nil];
+            [NSFileManager removeItemAtPath:SDDocumentFile(etSourceFileName)error:nil];
             [[self evFiles] replaceObjectAtIndex:[[self evFiles] indexOfObject:etSourceFileName] withObject:etResultFileName];
-            [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [[self evtbvContainer] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
     else{
 
         [[self evatAlert] dismissWithClickedButtonIndex:[[self evatAlert] cancelButtonIndex] animated:NO];
 
-        [self _efShowEidtFolderAlert:NSLocalizedString(@"9", @"Rename") message:NSLocalizedString(@"6", @"file or folder already exists") placeholder:fileName userInfo:indexPath];
-    }
-}
-
-#pragma mark - accessory
-
-- (NSMutableArray*)evFiles{
-    if (!_evFiles) {
-
-        _evFiles = [NSMutableArray array];
-    }
-    return _evFiles;
-}
-
-- (UILabel*)evlbPrompt{
-    if (!_evlbPrompt) {
-
-        _evlbPrompt = [[UILabel alloc] initWithFrame:[[self tableView] bounds]];
-        [_evlbPrompt setText:NSLocalizedString(@"10", @"No any file")];
-        [_evlbPrompt setTextAlignment:NSTextAlignmentCenter];
-        [_evlbPrompt setTextColor:[UIColor lightGrayColor]];
-    }
-    return _evlbPrompt;
-}
-
-- (void)setEvaltvPasswordInput:(UIAlertView *)evaltvPasswordInput{
-
-    if (_evaltvPasswordInput != evaltvPasswordInput) {
-
-        if (_evaltvPasswordInput) {
-
-            [_evaltvPasswordInput dismissWithClickedButtonIndex:0 animated:NO];
-        }
-
-        _evaltvPasswordInput = evaltvPasswordInput;
-    }
-}
-
-- (void)setEvatAlert:(UIAlertView *)evatAlert{
-
-    if (_evatAlert != evatAlert) {
-
-        [_evatAlert dismissWithClickedButtonIndex:[_evatAlert cancelButtonIndex] animated:NO];
-
-        _evatAlert = evatAlert;
+        [self _efShowEidtFolderAlert:NSLocalizedString(@"9", @"Rename")message:NSLocalizedString(@"6", @"file or folder already exists")placeholder:fileName userInfo:indexPath];
     }
 }
 
@@ -320,31 +366,31 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    __weak typeof(self) etWeakSelf = self;
+    __weak typeof(self)etWeakSelf = self;
 
 //    BOOL needLock = [FBLockManager efNeedLockForFilePath:etFilePath];
 //
-//    UITableViewRowAction *etLockRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:select(needLock, @"解锁", @"加锁") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+//    UITableViewRowAction *etLockRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:select(needLock, @"解锁", @"加锁")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
 //
-//        if (needLock) {
+//        if (needLock){
 //            [FBLockManager efRemoveLockForFilePath:etFilePath];
 //        }
 //        else{
 //            [FBLockManager efSetNeedLock:!needLock forFilePath:etFilePath];
 //        }
-//        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [evtbvContainer reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 //    }];
 
-    UITableViewRowAction *etRenameRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"9", @"Rename") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    UITableViewRowAction *etRenameRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"9", @"Rename")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
 
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
 
-            [etWeakSelf _efShowEidtFolderAlert:NSLocalizedString(@"9", @"Rename") message:NSLocalizedString(@"30", @"Please input the folder name") placeholder:[[self evFiles] objectAtIndex:[indexPath row]] userInfo:indexPath];
+            [etWeakSelf _efShowEidtFolderAlert:NSLocalizedString(@"9", @"Rename")message:NSLocalizedString(@"30", @"Please input the folder name")placeholder:[[self evFiles] objectAtIndex:[indexPath row]] userInfo:indexPath];
         }];
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }];
 
-    UITableViewRowAction *etMoveRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"11", @"Move") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    UITableViewRowAction *etMoveRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"11", @"Move")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
 
         NSString *etFilePath = SDDocumentFile([[etWeakSelf evFiles] objectAtIndex:[indexPath row]]);
 
@@ -361,7 +407,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
         }];
     }];
 
-    UITableViewRowAction *etDeleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"12", @"Delete") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    UITableViewRowAction *etDeleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"12", @"Delete")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
 
         NSString *etFilePath = SDDocumentFile([[etWeakSelf evFiles] objectAtIndex:[indexPath row]]);
 
@@ -371,10 +417,10 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
             BOOL state = [FBFileManager efRemoveItemAtPath:etFilePath error:&etError];
             NSAssert(!etError, [etError description]);
 
-            if (state) {
+            if (state){
 
                 [[etWeakSelf evFiles] removeObjectAtIndex:[indexPath row]];
-                [[etWeakSelf tableView] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [[etWeakSelf evtbvContainer] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
                 [self _efUpdatePrompInfo];
             }
@@ -394,30 +440,30 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     BOOL isDirectory = NO;
     BOOL isExist = [NSFileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
 
-    if (isExist && isDirectory) {
+    if (isExist && isDirectory){
 
         FBFolderPreviewVC *folderVC = [[FBFolderPreviewVC alloc] init];
         [folderVC setEvPath:filePath];
 
         [[self navigationController] pushViewController:folderVC animated:YES];
     }
-    else if ([FBFileManager efFileTypeWithFilePath:filePath] == FBFileTypeVideo) {
+    else if ([FBFileManager efFileTypeWithFilePath:filePath] == FBFileTypeVideo){
        
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        FBMovieParameter *parameter = [[FBMovieParameter alloc] init];
         
         // increase buffering for .wmv, it solves problem with delaying audio frames
-        if ([[filePath pathExtension] isEqualToString:@"wmv"]) {
-            parameters[KXMovieParameterMinBufferedDuration] = @(5.0);
+        if ([[filePath pathExtension] isEqualToString:@"wmv"]){
+            [parameter setMinBufferedDuration:5.0];
         }
         
         // disable deinterlacing for iPhone, because it's complex operation can cause stuttering
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            parameters[KXMovieParameterDisableDeinterlacing] = @(YES);
+        if (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPhone){
+            [parameter setDeinterlacingEnable:NO];
         }
         
-        KXMovieViewController *etMovieVC = [KXMovieViewController movieViewControllerWithContentPath:filePath parameters:nil];
+        FBMovieViewController *etMovieVC = [FBMovieViewController movieViewControllerWithContentPath:filePath parameter:parameter];
         
-        [self presentViewController:etMovieVC animated:YES completion:nil];
+        [[self navigationController] pushViewController:etMovieVC animated:YES];
     }
     else {
     
@@ -452,10 +498,10 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
     NSInteger etIndex = [[self evFiles] indexOfObject:etFileName];
 
     NSError *etError = nil;
-    if ([FBFileManager efMoveItemAtPath:[vc evWillMoveFilePath] toPath:[folderPath stringByAppendingPathComponent:etFileName] error:&etError]) {
+    if ([FBFileManager efMoveItemAtPath:[vc evWillMoveFilePath] toPath:[folderPath stringByAppendingPathComponent:etFileName] error:&etError]){
 
         [[self evFiles] removeObjectAtIndex:etIndex];
-        [[self tableView] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:etIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [[self evtbvContainer] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:etIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self _efUpdatePrompInfo];
 
         [[vc navigationController] dismissViewControllerAnimated:YES completion:nil];
@@ -470,12 +516,12 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
-    if (buttonIndex != [alertView cancelButtonIndex]) {
+    if (buttonIndex != [alertView cancelButtonIndex]){
 
         NSString *etFileName = [[alertView textFieldAtIndex:0] text];
-        if ([etFileName length]) {
+        if ([etFileName length]){
 
-            if ([alertView evUserInfo]) {
+            if ([alertView evUserInfo]){
 
                 [self _efRenameFileName:etFileName indexPath:[alertView evUserInfo]];
             }
@@ -487,7 +533,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
         else{
 
             [alertView dismissWithClickedButtonIndex:[alertView cancelButtonIndex] animated:NO];
-            [self _efShowEidtFolderAlert:select([alertView evUserInfo], NSLocalizedString(@"9", @"Rename"), NSLocalizedString(@"3", @"New Folder")) message:NSLocalizedString(@"8", @"file or folder's name can not be empty") placeholder:etFileName userInfo:[alertView evUserInfo]];
+            [self _efShowEidtFolderAlert:select([alertView evUserInfo], NSLocalizedString(@"9", @"Rename"), NSLocalizedString(@"3", @"New Folder"))message:NSLocalizedString(@"8", @"file or folder's name can not be empty")placeholder:etFileName userInfo:[alertView evUserInfo]];
         }
     }
 }
@@ -507,7 +553,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
     BOOL success = [[FBLockManager sharedInstance] evIsVerifySuccess];
 
-    if (success) {
+    if (success){
 
         [self _efLoadFiles];
     }
@@ -522,9 +568,9 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (IBAction)didClickVerify:(UIBarButtonItem*)sender {
 
-    if ([[sender title] isEqualToString:NSLocalizedString(@"17", @"Set Password")]) {
+    if ([[sender title] isEqualToString:NSLocalizedString(@"17", @"Set Password")]){
 
-        [FBLockManager efResetPasswordWithResultBlock:^(BOOL success) {
+        [FBLockManager efResetPasswordWithResultBlock:^(BOOL success){
 
             [self _efUpdateVerify:success];
         }];
@@ -544,7 +590,7 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 - (IBAction)didClickAdd:(id)sender {
 
-    [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder") message:NSLocalizedString(@"30", @"Please input the folder name") placeholder:nil userInfo:nil];
+    [self _efShowEidtFolderAlert:NSLocalizedString(@"3", @"New Folder")message:NSLocalizedString(@"30", @"Please input the folder name")placeholder:nil userInfo:nil];
 }
 
 @end

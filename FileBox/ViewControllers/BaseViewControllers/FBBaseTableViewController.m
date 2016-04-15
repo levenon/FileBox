@@ -11,14 +11,4 @@
 
 @implementation FBBaseTableViewController
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
-    
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
-    
-    return UIInterfaceOrientationPortrait;
-}
-
 @end

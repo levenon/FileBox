@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,7 +26,7 @@
 #ifndef AVUTIL_COMMON_H
 #define AVUTIL_COMMON_H
 
-#if defined(__cplusplus) && !defined(__STDC_CONSTANT_MACROS) && !defined(UINT64_C)
+#if defined(__cplusplus)&& !defined(__STDC_CONSTANT_MACROS)&& !defined(UINT64_C)
 #error missing -D__STDC_CONSTANT_MACROS / #define __STDC_CONSTANT_MACROS
 #endif
 
@@ -44,31 +44,31 @@
 #include "libavutil/avconfig.h"
 
 #if AV_HAVE_BIGENDIAN
-#   define AV_NE(be, le) (be)
+#   define AV_NE(be, le)(be)
 #else
-#   define AV_NE(be, le) (le)
+#   define AV_NE(be, le)(le)
 #endif
 
 //rounded division & shift
-#define RSHIFT(a,b) ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b))
+#define RSHIFT(a,b)((a)> 0 ? ((a)+ ((1<<(b))>>1))>>(b):((a)+ ((1<<(b))>>1)-1)>>(b))
 /* assume b>0 */
-#define ROUNDED_DIV(a,b) (((a)>0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b))
+#define ROUNDED_DIV(a,b)(((a)>0 ? (a)+ ((b)>>1):(a)- ((b)>>1))/(b))
 /* assume a>0 and b>0 */
-#define FF_CEIL_RSHIFT(a,b) (!av_builtin_constant_p(b) ? -((-(a)) >> (b)) \
-                                                       : ((a) + (1<<(b)) - 1) >> (b))
-#define FFUDIV(a,b) (((a)>0 ?(a):(a)-(b)+1) / (b))
-#define FFUMOD(a,b) ((a)-(b)*FFUDIV(a,b))
-#define FFABS(a) ((a) >= 0 ? (a) : (-(a)))
-#define FFSIGN(a) ((a) > 0 ? 1 : -1)
+#define FF_CEIL_RSHIFT(a,b)(!av_builtin_constant_p(b)? -((-(a))>> (b))\
+                                                       :((a)+ (1<<(b))- 1)>> (b))
+#define FFUDIV(a,b)(((a)>0 ?(a):(a)-(b)+1)/ (b))
+#define FFUMOD(a,b)((a)-(b)*FFUDIV(a,b))
+#define FFABS(a)((a)>= 0 ? (a):(-(a)))
+#define FFSIGN(a)((a)> 0 ? 1 :-1)
 
-#define FFMAX(a,b) ((a) > (b) ? (a) : (b))
-#define FFMAX3(a,b,c) FFMAX(FFMAX(a,b),c)
-#define FFMIN(a,b) ((a) > (b) ? (b) : (a))
-#define FFMIN3(a,b,c) FFMIN(FFMIN(a,b),c)
+#define FFMAX(a,b)((a)> (b)? (a):(b))
+#define FFMAX3(a,b,c)FFMAX(FFMAX(a,b),c)
+#define FFMIN(a,b)((a)> (b)? (b):(a))
+#define FFMIN3(a,b,c)FFMIN(FFMIN(a,b),c)
 
-#define FFSWAP(type,a,b) do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0)
-#define FF_ARRAY_ELEMS(a) (sizeof(a) / sizeof((a)[0]))
-#define FFALIGN(x, a) (((x)+(a)-1)&~((a)-1))
+#define FFSWAP(type,a,b)do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0)
+#define FF_ARRAY_ELEMS(a)(sizeof(a)/ sizeof((a)[0]))
+#define FFALIGN(x, a)(((x)+(a)-1)&~((a)-1))
 
 /* misc math functions */
 
@@ -104,11 +104,11 @@ av_const int av_log2_16bit(unsigned v);
  */
 static av_always_inline av_const int av_clip_c(int a, int amin, int amax)
 {
-#if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
-    if (amin > amax) abort();
+#if defined(HAVE_AV_CONFIG_H)&& defined(ASSERT_LEVEL)&& ASSERT_LEVEL >= 2
+    if (amin > amax)abort();
 #endif
-    if      (a < amin) return amin;
-    else if (a > amax) return amax;
+    if      (a < amin)return amin;
+    else if (a > amax)return amax;
     else               return a;
 }
 
@@ -121,11 +121,11 @@ static av_always_inline av_const int av_clip_c(int a, int amin, int amax)
  */
 static av_always_inline av_const int64_t av_clip64_c(int64_t a, int64_t amin, int64_t amax)
 {
-#if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
-    if (amin > amax) abort();
+#if defined(HAVE_AV_CONFIG_H)&& defined(ASSERT_LEVEL)&& ASSERT_LEVEL >= 2
+    if (amin > amax)abort();
 #endif
-    if      (a < amin) return amin;
-    else if (a > amax) return amax;
+    if      (a < amin)return amin;
+    else if (a > amax)return amax;
     else               return a;
 }
 
@@ -136,7 +136,7 @@ static av_always_inline av_const int64_t av_clip64_c(int64_t a, int64_t amin, in
  */
 static av_always_inline av_const uint8_t av_clip_uint8_c(int a)
 {
-    if (a&(~0xFF)) return (-a)>>31;
+    if (a&(~0xFF))return (-a)>>31;
     else           return a;
 }
 
@@ -147,7 +147,7 @@ static av_always_inline av_const uint8_t av_clip_uint8_c(int a)
  */
 static av_always_inline av_const int8_t av_clip_int8_c(int a)
 {
-    if ((a+0x80) & ~0xFF) return (a>>31) ^ 0x7F;
+    if ((a+0x80)& ~0xFF)return (a>>31)^ 0x7F;
     else                  return a;
 }
 
@@ -158,7 +158,7 @@ static av_always_inline av_const int8_t av_clip_int8_c(int a)
  */
 static av_always_inline av_const uint16_t av_clip_uint16_c(int a)
 {
-    if (a&(~0xFFFF)) return (-a)>>31;
+    if (a&(~0xFFFF))return (-a)>>31;
     else             return a;
 }
 
@@ -169,7 +169,7 @@ static av_always_inline av_const uint16_t av_clip_uint16_c(int a)
  */
 static av_always_inline av_const int16_t av_clip_int16_c(int a)
 {
-    if ((a+0x8000) & ~0xFFFF) return (a>>31) ^ 0x7FFF;
+    if ((a+0x8000)& ~0xFFFF)return (a>>31)^ 0x7FFF;
     else                      return a;
 }
 
@@ -180,7 +180,7 @@ static av_always_inline av_const int16_t av_clip_int16_c(int a)
  */
 static av_always_inline av_const int32_t av_clipl_int32_c(int64_t a)
 {
-    if ((a+0x80000000u) & ~UINT64_C(0xFFFFFFFF)) return (int32_t)((a>>63) ^ 0x7FFFFFFF);
+    if ((a+0x80000000u)& ~UINT64_C(0xFFFFFFFF))return (int32_t)((a>>63)^ 0x7FFFFFFF);
     else                                         return (int32_t)a;
 }
 
@@ -192,7 +192,7 @@ static av_always_inline av_const int32_t av_clipl_int32_c(int64_t a)
  */
 static av_always_inline av_const unsigned av_clip_uintp2_c(int a, int p)
 {
-    if (a & ~((1<<p) - 1)) return -a >> 31 & ((1<<p) - 1);
+    if (a & ~((1<<p)- 1))return -a >> 31 & ((1<<p)- 1);
     else                   return  a;
 }
 
@@ -229,11 +229,11 @@ static av_always_inline int av_sat_dadd32_c(int a, int b)
  */
 static av_always_inline av_const float av_clipf_c(float a, float amin, float amax)
 {
-#if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
-    if (amin > amax) abort();
+#if defined(HAVE_AV_CONFIG_H)&& defined(ASSERT_LEVEL)&& ASSERT_LEVEL >= 2
+    if (amin > amax)abort();
 #endif
-    if      (a < amin) return amin;
-    else if (a > amax) return amax;
+    if      (a < amin)return amin;
+    else if (a > amax)return amax;
     else               return a;
 }
 
@@ -246,11 +246,11 @@ static av_always_inline av_const float av_clipf_c(float a, float amin, float ama
  */
 static av_always_inline av_const double av_clipd_c(double a, double amin, double amax)
 {
-#if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
-    if (amin > amax) abort();
+#if defined(HAVE_AV_CONFIG_H)&& defined(ASSERT_LEVEL)&& ASSERT_LEVEL >= 2
+    if (amin > amax)abort();
 #endif
-    if      (a < amin) return amin;
-    else if (a > amax) return amax;
+    if      (a < amin)return amin;
+    else if (a > amax)return amax;
     else               return a;
 }
 
@@ -260,7 +260,7 @@ static av_always_inline av_const double av_clipd_c(double a, double amin, double
  */
 static av_always_inline av_const int av_ceil_log2_c(int x)
 {
-    return av_log2((x - 1) << 1);
+    return av_log2((x - 1)<< 1);
 }
 
 /**
@@ -270,11 +270,11 @@ static av_always_inline av_const int av_ceil_log2_c(int x)
  */
 static av_always_inline av_const int av_popcount_c(uint32_t x)
 {
-    x -= (x >> 1) & 0x55555555;
-    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-    x = (x + (x >> 4)) & 0x0F0F0F0F;
+    x -= (x >> 1)& 0x55555555;
+    x = (x & 0x33333333)+ ((x >> 2)& 0x33333333);
+    x = (x + (x >> 4))& 0x0F0F0F0F;
     x += x >> 8;
-    return (x + (x >> 16)) & 0x3F;
+    return (x + (x >> 16))& 0x3F;
 }
 
 /**
@@ -284,14 +284,14 @@ static av_always_inline av_const int av_popcount_c(uint32_t x)
  */
 static av_always_inline av_const int av_popcount64_c(uint64_t x)
 {
-    return av_popcount((uint32_t)x) + av_popcount((uint32_t)(x >> 32));
+    return av_popcount((uint32_t)x)+ av_popcount((uint32_t)(x >> 32));
 }
 
-#define MKTAG(a,b,c,d) ((a) | ((b) << 8) | ((c) << 16) | ((unsigned)(d) << 24))
-#define MKBETAG(a,b,c,d) ((d) | ((c) << 8) | ((b) << 16) | ((unsigned)(a) << 24))
+#define MKTAG(a,b,c,d)((a)| ((b)<< 8)| ((c)<< 16)| ((unsigned)(d)<< 24))
+#define MKBETAG(a,b,c,d)((d)| ((c)<< 8)| ((b)<< 16)| ((unsigned)(a)<< 24))
 
 /**
- * Convert a UTF-8 character (up to 4 bytes) to its 32-bit UCS-4 encoded form.
+ * Convert a UTF-8 character (up to 4 bytes)to its 32-bit UCS-4 encoded form.
  *
  * @param val      Output value, must be an lvalue of type uint32_t.
  * @param GET_BYTE Expression reading one byte from the input.
@@ -303,27 +303,27 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
  *
  * @warning ERROR should not contain a loop control statement which
  * could interact with the internal while loop, and should force an
- * exit from the macro code (e.g. through a goto or a return) in order
+ * exit from the macro code (e.g. through a goto or a return)in order
  * to prevent undefined results.
  */
 #define GET_UTF8(val, GET_BYTE, ERROR)\
     val= GET_BYTE;\
     {\
-        uint32_t top = (val & 128) >> 1;\
-        if ((val & 0xc0) == 0x80 || val >= 0xFE)\
+        uint32_t top = (val & 128)>> 1;\
+        if ((val & 0xc0)== 0x80 || val >= 0xFE)\
             ERROR\
-        while (val & top) {\
+        while (val & top){\
             int tmp= GET_BYTE - 128;\
             if(tmp>>6)\
                 ERROR\
-            val= (val<<6) + tmp;\
+            val= (val<<6)+ tmp;\
             top <<= 5;\
         }\
-        val &= (top << 1) - 1;\
+        val &= (top << 1)- 1;\
     }
 
 /**
- * Convert a UTF-16 character (2 or 4 bytes) to its 32-bit UCS-4 encoded form.
+ * Convert a UTF-16 character (2 or 4 bytes)to its 32-bit UCS-4 encoded form.
  *
  * @param val       Output value, must be an lvalue of type uint32_t.
  * @param GET_16BIT Expression returning two bytes of UTF-16 data converted
@@ -335,11 +335,11 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
     val = GET_16BIT;\
     {\
         unsigned int hi = val - 0xD800;\
-        if (hi < 0x800) {\
+        if (hi < 0x800){\
             val = GET_16BIT - 0xDC00;\
             if (val > 0x3FFU || hi > 0x3FFU)\
                 ERROR\
-            val += (hi<<10) + 0x10000;\
+            val += (hi<<10)+ 0x10000;\
         }\
     }\
 
@@ -363,17 +363,17 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
     {\
         int bytes, shift;\
         uint32_t in = val;\
-        if (in < 0x80) {\
+        if (in < 0x80){\
             tmp = in;\
             PUT_BYTE\
         } else {\
-            bytes = (av_log2(in) + 4) / 5;\
-            shift = (bytes - 1) * 6;\
-            tmp = (256 - (256 >> bytes)) | (in >> shift);\
+            bytes = (av_log2(in)+ 4)/ 5;\
+            shift = (bytes - 1)* 6;\
+            tmp = (256 - (256 >> bytes))| (in >> shift);\
             PUT_BYTE\
-            while (shift >= 6) {\
+            while (shift >= 6){\
                 shift -= 6;\
-                tmp = 0x80 | ((in >> shift) & 0x3f);\
+                tmp = 0x80 | ((in >> shift)& 0x3f);\
                 PUT_BYTE\
             }\
         }\
@@ -396,13 +396,13 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
 #define PUT_UTF16(val, tmp, PUT_16BIT)\
     {\
         uint32_t in = val;\
-        if (in < 0x10000) {\
+        if (in < 0x10000){\
             tmp = in;\
             PUT_16BIT\
         } else {\
-            tmp = 0xD800 | ((in - 0x10000) >> 10);\
+            tmp = 0xD800 | ((in - 0x10000)>> 10);\
             PUT_16BIT\
-            tmp = 0xDC00 | ((in - 0x10000) & 0x3FF);\
+            tmp = 0xDC00 | ((in - 0x10000)& 0x3FF);\
             PUT_16BIT\
         }\
     }\

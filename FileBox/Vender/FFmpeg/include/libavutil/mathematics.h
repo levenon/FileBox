@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2005-2012 Michael Niedermayer <michaelni@gmx.at>
+ * copyright (c)2005-2012 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,10 +49,10 @@
 #define M_PI_2         1.57079632679489661923  /* pi/2 */
 #endif
 #ifndef M_SQRT1_2
-#define M_SQRT1_2      0.70710678118654752440  /* 1/sqrt(2) */
+#define M_SQRT1_2      0.70710678118654752440  /* 1/sqrt(2)*/
 #endif
 #ifndef M_SQRT2
-#define M_SQRT2        1.41421356237309504880  /* sqrt(2) */
+#define M_SQRT2        1.41421356237309504880  /* sqrt(2)*/
 #endif
 #ifndef NAN
 #define NAN            av_int2float(0x7fc00000)
@@ -87,7 +87,7 @@ int64_t av_const av_gcd(int64_t a, int64_t b);
  * Rescale a 64-bit integer with rounding to nearest.
  * A simple a*b/c isn't possible as it can overflow.
  */
-int64_t av_rescale(int64_t a, int64_t b, int64_t c) av_const;
+int64_t av_rescale(int64_t a, int64_t b, int64_t c)av_const;
 
 /**
  * Rescale a 64-bit integer with specified rounding.
@@ -96,12 +96,12 @@ int64_t av_rescale(int64_t a, int64_t b, int64_t c) av_const;
  * @return rescaled value a, or if AV_ROUND_PASS_MINMAX is set and a is
  *         INT64_MIN or INT64_MAX then a is passed through unchanged.
  */
-int64_t av_rescale_rnd(int64_t a, int64_t b, int64_t c, enum AVRounding) av_const;
+int64_t av_rescale_rnd(int64_t a, int64_t b, int64_t c, enum AVRounding)av_const;
 
 /**
  * Rescale a 64-bit integer by 2 rational numbers.
  */
-int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq) av_const;
+int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq)av_const;
 
 /**
  * Rescale a 64-bit integer by 2 rational numbers with specified rounding.
@@ -110,7 +110,7 @@ int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq) av_const;
  *         INT64_MIN or INT64_MAX then a is passed through unchanged.
  */
 int64_t av_rescale_q_rnd(int64_t a, AVRational bq, AVRational cq,
-                         enum AVRounding) av_const;
+                         enum AVRounding)av_const;
 
 /**
  * Compare 2 timestamps each in its own timebases.
@@ -123,7 +123,7 @@ int av_compare_ts(int64_t ts_a, AVRational tb_a, int64_t ts_b, AVRational tb_b);
 /**
  * Compare 2 integers modulo mod.
  * That is we compare integers a and b for which only the least
- * significant log2(mod) bits are known.
+ * significant log2(mod)bits are known.
  *
  * @param mod must be a power of 2
  * @return a negative value if a is smaller than b

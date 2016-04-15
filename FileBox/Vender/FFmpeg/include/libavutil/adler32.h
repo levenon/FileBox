@@ -1,12 +1,12 @@
 /*
- * copyright (c) 2006 Mans Rullgard
+ * copyright (c)2006 Mans Rullgard
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@
 /**
  * Calculate the Adler32 checksum of a buffer.
  *
- * Passing the return value to a subsequent av_adler32_update() call
+ * Passing the return value to a subsequent av_adler32_update()call
  * allows the checksum of multiple buffers to be calculated as though
  * they were concatenated.
  *
@@ -46,7 +46,7 @@
  * @return      updated checksum
  */
 unsigned long av_adler32_update(unsigned long adler, const uint8_t *buf,
-                                unsigned int len) av_pure;
+                                unsigned int len)av_pure;
 
 /**
  * @}

@@ -1,14 +1,14 @@
 /*
  * DXVA2 HW acceleration
  *
- * copyright (c) 2009 Laurent Aimar
+ * copyright (c)2009 Laurent Aimar
  *
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,7 +29,7 @@
  * Public libavcodec DXVA2 header.
  */
 
-#if defined(_WIN32_WINNT) && _WIN32_WINNT < 0x0600
+#if defined(_WIN32_WINNT)&& _WIN32_WINNT < 0x0600
 #undef _WIN32_WINNT
 #endif
 

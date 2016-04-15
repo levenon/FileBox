@@ -4,7 +4,7 @@
  * FFmpeg is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option)any later version.
  *
  * FFmpeg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,16 +43,16 @@
  * caller directly.
  *
  * There are two functions provided for creating a new AVBuffer with a single
- * reference -- av_buffer_alloc() to just allocate a new buffer, and
- * av_buffer_create() to wrap an existing array in an AVBuffer. From an existing
+ * reference -- av_buffer_alloc()to just allocate a new buffer, and
+ * av_buffer_create()to wrap an existing array in an AVBuffer. From an existing
  * reference, additional references may be created with av_buffer_ref().
- * Use av_buffer_unref() to free a reference (this will automatically free the
+ * Use av_buffer_unref()to free a reference (this will automatically free the
  * data once all the references are freed).
  *
  * The convention throughout this API and the rest of FFmpeg is such that the
  * buffer is considered writable if there exists only one reference to it (and
- * it has not been marked as read-only). The av_buffer_is_writable() function is
- * provided to check whether this is true and av_buffer_make_writable() will
+ * it has not been marked as read-only). The av_buffer_is_writable()function is
+ * provided to check whether this is true and av_buffer_make_writable()will
  * automatically create a new writable buffer when necessary.
  * Of course nothing prevents the calling code from violating this convention,
  * however that is safe only when all the existing references are under its
@@ -84,7 +84,7 @@ typedef struct AVBufferRef {
     /**
      * The data buffer. It is considered writable if and only if
      * this is the only reference to the buffer, in which case
-     * av_buffer_is_writable() returns 1.
+     * av_buffer_is_writable()returns 1.
      */
     uint8_t *data;
     /**
@@ -132,7 +132,7 @@ AVBufferRef *av_buffer_create(uint8_t *data, int size,
                               void *opaque, int flags);
 
 /**
- * Default free callback, which calls av_free() on the buffer data.
+ * Default free callback, which calls av_free()on the buffer data.
  * This function is meant to be passed to av_buffer_create(), not called
  * directly.
  */
@@ -158,7 +158,7 @@ void av_buffer_unref(AVBufferRef **buf);
  * @return 1 if the caller may write to the data referred to by buf (which is
  * true if and only if buf is the only reference to the underlying AVBuffer).
  * Return 0 otherwise.
- * A positive answer is valid until av_buffer_ref() is called on buf.
+ * A positive answer is valid until av_buffer_ref()is called on buf.
  */
 int av_buffer_is_writable(const AVBufferRef *buf);
 
@@ -190,8 +190,8 @@ int av_buffer_make_writable(AVBufferRef **buf);
  * @param size required new buffer size.
  * @return 0 on success, a negative AVERROR on failure.
  *
- * @note the buffer is actually reallocated with av_realloc() only if it was
- * initially allocated through av_buffer_realloc(NULL) and there is only one
+ * @note the buffer is actually reallocated with av_realloc()only if it was
+ * initially allocated through av_buffer_realloc(NULL)and there is only one
  * reference to it (i.e. the one passed to this function). In all other cases
  * a new buffer is allocated and the data is copied.
  */
@@ -213,16 +213,16 @@ int av_buffer_realloc(AVBufferRef **buf, int size);
  * same size (the most obvious use case being buffers for raw video or audio
  * frames).
  *
- * At the beginning, the user must call av_buffer_pool_init() to create the
- * buffer pool. Then whenever a buffer is needed, call av_buffer_pool_get() to
+ * At the beginning, the user must call av_buffer_pool_init()to create the
+ * buffer pool. Then whenever a buffer is needed, call av_buffer_pool_get()to
  * get a reference to a new buffer, similar to av_buffer_alloc(). This new
  * reference works in all aspects the same way as the one created by
  * av_buffer_alloc(). However, when the last reference to this buffer is
  * unreferenced, it is returned to the pool instead of being freed and will be
- * reused for subsequent av_buffer_pool_get() calls.
+ * reused for subsequent av_buffer_pool_get()calls.
  *
  * When the caller is done with the pool and no longer needs to allocate any new
- * buffers, av_buffer_pool_uninit() must be called to mark the pool as freeable.
+ * buffers, av_buffer_pool_uninit()must be called to mark the pool as freeable.
  * Once all the buffers are released, it will automatically be freed.
  *
  * Allocating and releasing buffers with this API is thread-safe as long as
@@ -232,7 +232,7 @@ int av_buffer_realloc(AVBufferRef **buf, int size);
 
 /**
  * The buffer pool. This structure is opaque and not meant to be accessed
- * directly. It is allocated with av_buffer_pool_init() and freed with
+ * directly. It is allocated with av_buffer_pool_init()and freed with
  * av_buffer_pool_uninit().
  */
 typedef struct AVBufferPool AVBufferPool;

@@ -3,7 +3,7 @@
 //  FileBox
 //
 //  Created by Marike Jave on 15/2/9.
-//  Copyright (c) 2015年 Marike Jave. All rights reserved.
+//  Copyright (c)2015年 Marike Jave. All rights reserved.
 //
 
 #import "FBLockManager.h"
@@ -18,25 +18,25 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 @interface FBLockManager ()<XLFPinViewControllerDelegate>
 
-@property (nonatomic, strong) UIAlertView *evatAlert;
+@property (nonatomic, strong)UIAlertView *evatAlert;
 
-@property (nonatomic, strong) XLFPinViewController *evPasswordInputVC;
+@property (nonatomic, strong)XLFPinViewController *evPasswordInputVC;
 
-@property (nonatomic, strong) NSMutableDictionary *evMutLockKey;
+@property (nonatomic, strong)NSMutableDictionary *evMutLockKey;
 
-@property (nonatomic, assign, getter=evIsVerifySuccess) BOOL evVerifySuccess;
+@property (nonatomic, assign, getter=evIsVerifySuccess)BOOL evVerifySuccess;
 
-@property (nonatomic, assign, getter=evIsResetPassword) BOOL evResetPassword;
+@property (nonatomic, assign, getter=evIsResetPassword)BOOL evResetPassword;
 
-@property (nonatomic, assign, getter=evIsSecondInput) BOOL evSecondInput;
+@property (nonatomic, assign, getter=evIsSecondInput)BOOL evSecondInput;
 
-@property (nonatomic, assign, getter=evIsVerifying) BOOL evVerifying;
+@property (nonatomic, assign, getter=evIsVerifying)BOOL evVerifying;
 
-@property (nonatomic, copy) NSString *evPassword;
+@property (nonatomic, copy)NSString *evPassword;
 
-@property (nonatomic, copy) NSString *evFirstInputPassword;
+@property (nonatomic, copy)NSString *evFirstInputPassword;
 
-@property (nonatomic, copy) NSMutableArray* evblcMutVerifySuccesses;
+@property (nonatomic, copy)NSMutableArray* evblcMutVerifySuccesses;
 
 @end
 
@@ -51,7 +51,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (NSMutableDictionary*)evMutLockKey{
 
-    if (!_evMutLockKey) {
+    if (!_evMutLockKey){
         
         _evMutLockKey = [NSMutableDictionary dictionary];
     }
@@ -59,14 +59,14 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 }
 
 - (NSMutableArray*)evblcMutVerifySuccesses{
-    if (!_evblcMutVerifySuccesses) {
+    if (!_evblcMutVerifySuccesses){
         _evblcMutVerifySuccesses = [NSMutableArray array];
     }
     return _evblcMutVerifySuccesses;
 }
 
 - (void)setEvPassword:(NSString *)evPassword{
-    if (_evPassword != evPassword) {
+    if (_evPassword != evPassword){
 
         _evPassword = evPassword;
 
@@ -76,7 +76,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (void)setEvPasswordEnable:(BOOL)evPasswordEnable{
 
-    if (_evPasswordEnable != evPasswordEnable) {
+    if (_evPasswordEnable != evPasswordEnable){
 
         _evPasswordEnable = evPasswordEnable;
 
@@ -86,7 +86,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (void)setEvatAlert:(UIAlertView *)evatAlert{
 
-    if (_evatAlert != evatAlert) {
+    if (_evatAlert != evatAlert){
 
         [_evatAlert dismissWithClickedButtonIndex:[_evatAlert cancelButtonIndex] animated:NO];
 
@@ -96,14 +96,14 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (void)setEvVerifySuccess:(BOOL)evVerifySuccess{
 
-    if (_evVerifySuccess != evVerifySuccess) {
+    if (_evVerifySuccess != evVerifySuccess){
 
         _evVerifySuccess = evVerifySuccess;
     }
 
-    if ([[self evblcMutVerifySuccesses] count]) {
+    if ([[self evblcMutVerifySuccesses] count]){
 
-        for (VerifySuccessBlock blcVerifySuccess in [self evblcMutVerifySuccesses]) {
+        for (VerifySuccessBlock blcVerifySuccess in [self evblcMutVerifySuccesses]){
 
             blcVerifySuccess(_evVerifySuccess);
         }
@@ -154,10 +154,10 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (instancetype)init{
     self = [super init];
-    if (self) {
+    if (self){
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidEnterBackground:)name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didNotificationDidFinishLaunching:)name:UIApplicationDidFinishLaunchingNotification object:nil];
 
     }
     return self;
@@ -187,7 +187,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
     NSMutableDictionary *archiver = [NSMutableDictionary dictionary];
     [archiver setObject:[self evLockKey] forKey:egLockKeyKey];
-    [archiver setObject:ntoe([self evPassword]) forKey:egPasswordKey];
+    [archiver setObject:ntoe([self evPassword])forKey:egPasswordKey];
     [archiver setObject:[NSNumber numberWithBool:[self evIsPasswordEnable]] forKey:egPasswordEnableKey];
 
     return [NSKeyedArchiver archiveRootObject:archiver toFile:SDArchiverFolder(egLockKeyArchiveFileName)];
@@ -215,7 +215,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 - (void)_efSetNeedLock:(BOOL)lock forFilePath:(NSString*)filePath;{
 
     NSAssert(filePath, @"filePath can't be nil");
-    if (lock) {
+    if (lock){
 
         [[self evMutLockKey] setObject:[NSNumber numberWithBool:lock] forKey:filePath];
     }
@@ -261,16 +261,16 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
     [[self evblcMutVerifySuccesses] addObject:resultBlock];
 
-    if (![self evIsVerifying]) {
+    if (![self evIsVerifying]){
 
         [self setEvVerifying:YES];
 
-        if (IOS_VERSION > 8.0) {
+        if (IOS_VERSION > 8.0){
 
             NSError *etAuthError = nil;
             LAContext *etContext = [[LAContext alloc] init];
 
-            if ([self evIsPasswordEnable] && ![[self evPassword] length]) {
+            if ([self evIsPasswordEnable] && ![[self evPassword] length]){
                 [etContext setLocalizedFallbackTitle:NSLocalizedString(@"17", @"Set Password")];
             }
             else if (![self evIsPasswordEnable]){
@@ -278,15 +278,15 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
             }
 
             if ([etContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                                       error:&etAuthError]) {
+                                       error:&etAuthError]){
 
                 [etContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                           localizedReason:NSLocalizedString(@"20", @"Please verify fingerprint")
-                                    reply:^(BOOL success, NSError *error) {
+                                    reply:^(BOOL success, NSError *error){
 
                                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
 
-                                            if (!success && [error code] == LAErrorUserFallback) {
+                                            if (!success && [error code] == LAErrorUserFallback){
 
                                                 [self _efInputPassword:![[self evPassword] length]];
                                             }
@@ -350,7 +350,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 + (void)efResetPasswordWithResultBlock:(VerifySuccessBlock)resultBlock;{
 
-    if (resultBlock) {
+    if (resultBlock){
 
         [[[self sharedInstance] evblcMutVerifySuccesses] addObject:resultBlock];
     }
@@ -368,7 +368,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (IBAction)didNotificationDidFinishLaunching:(id)sender{
 
-    if (![NSUserDefaults boolForKey:kDidInstalledKey]) {
+    if (![NSUserDefaults boolForKey:kDidInstalledKey]){
         [NSUserDefaults setBool:YES forKey:kDidInstalledKey];
         [self setEvPasswordEnable:YES];
     }
@@ -385,7 +385,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
     // 设置密码， 再次输入密码，密码验证
     if ([self evIsResetPassword]){
 
-        if ([self evIsSecondInput]) {
+        if ([self evIsSecondInput]){
 
             return [[self evFirstInputPassword] isEqualToString:pin];
         }
@@ -409,7 +409,7 @@ NSString * const kNotificationVerifyHasChanged = @"kNotificationVerifyHasChanged
 
 - (void)pinViewControllerWillDismissAfterPinEntryWasSuccessful:(XLFPinViewController *)pinViewController{
 
-    if ([self evIsResetPassword] && [self evIsSecondInput]) {
+    if ([self evIsResetPassword] && [self evIsSecondInput]){
         [self setEvPassword:[self evFirstInputPassword]];
     }
     [self setEvVerifySuccess:YES];
