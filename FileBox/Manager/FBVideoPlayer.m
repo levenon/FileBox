@@ -33,6 +33,32 @@ static NSMutableDictionary * FBMovieViewControllerHistory;
 
 @interface FBVideoPlayer ()
 
+@property (nonatomic, assign)CGFloat                 bufferedDuration;
+@property (nonatomic, assign)CGFloat                 minBufferedDuration;
+@property (nonatomic, assign)CGFloat                 maxBufferedDuration;
+@property (nonatomic, assign)BOOL                    buffered;
+
+@property (nonatomic, assign)BOOL                    savedIdleTimer;
+
+@property (nonatomic, strong)FBMovieParameter        *parameter;
+
+@property (nonatomic, assign)BOOL                    playing;
+@property (nonatomic, assign)BOOL                    decoding;
+@property (nonatomic, strong)FBArtworkFrame          *artworkFrame;
+
+@property (nonatomic, strong)FBMovieDecoder          *decoder;
+@property (nonatomic, strong)dispatch_queue_t        dispatchQueue;
+@property (nonatomic, strong)NSMutableArray          *videoFrames;
+@property (nonatomic, strong)NSMutableArray          *audioFrames;
+@property (nonatomic, strong)NSMutableArray          *subtitles;
+@property (nonatomic, strong)NSData                  *currentAudioFrame;
+@property (nonatomic, assign)NSUInteger              currentAudioFramePos;
+@property (nonatomic, assign)CGFloat                 moviePosition;
+
+@property (nonatomic, assign)NSTimeInterval          tickCorrectionTime;
+@property (nonatomic, assign)NSTimeInterval          tickCorrectionPosition;
+@property (nonatomic, assign)NSUInteger              tickCounter;
+
 @end
 
 @implementation FBVideoPlayer
@@ -44,8 +70,9 @@ static NSMutableDictionary * FBMovieViewControllerHistory;
     }
 }
 
-
-- (instancetype)initWithRenderView:(id<FBMovieRenderView>)renderView;{
+- (instancetype)initWithPath:(NSString *)path
+                  renderView:(id<FBMovieRenderView>)renderView
+                   parameter:(FBMovieParameter *)parameter;{
     self = [super init];
     if (self) {
         

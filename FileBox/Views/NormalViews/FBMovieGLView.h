@@ -13,16 +13,6 @@
 
 #import "FBMovieRenderView.h"
 
-@class FBVideoFrame;
-@class FBMovieDecoder;
-
 @interface FBMovieGLView :UIView<FBMovieRenderView>
-
-@property(nonatomic, strong, readonly) FBMovieDecoder  *decoder;
-
-- (id)initWithFrame:(CGRect)frame
-             decoder:(FBMovieDecoder *)decoder;
-
-- (void)render:(FBVideoFrame *)frame;
 
 @end

@@ -39,7 +39,7 @@ typedef enum {
 } FBMovieFrameType;
 
 typedef enum {
-        
+    
     FBVideoFrameFormatRGB,
     FBVideoFrameFormatYUV,
     
@@ -109,12 +109,12 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
 @property (readwrite, nonatomic, strong)FBMovieDecoderInterruptCallback interruptCallback;
 
 + (id)movieDecoderWithContentPath:(NSString *)path
-                             error:(NSError **)perror;
+                            error:(NSError **)perror;
 
 - (BOOL)openFile:(NSString *)path
-            error:(NSError **)perror;
+           error:(NSError **)perror;
 
--(void)closeFile;
+- (void)closeFile;
 
 - (BOOL)setupVideoFrameFormat:(FBVideoFrameFormat)format;
 
@@ -126,7 +126,7 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
 
 + (NSArray *)parseEvents:(NSString *)events;
 + (NSArray *)parseDialogue:(NSString *)dialogue
-                  numFields:(NSUInteger)numFields;
+                 numFields:(NSUInteger)numFields;
 + (NSString *)removeCommandsFromEventText:(NSString *)text;
 
 @end

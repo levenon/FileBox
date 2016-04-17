@@ -39,36 +39,35 @@ enum {
 
 @end
 
+@class FBVideoPlayer;
+
+@protocol FBVideoPlayerDelegate <NSObject>
+
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position;
+
+@end
+
 @interface FBVideoPlayer : NSObject
 
-@property (nonatomic, assign)CGFloat                 bufferedDuration;
-@property (nonatomic, assign)CGFloat                 minBufferedDuration;
-@property (nonatomic, assign)CGFloat                 maxBufferedDuration;
-@property (nonatomic, assign)BOOL                    buffered;
+@property(nonatomic, assign) CGFloat evPosition;
 
-@property (nonatomic, assign)BOOL                    savedIdleTimer;
+@property(nonatomic, assign) CGFloat evDuration;
 
-@property (nonatomic, strong)FBMovieParameter        *parameter;
+@property(nonatomic, assign, getter=evIsOver) BOOL evOver;
 
-@property (nonatomic, assign)BOOL                    playing;
-@property (nonatomic, assign)BOOL                    decoding;
-@property (nonatomic, strong)FBArtworkFrame          *artworkFrame;
+@property(nonatomic, assign, getter=evIsPlaying) BOOL evPlay;
 
-@property (nonatomic, strong)FBMovieDecoder          *decoder;
-@property (nonatomic, strong)dispatch_queue_t        dispatchQueue;
-@property (nonatomic, strong)NSMutableArray          *videoFrames;
-@property (nonatomic, strong)NSMutableArray          *audioFrames;
-@property (nonatomic, strong)NSMutableArray          *subtitles;
-@property (nonatomic, strong)NSData                  *currentAudioFrame;
-@property (nonatomic, assign)NSUInteger              currentAudioFramePos;
-@property (nonatomic, assign)CGFloat                 moviePosition;
+@property(nonatomic, strong, readonly) FBMovieParameter      *parameter;
 
-@property (nonatomic, assign)NSTimeInterval          tickCorrectionTime;
-@property (nonatomic, assign)NSTimeInterval          tickCorrectionPosition;
-@property (nonatomic, assign)NSUInteger              tickCounter;
+@property(nonatomic, assign, readonly) id<FBMovieRenderView> evvRenderContent;
 
-@property (nonatomic, assign)id<FBMovieRenderView>   glView;
+@property(nonatomic, strong) XLFMulticastDelegate<FBVideoPlayerDelegate> *evProgressDelegates;
 
-- (instancetype)initWithRenderView:(id<FBMovieRenderView>)renderView;
+- (instancetype)initWithPath:(NSString *)path
+                  renderView:(id<FBMovieRenderView>)renderView
+                   parameter:(FBMovieParameter *)parameter;
+
+- (void)efPlay;
+- (void)efPause;
 
 @end

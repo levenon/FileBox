@@ -62,7 +62,7 @@
 		33C1DD751CBEA2380012F740 /* FBBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C1DD741CBEA2380012F740 /* FBBaseTableViewController.m */; };
 		33C1DD781CBEA2480012F740 /* FBBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C1DD771CBEA2480012F740 /* FBBaseNavigationController.m */; };
 		B33DD7CE1CC0C2F1001F095B /* FBBrightnessView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */; };
-		B33DD7D01CC0C2F1001F095B /* FBPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */; };
+		B33DD7D01CC0C2F1001F095B /* FBVideoPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7CA1CC0C2F1001F095B /* FBVideoPlayerControlView.m */; };
 		B33DD7D11CC0C2F1001F095B /* FBFileSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7CD1CC0C2F1001F095B /* FBFileSummaryCell.m */; };
 		B33DD7D41CC0C3F3001F095B /* FBMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7D31CC0C3F3001F095B /* FBMovieViewController.m */; };
 		B33DD7D71CC0C412001F095B /* FBMovieGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7D61CC0C411001F095B /* FBMovieGLView.m */; };
@@ -242,8 +242,8 @@
 		7758EB6BA14A7E7E709E94AE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B33DD7C61CC0C2F1001F095B /* FBBrightnessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBBrightnessView.h; sourceTree = "<group>"; };
 		B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBBrightnessView.m; sourceTree = "<group>"; };
-		B33DD7C91CC0C2F1001F095B /* FBPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBPlayerControlView.h; sourceTree = "<group>"; };
-		B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBPlayerControlView.m; sourceTree = "<group>"; };
+		B33DD7C91CC0C2F1001F095B /* FBVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideoPlayerControlView.h; sourceTree = "<group>"; };
+		B33DD7CA1CC0C2F1001F095B /* FBVideoPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBVideoPlayerControlView.m; sourceTree = "<group>"; };
 		B33DD7CC1CC0C2F1001F095B /* FBFileSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFileSummaryCell.h; sourceTree = "<group>"; };
 		B33DD7CD1CC0C2F1001F095B /* FBFileSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFileSummaryCell.m; sourceTree = "<group>"; };
 		B33DD7D21CC0C3F3001F095B /* FBMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieViewController.h; sourceTree = "<group>"; };
@@ -655,8 +655,8 @@
 				B33DD7D61CC0C411001F095B /* FBMovieGLView.m */,
 				B33DD7C61CC0C2F1001F095B /* FBBrightnessView.h */,
 				B33DD7C71CC0C2F1001F095B /* FBBrightnessView.m */,
-				B33DD7C91CC0C2F1001F095B /* FBPlayerControlView.h */,
-				B33DD7CA1CC0C2F1001F095B /* FBPlayerControlView.m */,
+				B33DD7C91CC0C2F1001F095B /* FBVideoPlayerControlView.h */,
+				B33DD7CA1CC0C2F1001F095B /* FBVideoPlayerControlView.m */,
 				B33DD7F21CC0CF32001F095B /* FBBoxNumberView.h */,
 				B33DD7F31CC0CF32001F095B /* FBBoxNumberView.m */,
 			);
@@ -852,7 +852,7 @@
 				332EA6251CBE7DCF00FFA60E /* FBSystemSettingsVC.m in Sources */,
 				332EA6231CBE7DCF00FFA60E /* FBFolderSelectorVC.m in Sources */,
 				332EA60A1CBE7DCF00FFA60E /* FBBluetoothManager.m in Sources */,
-				B33DD7D01CC0C2F1001F095B /* FBPlayerControlView.m in Sources */,
+				B33DD7D01CC0C2F1001F095B /* FBVideoPlayerControlView.m in Sources */,
 				B33DD7E01CC0C4CD001F095B /* FBMovieDecoder.m in Sources */,
 				33C1DD721CBEA2250012F740 /* FBBaseViewController.m in Sources */,
 				33C1DD751CBEA2380012F740 /* FBBaseTableViewController.m in Sources */,

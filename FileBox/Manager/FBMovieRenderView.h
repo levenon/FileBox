@@ -12,9 +12,9 @@
 
 @protocol FBMovieRenderView <NSObject>
 
-@property(nonatomic, strong, readonly) FBMovieDecoder  *decoder;
+- (id)initWithFrame:(CGRect)frame;
 
-- (id)initWithFrame:(CGRect)frame decoder:(FBMovieDecoder *)decoder;
+- (void)setup:(FBMovieDecoder *)decoder;
 
 - (void)render:(FBVideoFrame *)frame;
 

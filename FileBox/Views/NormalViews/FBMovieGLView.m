@@ -15,7 +15,7 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
-#import "FBMovieDecoder.h"
+#import "FBVideoPlayer.h"
 #import "FBLogger.h"
 
 //////////////////////////////////////////////////////////
@@ -352,7 +352,7 @@ enum {
 
 @interface FBMovieGLView ()
 
-@property(nonatomic, strong) FBMovieDecoder  *decoder;
+@property(nonatomic, assign) FBMovieDecoder  *decoder;
 
 @end
 
@@ -373,88 +373,6 @@ enum {
 + (Class)layerClass
 {
 	return [CAEAGLLayer class];
-}
-
-- (id)initWithFrame:(CGRect)frame
-             decoder:(FBMovieDecoder *)decoder
-{
-    self = [super initWithFrame:frame];
-    if (self){
-        
-        _decoder = decoder;
-        
-        if ([decoder setupVideoFrameFormat:FBVideoFrameFormatYUV]){
-            
-            _renderer = [[FBMovieGLRenderer_YUV alloc] init];
-            LoggerVideo(1, @"OK use YUV GL renderer");
-            
-        } else {
-            
-            _renderer = [[FBMovieGLRenderer_RGB alloc] init];
-            LoggerVideo(1, @"OK use RGB GL renderer");
-        }
-                
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer*)self.layer;
-        eaglLayer.opaque = YES;
-        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
-                                        kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
-                                        nil];
-        
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-        
-        if (!_context ||
-            ![EAGLContext setCurrentContext:_context]){
-            
-            LoggerVideo(0, @"failed to setup EAGLContext");
-            self = nil;
-            return nil;
-        }
-        
-        glGenFramebuffers(1, &_framebuffer);
-        glGenRenderbuffers(1, &_renderbuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
-        [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
-        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
-        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
-        
-        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        if (status != GL_FRAMEBUFFER_COMPLETE){
-            
-            LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
-            self = nil;
-            return nil;
-        }
-        
-        GLenum glError = glGetError();
-        if (GL_NO_ERROR != glError){
-            
-            LoggerVideo(0, @"failed to setup GL %x", glError);
-            self = nil;
-            return nil;
-        }
-                
-        if (![self loadShaders]){
-            
-            self = nil;
-            return nil;
-        }
-        
-        _vertices[0] = -1.0f;  // x0
-        _vertices[1] = -1.0f;  // y0
-        _vertices[2] =  1.0f;  // ..
-        _vertices[3] = -1.0f;
-        _vertices[4] = -1.0f;
-        _vertices[5] =  1.0f;
-        _vertices[6] =  1.0f;  // x3
-        _vertices[7] =  1.0f;  // y3
-        
-        LoggerVideo(1, @"OK setup GL");
-    }
-    
-    return self;
 }
 
 - (void)dealloc
@@ -587,8 +505,78 @@ exit:
     _vertices[7] =   h;
 }
 
+#pragma mark - FBMovieRenderView
+
+- (void)setup:(FBMovieDecoder *)decoder;{
+    
+    if ([decoder setupVideoFrameFormat:FBVideoFrameFormatYUV]){
+        
+        _renderer = [[FBMovieGLRenderer_YUV alloc] init];
+        LoggerVideo(1, @"OK use YUV GL renderer");
+        
+    } else {
+        
+        _renderer = [[FBMovieGLRenderer_RGB alloc] init];
+        LoggerVideo(1, @"OK use RGB GL renderer");
+    }
+    
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer*)self.layer;
+    eaglLayer.opaque = YES;
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
+                                    kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                    nil];
+    
+    _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    
+    if (!_context ||
+        ![EAGLContext setCurrentContext:_context]){
+        
+        LoggerVideo(0, @"failed to setup EAGLContext");
+        return;
+    }
+    
+    glGenFramebuffers(1, &_framebuffer);
+    glGenRenderbuffers(1, &_renderbuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
+    
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE){
+        
+        LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
+        return;
+    }
+    
+    GLenum glError = glGetError();
+    if (GL_NO_ERROR != glError){
+        
+        LoggerVideo(0, @"failed to setup GL %x", glError);
+        return;
+    }
+    
+    if (![self loadShaders]){
+        return;
+    }
+    
+    _vertices[0] = -1.0f;  // x0
+    _vertices[1] = -1.0f;  // y0
+    _vertices[2] =  1.0f;  // ..
+    _vertices[3] = -1.0f;
+    _vertices[4] = -1.0f;
+    _vertices[5] =  1.0f;
+    _vertices[6] =  1.0f;  // x3
+    _vertices[7] =  1.0f;  // y3
+    
+    LoggerVideo(1, @"OK setup GL");
+}
+
 - (void)render:(FBVideoFrame *)frame
-{        
+{
     static const GLfloat texCoords[] = {
         0.0f, 1.0f,
         1.0f, 1.0f,

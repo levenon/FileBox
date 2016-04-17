@@ -14,54 +14,26 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "FBMovieGLView.h"
+#import "FBVideoPlayerControlView.h"
 #import "FBLogger.h"
+#import "FBVideoPlayer.h"
 
-////////////////////////////////////////////////////////////////////////////////
-
-static NSString * formatTimeInterval(CGFloat seconds, BOOL isLeft){
-    
-    seconds = MAX(0, seconds);
-    
-    int s = seconds;
-    int m = s / 60;
-    int h = m / 60;
-    
-    s = s % 60;
-    m = m % 60;
-    
-    NSMutableString *format = [(isLeft && seconds >= 0.5 ? @"-" :@"")mutableCopy];
-    if (h != 0)[format appendFormat:@"%d:%0.2d", h, m];
-    else        [format appendFormat:@"%d", m];
-    [format appendFormat:@":%0.2d", s];
-    
-    return format;
-}
 
 @interface FBMovieViewController ()
 
-@property (nonatomic, assign)BOOL                    fullscreen;
-@property (nonatomic, assign)BOOL                    fitMode;
-@property (nonatomic, assign)BOOL                    restoreIdleTimer;
-@property (nonatomic, assign)BOOL                    interrupted;
+@property(nonatomic, strong) FBVideoPlayer *evVideoPlayer;
 
-@property (nonatomic, strong)FBMovieGLView           *glView;
-@property (nonatomic, strong)UIImageView             *imageView;
+@property(nonatomic, strong) FBMovieGLView *evvRenderContent;
 
-@property (nonatomic, strong)UIActivityIndicatorView *activityIndicatorView;
+@property(nonatomic, strong) FBVideoPlayerControlView *evvVideoPlayerControl;
 
-#ifdef DEBUG
-@property (nonatomic, strong)UILabel                 *messageLabel;
-@property (nonatomic, assign)NSTimeInterval          debugStartTime;
-@property (nonatomic, assign)NSUInteger              debugAudioStatus;
-@property (nonatomic, strong)NSDate                  *debugAudioStatusTS;
-#endif
+@property(nonatomic, strong) FBMovieParameter *evParameter;
 
+@property(nonatomic, strong) NSString *evResourcePath;
 
 @end
 
 @implementation FBMovieViewController
-
-- (BOOL)prefersStatusBarHidden { return YES; }
 
 + (id)movieViewControllerWithContentPath:(NSString *)path
                                parameter:(FBMovieParameter *)parameter;{
@@ -73,42 +45,73 @@ static NSString * formatTimeInterval(CGFloat seconds, BOOL isLeft){
 
 - (id)initWithContentPath:(NSString *)path
                 parameter:(FBMovieParameter *)parameter;{
-    
-    NSAssert(path.length > 0, @"empty path");
-    
     self = [super init];
     if (self){
         
-        _moviePosition = 0;
+        NSAssert(path.length, @"empty path");
         
-        _parameter = parameter;
-        
-        __weak FBMovieViewController *weakSelf = self;
-        
-        FBMovieDecoder *decoder = [[FBMovieDecoder alloc] init];
-        
-        decoder.interruptCallback = ^BOOL(){
-            
-            __strong FBMovieViewController *strongSelf = weakSelf;
-            return strongSelf ? [strongSelf interruptDecoder] :YES;
-        };
-        
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-            NSError *error = nil;
-            [decoder openFile:path error:&error];
-            
-            __strong FBMovieViewController *strongSelf = weakSelf;
-            if (strongSelf){
-                
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    
-                    [strongSelf setMovieDecoder:decoder withError:error];
-                });
-            }
-        });
+        [self setEvParameter:parameter];
+        [self setEvResourcePath:path];
     }
     return self;
+}
+
+- (void)loadView{
+    [super loadView];
+    
+    [[self view] addSubview:[self evvRenderContent]];
+    [[self view] addSubview:[self evvVideoPlayerControl]];
+    
+    [self _efInstallConstraints];
+}
+
+#pragma mark - accessory
+
+- (FBMovieGLView *)evvRenderContent{
+    
+    if (!_evvRenderContent) {
+        
+        _evvRenderContent = [FBMovieGLView emptyFrameView];
+    }
+    return _evvRenderContent;
+}
+
+- (FBVideoPlayer *)evVideoPlayer{
+    
+    if (!_evVideoPlayer) {
+        
+        _evVideoPlayer = [[FBVideoPlayer alloc] initWithPath:[self evResourcePath]
+                                                  renderView:[self evvRenderContent]
+                                                   parameter:[self evParameter]];
+    }
+    return _evVideoPlayer;
+}
+
+- (FBVideoPlayerControlView *)evvVideoPlayerControl{
+    
+    if (!_evvVideoPlayerControl) {
+        
+        _evvVideoPlayerControl = [[FBVideoPlayerControlView alloc] initWithPlayer:[self evVideoPlayer]];
+    }
+    return _evvVideoPlayerControl;
+}
+
+#pragma mark - private
+
+- (void)_efInstallConstraints{
+    
+    @weakify(self);
+    [[self evvRenderContent] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        
+        make.edges.equalTo(self).insets(UIEdgeInsetsZero);
+    }];
+    
+    [[self evvVideoPlayerControl] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        
+        make.edges.equalTo(self).insets(UIEdgeInsetsZero);
+    }];
 }
 
 - (void)dealloc{
