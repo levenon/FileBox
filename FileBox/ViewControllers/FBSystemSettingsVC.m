@@ -43,7 +43,7 @@
 
 - (NSMutableArray *)evMutItems{
 
-    if (!_evMutItems){
+    if (!_evMutItems) {
 
         _evMutItems = [NSMutableArray array];
 
@@ -54,7 +54,7 @@
                                     @"accessory":[NSNumber numberWithBool:etPasswordEnable],
                                     @"destination":@"didClickEnablePassword:"}];
 
-        if (etPasswordEnable){
+        if (etPasswordEnable) {
             [etSectionFirst addObject:[self etRestPasswordItem]];
         }
 
@@ -105,7 +105,7 @@
 
     NSDictionary *etItem = [[[self evMutItems] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     UITableViewCell *etCell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCellDefault"];
-    if (!etCell){
+    if (!etCell) {
 
         etCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"UITableViewCellDefault"];
     }
@@ -113,13 +113,13 @@
     [[etCell detailTextLabel] setText:ntoe([etItem objectForKey:@"detail"])];
     [etCell setSelectionStyle:select([etItem objectForKey:@"destination"], UITableViewCellSelectionStyleGray, UITableViewCellSelectionStyleNone)];
 
-    if ([etItem objectForKey:@"accessory"]){
+    if ([etItem objectForKey:@"accessory"]) {
         UISwitch *etswtEnablePassword = [[UISwitch alloc] init];
         [etswtEnablePassword addTarget:self action:@selector(didClickEnablePassword:)forControlEvents:UIControlEventTouchUpInside];
         [etswtEnablePassword setOn:[[etItem objectForKey:@"accessory"] boolValue]];
         [etCell setAccessoryView:etswtEnablePassword];
     }
-    if ([etItem objectForKey:@"accessoryType"]){
+    if ([etItem objectForKey:@"accessoryType"]) {
         [etCell setAccessoryType:[[etItem objectForKey:@"accessoryType"] integerValue]];
     }
 
@@ -132,7 +132,7 @@
     NSDictionary *etItem = [[[self evMutItems] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     NSString *etSelectorName = [etItem objectForKey:@"destination"];
 
-    if ([etSelectorName length]){
+    if ([etSelectorName length]) {
 
         SEL etSelector = NSSelectorFromString(etSelectorName);
         [self performSelector:etSelector withObject:etItem];
@@ -143,7 +143,7 @@
 
 - (IBAction)didClickEnablePassword:(UISwitch*)sender{
 
-    if ([sender isOn]){
+    if ([sender isOn]) {
 
         [[[self evMutItems] objectAtIndex:0] insertObject:[self etRestPasswordItem] atIndex:1];
         [[self tableView] insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -159,14 +159,14 @@
 
 - (IBAction)didClickResetPassword:(id)sender{
 
-    if ([[[FBLockManager sharedInstance] evPassword] length]){
+    if ([[[FBLockManager sharedInstance] evPassword] length]) {
 
         [FBLockManager efResetPasswordWithResultBlock:nil];
     }
     else{
-        [FBLockManager efResetPasswordWithResultBlock:^(BOOL success){
+        [FBLockManager efResetPasswordWithResultBlock:^(BOOL success) {
 
-            if (success){
+            if (success) {
                 
                 [[[self evMutItems] objectAtIndex:0] replaceObjectAtIndex:1 withObject:[self etRestPasswordItem]];
                 [[self tableView] reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];

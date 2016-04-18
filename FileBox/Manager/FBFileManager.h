@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <XLFCommonKit/XLFCommonKit.h>
 
-typedef NS_ENUM(NSInteger, FBFileType){
+typedef NS_ENUM(NSInteger, FBFileType) {
     
     FBFileTypeUnknown,
     FBFileTypeFolder,

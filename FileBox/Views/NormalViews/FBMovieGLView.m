@@ -72,8 +72,8 @@ NSString *const yuvFragmentShaderString = SHADER_STRING
  }
 );
 
-static BOOL validateProgram(GLuint prog)
-{
+static BOOL validateProgram(GLuint prog){
+    
 	GLint status;
 	
     glValidateProgram(prog);
@@ -91,7 +91,7 @@ static BOOL validateProgram(GLuint prog)
 #endif
     
     glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
-    if (status == GL_FALSE){
+    if (status == GL_FALSE) {
 		LoggerVideo(0, @"Failed to validate program %d", prog);
         return NO;
     }
@@ -99,13 +99,13 @@ static BOOL validateProgram(GLuint prog)
 	return YES;
 }
 
-static GLuint compileShader(GLenum type, NSString *shaderString)
-{
+static GLuint compileShader(GLenum type, NSString *shaderString){
+    
 	GLint status;
 	const GLchar *sources = (GLchar *)shaderString.UTF8String;
 	
     GLuint shader = glCreateShader(type);
-    if (shader == 0 || shader == GL_INVALID_ENUM){
+    if (shader == 0 || shader == GL_INVALID_ENUM) {
         LoggerVideo(0, @"Failed to create shader %d", type);
         return 0;
     }
@@ -126,7 +126,7 @@ static GLuint compileShader(GLenum type, NSString *shaderString)
 #endif
     
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE){
+    if (status == GL_FALSE) {
         glDeleteShader(shader);
 		LoggerVideo(0, @"Failed to compile shader:\n");
         return 0;
@@ -135,8 +135,8 @@ static GLuint compileShader(GLenum type, NSString *shaderString)
 	return shader;
 }
 
-static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float near, float far, float* mout)
-{
+static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float near, float far, float* mout){
+    
 	float r_l = right - left;
 	float t_b = top - bottom;
 	float f_n = far - near;
@@ -186,23 +186,23 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
 
 @implementation FBMovieGLRenderer_RGB
 
-- (BOOL)isValid
-{
+- (BOOL)isValid{
+    
     return (_texture != 0);
 }
 
-- (NSString *)fragmentShader
-{
+- (NSString *)fragmentShader{
+    
     return rgbFragmentShaderString;
 }
 
-- (void)resolveUniforms:(GLuint)program
-{
+- (void)resolveUniforms:(GLuint)program{
+    
     _uniformSampler = glGetUniformLocation(program, "s_texture");
 }
 
-- (void)setFrame:(FBVideoFrame *)frame
-{
+- (void)setFrame:(FBVideoFrame *)frame{
+    
     FBVideoFrameRGB *rgbFrame = (FBVideoFrameRGB *)frame;
    
     assert(rgbFrame.rgb.length == rgbFrame.width * rgbFrame.height * 3);
@@ -230,8 +230,8 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-- (BOOL)prepareRender
-{
+- (BOOL)prepareRender{
+    
     if (_texture == 0)
         return NO;
     
@@ -242,9 +242,9 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     return YES;
 }
 
-- (void)dealloc
-{
-    if (_texture){
+- (void)dealloc{
+    
+    if (_texture) {
         glDeleteTextures(1, &_texture);
         _texture = 0;
     }
@@ -261,25 +261,25 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
 
 @implementation FBMovieGLRenderer_YUV
 
-- (BOOL)isValid
-{
+- (BOOL)isValid{
+    
     return (_textures[0] != 0);
 }
 
-- (NSString *)fragmentShader
-{
+- (NSString *)fragmentShader{
+    
     return yuvFragmentShaderString;
 }
 
-- (void)resolveUniforms:(GLuint)program
-{
+- (void)resolveUniforms:(GLuint)program{
+    
     _uniformSamplers[0] = glGetUniformLocation(program, "s_texture_y");
     _uniformSamplers[1] = glGetUniformLocation(program, "s_texture_u");
     _uniformSamplers[2] = glGetUniformLocation(program, "s_texture_v");
 }
 
-- (void)setFrame:(FBVideoFrame *)frame
-{
+- (void)setFrame:(FBVideoFrame *)frame{
+    
     FBVideoFrameYUV *yuvFrame = (FBVideoFrameYUV *)frame;
     
     assert(yuvFrame.luma.length == yuvFrame.width * yuvFrame.height);
@@ -298,7 +298,7 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     const int widths[3]  = { frameWidth, frameWidth / 2, frameWidth / 2 };
     const int heights[3] = { frameHeight, frameHeight / 2, frameHeight / 2 };
     
-    for (int i = 0; i < 3; ++i){
+    for (int i = 0; i < 3; ++i) {
         
         glBindTexture(GL_TEXTURE_2D, _textures[i]);
         
@@ -319,12 +319,12 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     }     
 }
 
-- (BOOL)prepareRender
-{
+- (BOOL)prepareRender{
+    
     if (_textures[0] == 0)
         return NO;
     
-    for (int i = 0; i < 3; ++i){
+    for (int i = 0; i < 3; ++i) {
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, _textures[i]);
         glUniform1i(_uniformSamplers[i], i);
@@ -333,8 +333,8 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     return YES;
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
+    
     if (_textures[0])
         glDeleteTextures(3, _textures);
 }
@@ -352,7 +352,9 @@ enum {
 
 @interface FBMovieGLView ()
 
-@property(nonatomic, assign) FBMovieDecoder  *decoder;
+@property(nonatomic, strong) FBMovieDecoder  *decoder;
+
+@property(nonatomic, strong) id<FBMovieGLRenderer> renderer;
 
 @end
 
@@ -366,50 +368,48 @@ enum {
     GLuint          _program;
     GLint           _uniformMatrix;
     GLfloat         _vertices[8];
-    
-    id<FBMovieGLRenderer> _renderer;
 }
 
-+ (Class)layerClass
-{
++ (Class)layerClass{
+    
 	return [CAEAGLLayer class];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
+    
     _renderer = nil;
 
-    if (_framebuffer){
+    if (_framebuffer) {
         glDeleteFramebuffers(1, &_framebuffer);
         _framebuffer = 0;
     }
     
-    if (_renderbuffer){
+    if (_renderbuffer) {
         glDeleteRenderbuffers(1, &_renderbuffer);
         _renderbuffer = 0;
     }
     
-    if (_program){
+    if (_program) {
         glDeleteProgram(_program);
         _program = 0;
     }
 	
-	if ([EAGLContext currentContext] == _context){
+	if ([EAGLContext currentContext] == _context) {
 		[EAGLContext setCurrentContext:nil];
 	}
     
 	_context = nil;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
+    
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
-    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)[self layer]];
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
 	
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if (status != GL_FRAMEBUFFER_COMPLETE){
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
 		
         LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
         
@@ -419,19 +419,20 @@ enum {
     }
     
     [self updateVertices];
-    [self render:nil];
+    [self epRenderWithFrame:nil];
 }
 
-- (void)setContentMode:(UIViewContentMode)contentMode
-{
+- (void)setContentMode:(UIViewContentMode)contentMode{
+    
     [super setContentMode:contentMode];
     [self updateVertices];
-    if (_renderer.isValid)
-        [self render:nil];
+    if ([[self renderer] isValid]) {
+        [self epRenderWithFrame:nil];
+    }
 }
 
-- (BOOL)loadShaders
-{
+- (BOOL)loadShaders{
+    
     BOOL result = NO;
     GLuint vertShader = 0, fragShader = 0;
     
@@ -454,7 +455,7 @@ enum {
     
     GLint status;
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE){
+    if (status == GL_FALSE) {
 		LoggerVideo(0, @"Failed to link program %d", _program);
         goto exit;
     }
@@ -471,7 +472,7 @@ exit:
     if (fragShader)
         glDeleteShader(fragShader);
     
-    if (result){
+    if (result) {
         
         LoggerVideo(1, @"OK setup GL programm");
         
@@ -484,8 +485,8 @@ exit:
     return result;
 }
 
-- (void)updateVertices
-{
+- (void)updateVertices{
+    
     const BOOL fit      = (self.contentMode == UIViewContentModeScaleAspectFit);
     const float width   = _decoder.frameWidth;
     const float height  = _decoder.frameHeight;
@@ -507,9 +508,11 @@ exit:
 
 #pragma mark - FBMovieRenderView
 
-- (void)setup:(FBMovieDecoder *)decoder;{
+- (void)epSetupWithDecoder:(FBMovieDecoder *)decoder;{
     
-    if ([decoder setupVideoFrameFormat:FBVideoFrameFormatYUV]){
+    self.decoder = decoder;
+    
+    if ([decoder setupVideoFrameFormat:FBVideoFrameFormatYUV]) {
         
         _renderer = [[FBMovieGLRenderer_YUV alloc] init];
         LoggerVideo(1, @"OK use YUV GL renderer");
@@ -530,7 +533,7 @@ exit:
     _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!_context ||
-        ![EAGLContext setCurrentContext:_context]){
+        ![EAGLContext setCurrentContext:_context]) {
         
         LoggerVideo(0, @"failed to setup EAGLContext");
         return;
@@ -546,20 +549,20 @@ exit:
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
     
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE){
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
         
         LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
         return;
     }
     
     GLenum glError = glGetError();
-    if (GL_NO_ERROR != glError){
+    if (GL_NO_ERROR != glError) {
         
         LoggerVideo(0, @"failed to setup GL %x", glError);
         return;
     }
     
-    if (![self loadShaders]){
+    if (![self loadShaders]) {
         return;
     }
     
@@ -575,8 +578,8 @@ exit:
     LoggerVideo(1, @"OK setup GL");
 }
 
-- (void)render:(FBVideoFrame *)frame
-{
+- (void)epRenderWithFrame:(FBVideoFrame *)frame{
+    
     static const GLfloat texCoords[] = {
         0.0f, 1.0f,
         1.0f, 1.0f,
@@ -592,11 +595,11 @@ exit:
     glClear(GL_COLOR_BUFFER_BIT);
 	glUseProgram(_program);
         
-    if (frame){
+    if (frame) {
         [_renderer setFrame:frame];        
     }
     
-    if ([_renderer prepareRender]){
+    if ([_renderer prepareRender]) {
         
         GLfloat modelviewProj[16];
         mat4f_LoadOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, modelviewProj);
@@ -620,6 +623,10 @@ exit:
     
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];
+}
+
+- (void)epDecoder:(FBMovieDecoder *)decoder didFailedSetupWithError:(NSError *)error;{
+    
 }
 
 @end

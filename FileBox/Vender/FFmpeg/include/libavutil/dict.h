@@ -56,7 +56,7 @@
    char *v = av_strdup("value");     // you can avoid copying them like this
    av_dict_set(&d, k, v, AV_DICT_DONT_STRDUP_KEY | AV_DICT_DONT_STRDUP_VAL);
 
-   while (t = av_dict_get(d, "", t, AV_DICT_IGNORE_SUFFIX)){
+   while (t = av_dict_get(d, "", t, AV_DICT_IGNORE_SUFFIX)) {
        <....>                             // iterate over all entries in d
    }
    av_dict_free(&d);

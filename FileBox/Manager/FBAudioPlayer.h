@@ -17,8 +17,6 @@ typedef void (^FBAudioPlayerOutputBlock)(float *data, UInt32 numFrames, UInt32 n
 
 @interface FBAudioPlayer :NSObject
 
-+ (FBAudioPlayer *)shareAudioPlayer;
-
 @property (nonatomic, readonly, assign)  UInt32             numOutputChannels;
 @property (nonatomic, readonly, assign)  Float64            samplingRate;
 @property (nonatomic, readonly, assign)  UInt32             numBytesPerSample;

@@ -12,10 +12,10 @@
 
 @protocol FBMovieRenderView <NSObject>
 
-- (id)initWithFrame:(CGRect)frame;
+- (void)epSetupWithDecoder:(FBMovieDecoder *)decoder;
 
-- (void)setup:(FBMovieDecoder *)decoder;
+- (void)epRenderWithFrame:(FBMovieFrame *)frame;
 
-- (void)render:(FBVideoFrame *)frame;
+- (void)epDecoder:(FBMovieDecoder *)decoder didFailedSetupWithError:(NSError *)error;
 
 @end

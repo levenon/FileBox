@@ -108,7 +108,7 @@ static inline char *av_make_error_string(char *errbuf, size_t errbuf_size, int e
  * function arguments but never stand-alone.
  */
 #define av_err2str(errnum)\
-    av_make_error_string((char[AV_ERROR_MAX_STRING_SIZE]){0}, AV_ERROR_MAX_STRING_SIZE, errnum)
+    av_make_error_string((char[AV_ERROR_MAX_STRING_SIZE]) {0}, AV_ERROR_MAX_STRING_SIZE, errnum)
 
 /**
  * @}

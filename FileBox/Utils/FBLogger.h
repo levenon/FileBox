@@ -30,9 +30,9 @@
 #endif
 #else
 
-#    define LoggerStream(...)        while(0){}
-#    define LoggerVideo(...)         while(0){}
-#    define LoggerAudio(...)         while(0){}
+#    define LoggerStream(...)        while(0) {}
+#    define LoggerVideo(...)         while(0) {}
+#    define LoggerAudio(...)         while(0) {}
 
 #endif
 

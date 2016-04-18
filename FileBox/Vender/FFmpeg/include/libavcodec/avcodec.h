@@ -4237,7 +4237,7 @@ AVCodecParserContext *av_parser_init(int codec_id);
  *
  * Example:
  * @code
- *   while(in_len){
+ *   while(in_len) {
  *       len = av_parser_parse2(myparser, AVCodecContext, &data, &size,
  *                                        in_data, in_len,
  *                                        pts, dts, pos);

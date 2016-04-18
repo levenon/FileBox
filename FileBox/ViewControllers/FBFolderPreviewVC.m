@@ -64,7 +64,7 @@
 
     NSError *etError = nil;
 
-    if (![NSFileManager fileExistsAtPath:[self evPath]]){
+    if (![NSFileManager fileExistsAtPath:[self evPath]]) {
         [NSFileManager createDirectoryAtPath:[self evPath] withIntermediateDirectories:YES attributes:nil error:&etError];
 
         NSAssert(!etError, [etError description]);
@@ -102,9 +102,9 @@
     BOOL etIsDirectory = NO;
     NSString *etFolderPath = [[self evPath] stringByAppendingPathComponent:folderName];
 
-    if (![NSFileManager fileExistsAtPath:etFolderPath isDirectory:&etIsDirectory] || !etIsDirectory){
+    if (![NSFileManager fileExistsAtPath:etFolderPath isDirectory:&etIsDirectory] || !etIsDirectory) {
 
-        if ([NSFileManager createDirectoryAtPath:etFolderPath withIntermediateDirectories:YES attributes:nil error:nil]){
+        if ([NSFileManager createDirectoryAtPath:etFolderPath withIntermediateDirectories:YES attributes:nil error:nil]) {
 
             [[self evFiles] insertObject:folderName atIndex:0];
             [[self tableView] insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -133,9 +133,9 @@
     NSString *etSouceFilePath = [[self evPath] stringByAppendingPathComponent:etSourceFileName];
     NSString *etResultFilePath = [[self evPath] stringByAppendingPathComponent:etSourceFileName];
 
-    if (![NSFileManager fileExistsAtPath:etResultFilePath isDirectory:&etIsDirectory] || etIsDirectory){
+    if (![NSFileManager fileExistsAtPath:etResultFilePath isDirectory:&etIsDirectory] || etIsDirectory) {
 
-        if ([NSFileManager moveItemAtPath:etSouceFilePath toPath:etResultFilePath error:nil]){
+        if ([NSFileManager moveItemAtPath:etSouceFilePath toPath:etResultFilePath error:nil]) {
 
             [NSFileManager removeItemAtPath:etSouceFilePath error:nil];
             [[self evFiles] replaceObjectAtIndex:[indexPath row] withObject:etResultFileName];
@@ -154,7 +154,7 @@
 
     [[self evlbPrompt] removeFromSuperview];
 
-    if (![[self evFiles] count]){
+    if (![[self evFiles] count]) {
 
         [[self tableView] addSubview:[self evlbPrompt]];
     }
@@ -163,7 +163,7 @@
 #pragma mark - accessory
 
 - (NSMutableArray*)evFiles{
-    if (!_evFiles){
+    if (!_evFiles) {
 
         _evFiles = [NSMutableArray array];
     }
@@ -171,7 +171,7 @@
 }
 
 - (UILabel*)evlbPrompt{
-    if (!_evlbPrompt){
+    if (!_evlbPrompt) {
 
         _evlbPrompt = [[UILabel alloc] initWithFrame:[[self tableView] bounds]];
         [_evlbPrompt setText:NSLocalizedString(@"10", @"No any file")];
@@ -183,7 +183,7 @@
 
 - (void)setEvatAlert:(UIAlertView *)evatAlert{
 
-    if (_evatAlert != evatAlert){
+    if (_evatAlert != evatAlert) {
 
         [_evatAlert dismissWithClickedButtonIndex:[_evatAlert cancelButtonIndex] animated:NO];
 
@@ -202,7 +202,7 @@
 
     FBFileSummaryCell *etFileSummaryCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FBFileSummaryCell class])];
     
-    if (!etFileSummaryCell){
+    if (!etFileSummaryCell) {
         
         etFileSummaryCell = [[FBFileSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([FBFileSummaryCell class])];
     }
@@ -228,9 +228,9 @@
 
     //    BOOL needLock = [FBLockManager efNeedLockForFilePath:etFilePath];
     //
-    //    UITableViewRowAction *etLockRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:select(needLock, @"解锁", @"加锁")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    //    UITableViewRowAction *etLockRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:select(needLock, @"解锁", @"加锁")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
     //
-    //        if (needLock){
+    //        if (needLock) {
     //            [FBLockManager efRemoveLockForFilePath:etFilePath];
     //        }
     //        else{
@@ -239,7 +239,7 @@
     //        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     //    }];
 
-    UITableViewRowAction *etRenameRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"9", @"Rename")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *etRenameRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"9", @"Rename")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
 
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
 
@@ -248,7 +248,7 @@
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }];
 
-    UITableViewRowAction *etMoveRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"11", @"Move")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *etMoveRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"11", @"Move")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
 
         NSString *etFilePath = [[self evPath] stringByAppendingPathComponent:[[etWeakSelf evFiles] objectAtIndex:[indexPath row]]];
 
@@ -265,7 +265,7 @@
         }];
     }];
 
-    UITableViewRowAction *etDeleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"12", @"Delete")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *etDeleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"12", @"Delete")handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
 
         NSString *etFilePath = [[self evPath] stringByAppendingPathComponent:[[etWeakSelf evFiles] objectAtIndex:[indexPath row]]];
 
@@ -275,7 +275,7 @@
             BOOL state = [FBFileManager efRemoveItemAtPath:etFilePath error:&etError];
             NSAssert(!etError, [etError description]);
 
-            if (state){
+            if (state) {
 
                 [[etWeakSelf evFiles] removeObjectAtIndex:[indexPath row]];
                 [[etWeakSelf tableView] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -299,7 +299,7 @@
     BOOL isDirectory = NO;
     BOOL isExist = [NSFileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
 
-    if (isExist && isDirectory){
+    if (isExist && isDirectory) {
 
         FBFolderPreviewVC *folderVC = [[FBFolderPreviewVC alloc] init];
         [folderVC setEvPath:filePath];
@@ -339,7 +339,7 @@
     NSInteger etIndex = [[self evFiles] indexOfObject:etFileName];
 
     NSError *etError = nil;
-    if ([FBFileManager efMoveItemAtPath:[vc evWillMoveFilePath] toPath:[folderPath stringByAppendingPathComponent:etFileName] error:&etError]){
+    if ([FBFileManager efMoveItemAtPath:[vc evWillMoveFilePath] toPath:[folderPath stringByAppendingPathComponent:etFileName] error:&etError]) {
 
         [[self evFiles] removeObjectAtIndex:etIndex];
         [[self tableView] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:etIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -356,12 +356,12 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
-    if (buttonIndex != [alertView cancelButtonIndex]){
+    if (buttonIndex != [alertView cancelButtonIndex]) {
 
         NSString *etFileName = [[alertView textFieldAtIndex:0] text];
-        if ([etFileName length]){
+        if ([etFileName length]) {
 
-            if ([alertView evUserInfo]){
+            if ([alertView evUserInfo]) {
 
                 [self _efRenameFileName:etFileName indexPath:[alertView evUserInfo]];
             }

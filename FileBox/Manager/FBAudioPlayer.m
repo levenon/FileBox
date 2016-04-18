@@ -51,20 +51,10 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 @implementation FBAudioPlayer
 
-+ (FBAudioPlayer *)shareAudioPlayer{
-    
-    static FBAudioPlayer *shareAudioPlayer = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        shareAudioPlayer = [[FBAudioPlayer alloc] init];
-    });
-    return shareAudioPlayer;
-}
-
 - (id)init{
         
     self = [super init];
-	if (self){
+	if (self) {
         
         _outData = (float *)calloc(MAX_FRAME_SIZE*MAX_CHAN, sizeof(float));
         _outputVolume = 0.5;        
@@ -74,7 +64,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (void)dealloc{
     
-    if (_outData){
+    if (_outData) {
         
         free(_outData);
         _outData = NULL;
@@ -180,7 +170,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     if (checkError(AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration,
                                             sizeof(preferredBufferSize),
                                             &preferredBufferSize),
-                    "Couldn't set the preferred buffer duration")){
+                    "Couldn't set the preferred buffer duration")) {
         
         // just warning
     }
@@ -228,7 +218,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                                         0,
                                         &_outputFormat,
                                         size),
-                   "Couldn't set the hardware output stream format")){
+                   "Couldn't set the hardware output stream format")) {
         
         // just warning
     }
@@ -301,11 +291,11 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 - (BOOL)renderFrames:(UInt32)numFrames
                ioData:(AudioBufferList *)ioData{
     
-    for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer){
+    for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer) {
         memset(ioData->mBuffers[iBuffer].mData, 0, ioData->mBuffers[iBuffer].mDataByteSize);
     }
     
-    if (_playing && _outputBlock ){
+    if (_playing && _outputBlock ) {
     
         // Collect data to render from the callbacks
         _outputBlock(_outData, numFrames, _numOutputChannels);
@@ -315,11 +305,11 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         {
             float zero = 0.0;
             
-            for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer){
+            for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer) {
                 
                 int thisNumChannels = ioData->mBuffers[iBuffer].mNumberChannels;
                 
-                for (int iChannel = 0; iChannel < thisNumChannels; ++iChannel){
+                for (int iChannel = 0; iChannel < thisNumChannels; ++iChannel) {
                     vDSP_vsadd(_outData+iChannel, _numOutputChannels, &zero, (float *)ioData->mBuffers[iBuffer].mData, thisNumChannels, numFrames);
                 }
             }
@@ -337,11 +327,11 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                           (uint)ioData->mNumberBuffers, (uint)ioData->mBuffers[0].mNumberChannels, (uint)numFrames);
 #endif
 
-            for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer){
+            for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer) {
                 
                 int thisNumChannels = ioData->mBuffers[iBuffer].mNumberChannels;
                 
-                for (int iChannel = 0; iChannel < thisNumChannels; ++iChannel){
+                for (int iChannel = 0; iChannel < thisNumChannels; ++iChannel) {
                     vDSP_vfix16(_outData+iChannel, _numOutputChannels, (SInt16 *)ioData->mBuffers[iBuffer].mData+iChannel, thisNumChannels, numFrames);
                 }
 #ifdef DUMP_AUDIO_DATA
@@ -361,9 +351,9 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (BOOL)activateAudioSession{
     
-    if (!_activated){
+    if (!_activated) {
         
-        if (!_initialized){
+        if (!_initialized) {
             
             if (checkError(AudioSessionInitialize(NULL,
                                                   kCFRunLoopDefaultMode,
@@ -376,7 +366,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         }
         
         if ([self checkAudioRoute] &&
-            [self setupAudio]){
+            [self setupAudio]) {
             
             _activated = YES;
         }
@@ -387,7 +377,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (void)deactivateAudioSession{
     
-    if (_activated){
+    if (_activated) {
      
         [self pause];
                 
@@ -428,7 +418,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (void)pause{
     	
-	if (_playing){
+	if (_playing) {
         
         _playing = checkError(AudioOutputUnitStop(_audioUnit),
                              "Couldn't stop the output unit");
@@ -437,9 +427,9 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (BOOL)play{
         
-    if (!_playing){
+    if (!_playing) {
         
-        if ([self activateAudioSession]){
+        if ([self activateAudioSession]) {
             
             _playing = !checkError(AudioOutputUnitStart(_audioUnit),
                                    "Couldn't start the output unit");
@@ -456,39 +446,39 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 static void sessionPropertyListener(void *                  inClientData,
                                     AudioSessionPropertyID  inID,
                                     UInt32                  inDataSize,
-                                    const void *            inData){
+                                    const void *            inData) {
     
     FBAudioPlayer *sm = (__bridge FBAudioPlayer *)inClientData;
     
-	if (inID == kAudioSessionProperty_AudioRouteChange){
+	if (inID == kAudioSessionProperty_AudioRouteChange) {
         
-        if ([sm checkAudioRoute]){
+        if ([sm checkAudioRoute]) {
             [sm checkSessionProperties];
         }
         
-    } else if (inID == kAudioSessionProperty_CurrentHardwareOutputVolume){
+    } else if (inID == kAudioSessionProperty_CurrentHardwareOutputVolume) {
         
-        if (inData && inDataSize == 4){
+        if (inData && inDataSize == 4) {
 
             sm.outputVolume = *(float *)inData;
         }
     }
 }
 
-static void sessionInterruptionListener(void *inClientData, UInt32 inInterruption){
+static void sessionInterruptionListener(void *inClientData, UInt32 inInterruption) {
         
     FBAudioPlayer *sm = (__bridge FBAudioPlayer *)inClientData;
     
-	if (inInterruption == kAudioSessionBeginInterruption){
+	if (inInterruption == kAudioSessionBeginInterruption) {
         
 		LoggerAudio(2, @"Begin interuption");
         sm.playAfterSessionEndInterruption = sm.playing;
         [sm pause];
                 
-	} else if (inInterruption == kAudioSessionEndInterruption){
+	} else if (inInterruption == kAudioSessionEndInterruption) {
 		
         LoggerAudio(2, @"End interuption");
-        if (sm.playAfterSessionEndInterruption){
+        if (sm.playAfterSessionEndInterruption) {
             sm.playAfterSessionEndInterruption = NO;
             [sm play];
         }
@@ -500,13 +490,13 @@ static OSStatus renderCallback (void						*inRefCon,
                                 const AudioTimeStamp 		* inTimeStamp,
                                 UInt32						inOutputBusNumber,
                                 UInt32						inNumberFrames,
-                                AudioBufferList				* ioData){
+                                AudioBufferList				* ioData) {
     
 	FBAudioPlayer *sm = (__bridge FBAudioPlayer *)inRefCon;
     return [sm renderFrames:inNumberFrames ioData:ioData];
 }
 
-static BOOL checkError(OSStatus error, const char *operation){
+static BOOL checkError(OSStatus error, const char *operation) {
     
 	if (error == noErr)
         return NO;
@@ -514,7 +504,7 @@ static BOOL checkError(OSStatus error, const char *operation){
 	char str[20] = {0};
 	// see if it appears to be a 4-char-code
 	*(UInt32 *)(str + 1)= CFSwapInt32HostToBig(error);
-	if (isprint(str[1])&& isprint(str[2])&& isprint(str[3])&& isprint(str[4])){
+	if (isprint(str[1])&& isprint(str[2])&& isprint(str[3])&& isprint(str[4])) {
 		str[0] = str[5] = '\'';
 		str[6] = '\0';
 	} else

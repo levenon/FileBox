@@ -31,11 +31,11 @@ enum {
 
 @interface FBMovieParameter :NSObject
 
-@property(nonatomic, assign)CGFloat minBufferedDuration;
+@property(nonatomic, assign) NSUInteger evMinBufferedDuration;
 
-@property(nonatomic, assign)CGFloat maxBufferedDuration;
+@property(nonatomic, assign) NSUInteger evMaxBufferedDuration;
 
-@property(nonatomic, assign)CGFloat deinterlacingEnable;
+@property(nonatomic, assign) NSUInteger evDeinterlacingEnable;
 
 @end
 
@@ -43,7 +43,13 @@ enum {
 
 @protocol FBVideoPlayerDelegate <NSObject>
 
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didFailedSetupWithError:(NSError *)error;
+
 - (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position;
+
+- (void)epWillBeginLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;
+
+- (void)epDidEndLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;
 
 @end
 
@@ -51,21 +57,23 @@ enum {
 
 @property(nonatomic, assign) CGFloat evPosition;
 
-@property(nonatomic, assign) CGFloat evDuration;
+@property(nonatomic, assign, readonly) CGFloat evDuration;
 
-@property(nonatomic, assign, getter=evIsOver) BOOL evOver;
+@property(nonatomic, assign, readonly, getter=evIsOver) BOOL evOver;
 
-@property(nonatomic, assign, getter=evIsPlaying) BOOL evPlay;
+@property(nonatomic, assign, readonly, getter=evIsPlaying) BOOL evPlay;
 
-@property(nonatomic, strong, readonly) FBMovieParameter      *parameter;
+@property(nonatomic, strong, readonly) NSString              *evResourcePath;
+
+@property(nonatomic, strong, readonly) FBMovieParameter      *evParameter;
 
 @property(nonatomic, assign, readonly) id<FBMovieRenderView> evvRenderContent;
 
-@property(nonatomic, strong) XLFMulticastDelegate<FBVideoPlayerDelegate> *evProgressDelegates;
+@property(nonatomic, strong, readonly) XLFMulticastDelegate<FBVideoPlayerDelegate> *evDelegates;
 
 - (instancetype)initWithPath:(NSString *)path
-                  renderView:(id<FBMovieRenderView>)renderView
-                   parameter:(FBMovieParameter *)parameter;
+                   parameter:(FBMovieParameter *)parameter
+                  renderView:(id<FBMovieRenderView>)renderView;
 
 - (void)efPlay;
 - (void)efPause;

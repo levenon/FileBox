@@ -357,7 +357,7 @@ typedef struct AVOptionRanges {
      * AVOptionRanges *ranges;
      * AVOptionRange *range[3]; //may require more than 3 in the future.
      * av_opt_query_ranges(&ranges, obj, key, AV_OPT_MULTI_COMPONENT_RANGE);
-     * for (range_index = 0; range_index < ranges->nb_ranges; range_index++){
+     * for (range_index = 0; range_index < ranges->nb_ranges; range_index++) {
      *     for (component_index = 0; component_index < ranges->nb_components; component_index++)
      *         range[component_index] = ranges->range[ranges->nb_ranges * component_index + range_index];
      *     //do something with range here.

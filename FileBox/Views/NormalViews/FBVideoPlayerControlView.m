@@ -8,6 +8,26 @@
 
 #import "FBVideoPlayer.h"
 
+static NSString * egFormatTimeInterval(CGFloat seconds, BOOL isLeft)
+{
+    seconds = MAX(0, seconds);
+    
+    NSInteger s = seconds;
+    NSInteger m = s / 60;
+    NSInteger h = m / 60;
+    
+    s = s % 60;
+    m = m % 60;
+    
+    NSMutableString *format = [(isLeft && seconds >= 0.5 ? @"-" : @"")mutableCopy];
+    if (h != 0) [format appendFormat:@"%ld:%0.2ld", h, m];
+    else        [format appendFormat:@"%ld", m];
+    [format appendFormat:@":%0.2ld", s];
+    
+    return format;
+}
+
+
 @interface MPVolumeSlider : UISlider
 
 @end
@@ -58,7 +78,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 - (void)dealloc{
     
-    [[[self evPlayer] evProgressDelegates] removeDelegate:self];
+    [[[self evPlayer] evDelegates] removeDelegate:self];
 }
 
 - (instancetype)initWithPlayer:(FBVideoPlayer *)player;{
@@ -67,6 +87,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     if (self) {
         
         [self setEvPlayer:player];
+        [[player evDelegates] addDelegate:self];
         
         [self epCreateSubViews];
         [self epConfigSubViewsDefault];
@@ -99,23 +120,26 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     [[self evvContent] addSubview:[self evlbTotalTime]];
     [[self evvContent] addSubview:[self evsldPlayProgress]];
     [[self evvContent] addSubview:[self evbtnStepBackward]];
-    [[self evvContent] addGestureRecognizer:[self evpgrPanInContent]];
-    [[self evvContent] addGestureRecognizer:[self evpgrTapInContent]];
     
     [self addSubview:[self evlbProgressIndicator]];
     [self addSubview:[self evbtnLockScreen]];
+    
+    [self addGestureRecognizer:[self evpgrPanInContent]];
+    [self addGestureRecognizer:[self evpgrTapInContent]];
 }
 
 - (void)epConfigSubViewsDefault{
     
     [self setBackgroundColor:[UIColor clearColor]];
+    [[self evvContent] setBackgroundColor:[UIColor clearColor]];
     
-    [[[self evPlayer] evProgressDelegates] addDelegate:self];
+    [[[self evPlayer] evDelegates] addDelegate:self];
     
     [[self evbtnStepBackward] setImage:[UIImage imageNamed:@"FBMovie.bundle/play_back_full"] forState:UIControlStateNormal];
     [[self evbtnStepBackward] addTarget:self action:@selector(didClickStepBackward:) forControlEvents:UIControlEventTouchUpInside];
     
     [[self evaivLoading] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [[self evaivLoading] setBackgroundColor:[UIColor clearColor]];
     
     [[self evlbProgressIndicator] setHidden:YES];
     
@@ -132,10 +156,12 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     
     [[self evlbCurrentTime] setText:@"00:00"];
     [[self evlbCurrentTime] setTextColor:[UIColor whiteColor]];
+    [[self evlbCurrentTime] setTextAlignment:NSTextAlignmentCenter];
     [[self evlbCurrentTime] setFont:[UIFont systemFontOfSize:12.0f]];
     
     [[self evlbTotalTime] setText:@"00:00"];
     [[self evlbTotalTime] setTextColor:[UIColor whiteColor]];
+    [[self evlbTotalTime] setTextAlignment:NSTextAlignmentCenter];
     [[self evlbTotalTime] setFont:[UIFont systemFontOfSize:12.0f]];
     
     [[self evsldPlayProgress] setMinimumTrackTintColor:[UIColor whiteColor]];
@@ -164,7 +190,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         make.leading.equalTo(self.evvContent.mas_leading).offset(15);
         make.top.equalTo(self.evvContent.mas_top).offset(5);
-        make.width.height.mas_equalTo(30);
+        make.width.height.mas_equalTo(40);
     }];
     
     [self.evimgvTopGradientBackground mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -186,7 +212,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         make.leading.equalTo(self.evimgvBottomGradientBackground.mas_leading).offset(5);
         make.bottom.equalTo(self.evimgvBottomGradientBackground.mas_bottom).offset(-5);
-        make.width.height.mas_equalTo(30);
+        make.width.height.mas_equalTo(40);
     }];
     
     [self.evlbCurrentTime mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -194,7 +220,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         make.leading.equalTo(self.evbtnStart.mas_trailing).offset(-3);
         make.centerY.equalTo(self.evbtnStart.mas_centerY);
-        make.width.mas_equalTo(43);
+        make.width.mas_equalTo(60);
     }];
     
     [self.evlbTotalTime mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -202,7 +228,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         make.trailing.equalTo(self.evimgvBottomGradientBackground.mas_trailing).offset(-5);
         make.centerY.equalTo(self.evbtnStart.mas_centerY);
-        make.width.mas_equalTo(43);
+        make.width.mas_equalTo(60);
     }];
     
     [self.evsldPlayProgress mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -262,9 +288,9 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         MPVolumeView *volumeView = [[MPVolumeView alloc] init];
         
-        for (UIView *view in [volumeView subviews]){
+        for (UIView *view in [volumeView subviews]) {
             
-            if ([view isKindOfClass:[MPVolumeSlider class]]){
+            if ([view isKindOfClass:[MPVolumeSlider class]]) {
                 
                 _evsldVolume = (UISlider *)view;
                 break;
@@ -317,11 +343,18 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 - (void)_efUpdateContentDisplay:(BOOL)display{
     
+    if (display) {
+        [[self evvContent] setHidden:NO];
+        [[self evvContent] setAlpha:0];
+    }
     @weakify(self);
     [UIView animateWithDuration:0.3 animations:^{
         @strongify(self);
         
         [[self evvContent] setAlpha:display];
+    } completion:^(BOOL finished) {
+        
+        [[self evvContent] setHidden:!display];
     }];
 }
 
@@ -362,7 +395,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
                 [self _efUpdateProgressIndicatorDisplayState:YES];
             }
             // 垂直移动
-            else if (etHorizontalVelocty < etVerticalVelocty){
+            else if (etHorizontalVelocty < etVerticalVelocty) {
                 
                 // 调节亮度
                 if (etLocationPoint.x < CGRectGetWidth([self bounds]) / 2.) {
@@ -382,7 +415,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
                 
                 const CGFloat etPositionOffset = fabs(etTranslationOffset.x) * 0.33 * MAX(0.1, log10( fabs( etVeloctyPoint.x )) - 1.0);
         
-                if (etPositionOffset > 10){
+                if (etPositionOffset > 10) {
                     
                     [self _efWillUpdatePlayPositionOffset:(-1 + 2 * (etTranslationOffset.x > 0)) * MIN(etPositionOffset, 600.0)];
                 }
@@ -405,7 +438,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
                 
                 const CGFloat etPositionOffset = fabs(etTranslationOffset.x) * 0.33 * MAX(0.1, log10( fabs( etVeloctyPoint.x )) - 1.0);
                 
-                if (etPositionOffset > 10){
+                if (etPositionOffset > 10) {
                     
                     [self _efDidUpdatePlayPositionOffset:(-1 + 2 * (etTranslationOffset.x > 0)) * MIN(etPositionOffset, 600.0)];
                 }
@@ -439,7 +472,8 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     }
 }
 
-- (IBAction)didClickStart:(id)sender{
+- (IBAction)didClickStart:(UIButton *)sender{
+    [sender setSelected:![sender isSelected]];
     
     if ([[self evPlayer] evIsPlaying]) {
         
@@ -458,11 +492,34 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 #pragma mark - FBVideoPlayerDelegate
 
-- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position{
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didFailedSetupWithError:(NSError *)error;{
     
-    [[self evlbCurrentTime] setText:fmts(@"%.f:%d", position / 60, (int)position % 60)];
+    if ([self superview]) {
+        [self stopLoading];
+    }
+}
+
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position;{
     
-    [[self evlbTotalTime] setText:fmts(@"%.f:%d", [videoPlayer evDuration] / 60, (int)[videoPlayer evDuration] % 60)];
+    NSString *etCurrentTime = egFormatTimeInterval(position, NO);
+    
+    NSString *etLeftTime = egFormatTimeInterval([videoPlayer evDuration] - position, NO);
+    
+    [[self evlbCurrentTime] setText:etCurrentTime];
+    
+    [[self evlbTotalTime] setText:etLeftTime];
+    
+    [[self evsldPlayProgress] setValue:position/[videoPlayer evDuration] animated:YES];
+}
+
+- (void)epWillBeginLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;{
+
+    [self startLoading];
+}
+
+- (void)epDidEndLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;{
+    
+    [self stopLoading];
 }
 
 @end

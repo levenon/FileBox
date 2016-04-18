@@ -74,7 +74,7 @@
  * uint8_t **input;
  * int in_samples;
  *
- * while (get_input(&input, &in_samples)){
+ * while (get_input(&input, &in_samples)) {
  *     uint8_t *output;
  *     int out_samples = av_rescale_rnd(swr_get_delay(swr, 48000)+
  *                                      in_samples, 44100, 48000, AV_ROUND_UP);

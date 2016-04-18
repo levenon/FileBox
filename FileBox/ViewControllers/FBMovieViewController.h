@@ -11,16 +11,18 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FBBaseViewController.h"
+
 @class FBMovieParameter;
 
-@interface FBMovieViewController :UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface FBMovieViewController :UIViewController
 
 + (id)movieViewControllerWithContentPath:(NSString *)path
                                parameter:(FBMovieParameter *)parameter;
 
-@property (nonatomic, assign, readonly) BOOL playing;
+@property (nonatomic, assign, readonly, getter=evIsPlaying) BOOL evPlay;
 
-- (void)play;
-- (void)pause;
+- (void)efPlay;
+- (void)efPause;
 
 @end

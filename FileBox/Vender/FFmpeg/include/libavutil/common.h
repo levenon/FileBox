@@ -312,7 +312,7 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
         uint32_t top = (val & 128)>> 1;\
         if ((val & 0xc0)== 0x80 || val >= 0xFE)\
             ERROR\
-        while (val & top){\
+        while (val & top) {\
             int tmp= GET_BYTE - 128;\
             if(tmp>>6)\
                 ERROR\
@@ -335,7 +335,7 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
     val = GET_16BIT;\
     {\
         unsigned int hi = val - 0xD800;\
-        if (hi < 0x800){\
+        if (hi < 0x800) {\
             val = GET_16BIT - 0xDC00;\
             if (val > 0x3FFU || hi > 0x3FFU)\
                 ERROR\
@@ -363,7 +363,7 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
     {\
         int bytes, shift;\
         uint32_t in = val;\
-        if (in < 0x80){\
+        if (in < 0x80) {\
             tmp = in;\
             PUT_BYTE\
         } else {\
@@ -371,7 +371,7 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
             shift = (bytes - 1)* 6;\
             tmp = (256 - (256 >> bytes))| (in >> shift);\
             PUT_BYTE\
-            while (shift >= 6){\
+            while (shift >= 6) {\
                 shift -= 6;\
                 tmp = 0x80 | ((in >> shift)& 0x3f);\
                 PUT_BYTE\
@@ -396,7 +396,7 @@ static av_always_inline av_const int av_popcount64_c(uint64_t x)
 #define PUT_UTF16(val, tmp, PUT_16BIT)\
     {\
         uint32_t in = val;\
-        if (in < 0x10000){\
+        if (in < 0x10000) {\
             tmp = in;\
             PUT_16BIT\
         } else {\

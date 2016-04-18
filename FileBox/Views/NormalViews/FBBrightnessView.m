@@ -165,7 +165,6 @@
     @weakify(self);
     
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        @strongify(self);
         
         make.centerX.equalTo(etKeyWindow.mas_centerX).offset(0);
         make.centerY.equalTo(etKeyWindow.mas_centerY).offset(0);

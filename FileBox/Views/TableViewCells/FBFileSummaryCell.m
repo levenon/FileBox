@@ -14,7 +14,7 @@
 - (NSString *)defaultPathExtension{
     
     NSString *etPathExtension = [self pathExtension];
-    if (![etPathExtension length]){
+    if (![etPathExtension length]) {
         etPathExtension = @"Unknown";
     }
     return [etPathExtension uppercaseString];
@@ -35,7 +35,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 
-    if (self){
+    if (self) {
         
         [self epCreateSubViews];
         [self epConfigSubViewsDefault];
@@ -79,7 +79,7 @@
 - (void)epInstallConstraints{
     
     @weakify(self);
-    [[self evlbFileType] mas_makeConstraints:^(MASConstraintMaker *make){
+    [[self evlbFileType] mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
         
         make.left.equalTo(self.contentView.mas_leftMargin).offset(0);
@@ -88,7 +88,7 @@
         make.height.equalTo(@(40));
     }];
     
-    [[self evimgvFileType] mas_makeConstraints:^(MASConstraintMaker *make){
+    [[self evimgvFileType] mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
         
         make.left.equalTo(self.contentView.mas_leftMargin).offset(0);
@@ -97,7 +97,7 @@
         make.height.equalTo(@(40));
     }];
     
-    [[self evlbFileName] mas_makeConstraints:^(MASConstraintMaker *make){
+    [[self evlbFileName] mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
         
         make.left.equalTo(self.evlbFileType.mas_right).offset(10);
@@ -122,7 +122,7 @@
 
 - (void)setEvFilePath:(NSString *)evFilePath{
     
-    if (evFilePath != _evFilePath){
+    if (evFilePath != _evFilePath) {
         
         _evFilePath = [evFilePath copy];
     }
