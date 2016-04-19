@@ -1,4 +1,4 @@
-//
+    //
 //  FBVideoPlayerControlView
 //
 
@@ -7,6 +7,8 @@
 #import "FBVideoPlayerControlView.h"
 
 #import "FBVideoPlayer.h"
+
+#import "FBBrightnessView.h"
 
 static NSString * egFormatTimeInterval(CGFloat seconds, BOOL isLeft)
 {
@@ -79,6 +81,22 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 - (void)dealloc{
     
     [[[self evPlayer] evDelegates] removeDelegate:self];
+    
+    [self setEvPlayer:nil];
+    [self setEvbtnStart:nil];
+    [self setEvlbCurrentTime:nil];
+    [self setEvlbTotalTime:nil];
+    [self setEvsldPlayProgress:nil];
+    [self setEvbtnLockScreen:nil];
+    [self setEvlbProgressIndicator:nil];
+    [self setEvbtnStepBackward:nil];
+    [self setEvimgvTopGradientBackground:nil];
+    [self setEvimgvBottomGradientBackground:nil];
+    [self setEvsldVolume:nil];
+    [self setEvpgrPanInContent:nil];
+    [self setEvpgrTapInContent:nil];
+    
+    [self setEvvContent:nil];
 }
 
 - (instancetype)initWithPlayer:(FBVideoPlayer *)player;{
@@ -258,6 +276,20 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 - (void)epConfigSubViews{
     
+}
+
+#pragma mark - public
+
+- (void)didMoveToSuperview{
+    [super didMoveToSuperview];
+    
+    [[FBBrightnessView shareInstance] efRegisterObserver];
+}
+
+- (void)removeFromSuperview{
+    [super removeFromSuperview];
+    
+    [[FBBrightnessView shareInstance] efDeregisterObserver];
 }
 
 #pragma mark - accessory

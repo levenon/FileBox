@@ -87,26 +87,26 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
 @class FBAudioPlayer;
 @interface FBMovieDecoder :NSObject
 
-@property (readonly, nonatomic, strong) NSString *path;
-@property (readonly, nonatomic) BOOL isEOF;
-@property (readwrite,nonatomic) CGFloat position;
-@property (readonly, nonatomic) CGFloat duration;
-@property (readonly, nonatomic) CGFloat fps;
-@property (readonly, nonatomic) CGFloat sampleRate;
-@property (readonly, nonatomic) int frameWidth;
-@property (readonly, nonatomic) int frameHeight;
-@property (readonly, nonatomic) NSUInteger audioStreamsCount;
-@property (readwrite,nonatomic) NSInteger selectedAudioStream;
-@property (readonly, nonatomic) NSUInteger subtitleStreamsCount;
-@property (readwrite,nonatomic) NSInteger selectedSubtitleStream;
-@property (readonly, nonatomic) BOOL validVideo;
-@property (readonly, nonatomic) BOOL validAudio;
-@property (readonly, nonatomic) BOOL validSubtitles;
-@property (readonly, nonatomic, strong)NSDictionary *info;
-@property (readonly, nonatomic, strong)NSString *videoStreamFormatName;
-@property (readonly, nonatomic) BOOL isNetwork;
-@property (readonly, nonatomic) CGFloat startTime;
-@property (readwrite, nonatomic) BOOL deinterlacingEnable;
+@property (readonly, nonatomic, copy   ) NSString                        *resourcePath;
+@property (readonly, nonatomic         ) BOOL                            isEOF;
+@property (readwrite,nonatomic         ) CGFloat                         position;
+@property (readonly, nonatomic         ) CGFloat                         duration;
+@property (readonly, nonatomic         ) CGFloat                         fps;
+@property (readonly, nonatomic         ) CGFloat                         sampleRate;
+@property (readonly, nonatomic         ) int                             frameWidth;
+@property (readonly, nonatomic         ) int                             frameHeight;
+@property (readonly, nonatomic         ) NSUInteger                      audioStreamsCount;
+@property (readwrite,nonatomic         ) NSInteger                       selectedAudioStream;
+@property (readonly, nonatomic         ) NSUInteger                      subtitleStreamsCount;
+@property (readwrite,nonatomic         ) NSInteger                       selectedSubtitleStream;
+@property (readonly, nonatomic         ) BOOL                            validVideo;
+@property (readonly, nonatomic         ) BOOL                            validAudio;
+@property (readonly, nonatomic         ) BOOL                            validSubtitles;
+@property (readonly, nonatomic, strong ) NSDictionary                    *info;
+@property (readonly, nonatomic, copy   ) NSString                        *videoStreamFormatName;
+@property (readonly, nonatomic         ) BOOL                            isNetwork;
+@property (readonly, nonatomic         ) CGFloat                         startTime;
+@property (readwrite, nonatomic        ) BOOL                            deinterlacingEnable;
 @property (readwrite, nonatomic, strong) FBMovieDecoderInterruptCallback interruptCallback;
 
 @property (nonatomic, strong) FBAudioPlayer *audioPlayer;
@@ -120,7 +120,7 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
           audioPlayer:(FBAudioPlayer *)audioPlayer
                 error:(NSError **)error;
 
-- (BOOL)openFile:(NSString *)path
+- (BOOL)openFile:(NSString *)resourcePath
            error:(NSError **)perror;
 
 - (void)closeFile;

@@ -64,11 +64,18 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 - (void)dealloc{
     
+    [self pause];
+    
+    [self deactivateAudioSession];
+    
     if (_outData) {
         
         free(_outData);
         _outData = NULL;
     }
+    
+    [self setAudioRoute:nil];
+    [self setOutputBlock:nil];
 }
 
 - (void)setOutputVolume:(Float32)outputVolume{

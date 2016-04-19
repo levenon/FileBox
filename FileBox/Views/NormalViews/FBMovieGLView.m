@@ -377,7 +377,9 @@ enum {
 
 - (void)dealloc{
     
-    _renderer = nil;
+    [self setDecoder:nil];
+    
+    [self setRenderer:nil];
 
     if (_framebuffer) {
         glDeleteFramebuffers(1, &_framebuffer);

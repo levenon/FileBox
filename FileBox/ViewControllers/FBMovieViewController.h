@@ -15,7 +15,7 @@
 
 @class FBMovieParameter;
 
-@interface FBMovieViewController :UIViewController
+@interface FBMovieViewController :FBBaseViewController
 
 + (id)movieViewControllerWithContentPath:(NSString *)path
                                parameter:(FBMovieParameter *)parameter;

@@ -316,7 +316,7 @@ static int interrupt_callback(void *ctx);
     
     UIImage *image = nil;
     
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)(_rgb));
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)(self.rgb));
     if (provider) {
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         if (colorSpace) {
@@ -365,7 +365,7 @@ static int interrupt_callback(void *ctx);
     
     UIImage *image = nil;
     
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)(_picture));
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)(self.picture));
     if (provider) {
         
         CGImageRef imageRef = CGImageCreateWithJPEGDataProvider(provider,
@@ -397,30 +397,33 @@ static int interrupt_callback(void *ctx);
 
 @interface FBMovieDecoder ()
 
-@property (nonatomic, assign) AVFormatContext     *formatCtx;
-@property (nonatomic, assign) AVCodecContext      *videoCodecCtx;
-@property (nonatomic, assign) AVCodecContext      *audioCodecCtx;
-@property (nonatomic, assign) AVCodecContext      *subtitleCodecCtx;
-@property (nonatomic, assign) AVFrame             *videoFrame;
-@property (nonatomic, assign) AVFrame             *audioFrame;
-@property (nonatomic, assign) int                 videoStream;
-@property (nonatomic, assign) int                 audioStream;
-@property (nonatomic, assign) int                 subtitleStream;
-@property (nonatomic, assign) AVPicture           picture;
-@property (nonatomic, assign) BOOL                pictureValid;
-@property (nonatomic, assign) struct SwsContext   *swsContext;
-@property (nonatomic, assign) CGFloat             videoTimeBase;
-@property (nonatomic, assign) CGFloat             audioTimeBase;
-@property (nonatomic, strong) NSArray             *videoStreams;
-@property (nonatomic, strong) NSArray             *audioStreams;
-@property (nonatomic, strong) NSArray             *subtitleStreams;
-@property (nonatomic, assign) SwrContext          *swrContext;
-@property (nonatomic, assign) void                *swrBuffer;
-@property (nonatomic, assign) NSUInteger          swrBufferSize;
-@property (nonatomic, strong) NSDictionary        *info;
-@property (nonatomic, assign) FBVideoFrameFormat  videoFrameFormat;
-@property (nonatomic, assign) NSUInteger          artworkStream;
-@property (nonatomic, assign) NSInteger           subtitleASSEvents;
+@property (nonatomic, assign) BOOL               isNetwork;
+@property (nonatomic, assign) BOOL               isEOF;
+@property (nonatomic, copy  ) NSString           *resourcePath;
+@property (nonatomic, assign) AVFormatContext    *formatCtx;
+@property (nonatomic, assign) AVCodecContext     *videoCodecCtx;
+@property (nonatomic, assign) AVCodecContext     *audioCodecCtx;
+@property (nonatomic, assign) AVCodecContext     *subtitleCodecCtx;
+@property (nonatomic, assign) AVFrame            *videoFrame;
+@property (nonatomic, assign) AVFrame            *audioFrame;
+@property (nonatomic, assign) int                videoStream;
+@property (nonatomic, assign) int                audioStream;
+@property (nonatomic, assign) int                subtitleStream;
+@property (nonatomic, assign) AVPicture          picture;
+@property (nonatomic, assign) BOOL               pictureValid;
+@property (nonatomic, assign) struct SwsContext  *swsContext;
+@property (nonatomic, assign) CGFloat            videoTimeBase;
+@property (nonatomic, assign) CGFloat            audioTimeBase;
+@property (nonatomic, strong) NSArray            *videoStreams;
+@property (nonatomic, strong) NSArray            *audioStreams;
+@property (nonatomic, strong) NSArray            *subtitleStreams;
+@property (nonatomic, assign) SwrContext         *swrContext;
+@property (nonatomic, assign) void               *swrBuffer;
+@property (nonatomic, assign) NSUInteger         swrBufferSize;
+@property (nonatomic, strong) NSDictionary       *info;
+@property (nonatomic, assign) FBVideoFrameFormat videoFrameFormat;
+@property (nonatomic, assign) NSUInteger         artworkStream;
+@property (nonatomic, assign) NSInteger          subtitleASSEvents;
 
 @end
 
@@ -428,67 +431,67 @@ static int interrupt_callback(void *ctx);
 
 - (CGFloat)duration{
     
-    if (!_formatCtx)
+    if (!self.formatCtx)
         return 0;
-    if (_formatCtx->duration == AV_NOPTS_VALUE)
+    if (self.formatCtx->duration == AV_NOPTS_VALUE)
         return MAXFLOAT;
-    return (CGFloat)_formatCtx->duration / AV_TIME_BASE;
+    return (CGFloat)self.formatCtx->duration / AV_TIME_BASE;
 }
 
-- (void)setPosition:(CGFloat)seconds{
+- (void)setPosition:(CGFloat)position{
     
-    _position = seconds;
-    _isEOF = NO;
+    _position = position;
+    self.isEOF = NO;
 	   
-    if (_videoStream != -1) {
-        int64_t ts = (int64_t)(seconds / _videoTimeBase);
-        avformat_seek_file(_formatCtx, _videoStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
-        avcodec_flush_buffers(_videoCodecCtx);
+    if (self.videoStream != -1) {
+        int64_t ts = (int64_t)(position / self.videoTimeBase);
+        avformat_seek_file(self.formatCtx, self.videoStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
+        avcodec_flush_buffers(self.videoCodecCtx);
     }
     
-    if (_audioStream != -1) {
-        int64_t ts = (int64_t)(seconds / _audioTimeBase);
-        avformat_seek_file(_formatCtx, _audioStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
-        avcodec_flush_buffers(_audioCodecCtx);
+    if (self.audioStream != -1) {
+        int64_t ts = (int64_t)(position / self.audioTimeBase);
+        avformat_seek_file(self.formatCtx, self.audioStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
+        avcodec_flush_buffers(self.audioCodecCtx);
     }
 }
 
 - (int)frameWidth{
     
-    return _videoCodecCtx ? _videoCodecCtx->width :0;
+    return self.videoCodecCtx ? self.videoCodecCtx->width :0;
 }
 
 - (int)frameHeight{
     
-    return _videoCodecCtx ? _videoCodecCtx->height :0;
+    return self.videoCodecCtx ? self.videoCodecCtx->height :0;
 }
 
 - (CGFloat)sampleRate{
     
-    return _audioCodecCtx ? _audioCodecCtx->sample_rate :0;
+    return self.audioCodecCtx ? self.audioCodecCtx->sample_rate :0;
 }
 
 - (NSUInteger)audioStreamsCount{
     
-    return [_audioStreams count];
+    return [self.audioStreams count];
 }
 
 - (NSUInteger)subtitleStreamsCount{
     
-    return [_subtitleStreams count];
+    return [self.subtitleStreams count];
 }
 
 - (NSInteger)selectedAudioStream{
     
-    if (_audioStream == -1)
+    if (self.audioStream == -1)
         return -1;
-    NSNumber *n = [NSNumber numberWithInteger:_audioStream];
-    return [_audioStreams indexOfObject:n];
+    NSNumber *n = [NSNumber numberWithInteger:self.audioStream];
+    return [self.audioStreams indexOfObject:n];
 }
 
 - (void)setSelectedAudioStream:(NSInteger)selectedAudioStream{
     
-    int audioStream = [_audioStreams[selectedAudioStream] intValue];
+    int audioStream = [self.audioStreams[selectedAudioStream] intValue];
     [self closeAudioStream];
     FBMovieError errCode = [self openAudioStream:audioStream];
     if (FBMovieErrorNone != errCode) {
@@ -498,9 +501,9 @@ static int interrupt_callback(void *ctx);
 
 - (NSInteger)selectedSubtitleStream{
     
-    if (_subtitleStream == -1)
+    if (self.subtitleStream == -1)
         return -1;
-    return [_subtitleStreams indexOfObject:@(_subtitleStream)];
+    return [self.subtitleStreams indexOfObject:@(self.subtitleStream)];
 }
 
 - (void)setSelectedSubtitleStream:(NSInteger)selected{
@@ -509,11 +512,11 @@ static int interrupt_callback(void *ctx);
     
     if (selected == -1) {
         
-        _subtitleStream = -1;
+        self.subtitleStream = -1;
         
     } else {
         
-        int subtitleStream = [_subtitleStreams[selected] intValue];
+        int subtitleStream = [self.subtitleStreams[selected] intValue];
         FBMovieError errCode = [self openSubtitleStream:subtitleStream];
         if (FBMovieErrorNone != errCode) {
             LoggerStream(0, @"%@", errorMessage(errCode));
@@ -523,43 +526,43 @@ static int interrupt_callback(void *ctx);
 
 - (BOOL)validAudio{
     
-    return _audioStream != -1;
+    return self.audioStream != -1;
 }
 
 - (BOOL)validVideo{
     
-    return _videoStream != -1;
+    return self.videoStream != -1;
 }
 
 - (BOOL)validSubtitles{
     
-    return _subtitleStream != -1;
+    return self.subtitleStream != -1;
 }
 
 - (NSDictionary *)info{
     
-    if (!_info) {
+    if (!self.info) {
         
         NSMutableDictionary *md = [NSMutableDictionary dictionary];
         
-        if (_formatCtx) {
+        if (self.formatCtx) {
             
-            const char *formatName = _formatCtx->iformat->name;
+            const char *formatName = self.formatCtx->iformat->name;
             [md setValue:[NSString stringWithCString:formatName encoding:NSUTF8StringEncoding]
                   forKey:@"format"];
             
-            if (_formatCtx->bit_rate) {
+            if (self.formatCtx->bit_rate) {
                 
-                [md setValue:[NSNumber numberWithInt:_formatCtx->bit_rate]
+                [md setValue:[NSNumber numberWithInt:self.formatCtx->bit_rate]
                       forKey:@"bitrate"];
             }
             
-            if (_formatCtx->metadata) {
+            if (self.formatCtx->metadata) {
                 
                 NSMutableDictionary *md1 = [NSMutableDictionary dictionary];
                 
                 AVDictionaryEntry *tag = NULL;
-                while((tag = av_dict_get(_formatCtx->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
+                while((tag = av_dict_get(self.formatCtx->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
                     
                     [md1 setValue:[NSString stringWithCString:tag->value encoding:NSUTF8StringEncoding]
                            forKey:[NSString stringWithCString:tag->key encoding:NSUTF8StringEncoding]];
@@ -570,10 +573,10 @@ static int interrupt_callback(void *ctx);
             
             char buf[256];
             
-            if (_videoStreams.count) {
+            if (self.videoStreams.count) {
                 NSMutableArray *ma = [NSMutableArray array];
-                for (NSNumber *n in _videoStreams) {
-                    AVStream *st = _formatCtx->streams[n.integerValue];
+                for (NSNumber *n in self.videoStreams) {
+                    AVStream *st = self.formatCtx->streams[n.integerValue];
                     avcodec_string(buf, sizeof(buf), st->codec, 1);
                     NSString *s = [NSString stringWithCString:buf encoding:NSUTF8StringEncoding];
                     if ([s hasPrefix:@"Video:"])
@@ -583,10 +586,10 @@ static int interrupt_callback(void *ctx);
                 md[@"video"] = ma.copy;
             }
             
-            if (_audioStreams.count) {
+            if (self.audioStreams.count) {
                 NSMutableArray *ma = [NSMutableArray array];
-                for (NSNumber *n in _audioStreams) {
-                    AVStream *st = _formatCtx->streams[n.integerValue];
+                for (NSNumber *n in self.audioStreams) {
+                    AVStream *st = self.formatCtx->streams[n.integerValue];
                     
                     NSMutableString *ms = [NSMutableString string];
                     AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
@@ -605,10 +608,10 @@ static int interrupt_callback(void *ctx);
                 md[@"audio"] = ma.copy;
             }
             
-            if (_subtitleStreams.count) {
+            if (self.subtitleStreams.count) {
                 NSMutableArray *ma = [NSMutableArray array];
-                for (NSNumber *n in _subtitleStreams) {
-                    AVStream *st = _formatCtx->streams[n.integerValue];
+                for (NSNumber *n in self.subtitleStreams) {
+                    AVStream *st = self.formatCtx->streams[n.integerValue];
                     
                     NSMutableString *ms = [NSMutableString string];
                     AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
@@ -629,39 +632,39 @@ static int interrupt_callback(void *ctx);
             
         }
         
-        _info = [md copy];
+        self.info = [md copy];
     }
     
-    return _info;
+    return self.info;
 }
 
 - (NSString *)videoStreamFormatName{
     
-    if (!_videoCodecCtx)
+    if (!self.videoCodecCtx)
         return nil;
     
-    if (_videoCodecCtx->pix_fmt == AV_PIX_FMT_NONE)
+    if (self.videoCodecCtx->pix_fmt == AV_PIX_FMT_NONE)
         return @"";
     
-    const char *name = av_get_pix_fmt_name(_videoCodecCtx->pix_fmt);
+    const char *name = av_get_pix_fmt_name(self.videoCodecCtx->pix_fmt);
     return name ? [NSString stringWithCString:name encoding:NSUTF8StringEncoding] :@"?";
 }
 
 - (CGFloat)startTime{
     
-    if (_videoStream != -1) {
+    if (self.videoStream != -1) {
         
-        AVStream *st = _formatCtx->streams[_videoStream];
+        AVStream *st = self.formatCtx->streams[self.videoStream];
         if (AV_NOPTS_VALUE != st->start_time)
-            return st->start_time * _videoTimeBase;
+            return st->start_time * self.videoTimeBase;
         return 0;
     }
     
-    if (_audioStream != -1) {
+    if (self.audioStream != -1) {
         
-        AVStream *st = _formatCtx->streams[_audioStream];
+        AVStream *st = self.formatCtx->streams[self.audioStream];
         if (AV_NOPTS_VALUE != st->start_time)
-            return st->start_time * _audioTimeBase;
+            return st->start_time * self.audioTimeBase;
         return 0;
     }
     
@@ -698,36 +701,45 @@ static int interrupt_callback(void *ctx);
 - (void)dealloc{
     
     LoggerStream(2, @"%@ dealloc", self);
+    
     [self closeFile];
+    
+    [self setAudioPlayer:nil];
+    [self setResourcePath:nil];
+    [self setInfo:nil];
+    [self setInterruptCallback:nil];
+    [self setVideoFrame:nil];
+    [self setAudioFrame:nil];
+    [self setSubtitleStreams:nil];
 }
 
 #pragma mark - private
 
-- (BOOL)openFile:(NSString *)path
+- (BOOL)openFile:(NSString *)resourcePath
            error:(NSError **)perror{
     
-    NSAssert(path, @"nil path");
-    NSAssert(!_formatCtx, @"already open");
+    NSAssert(resourcePath, @"nil path");
+    NSAssert(!self.formatCtx, @"already open");
     
-    _isNetwork = isNetworkPath(path);
+    self.isNetwork = isNetworkPath(resourcePath);
     
     static BOOL needNetworkInit = YES;
-    if (needNetworkInit && _isNetwork) {
+    if (needNetworkInit && self.isNetwork) {
         
         needNetworkInit = NO;
         avformat_network_init();
     }
     
-    _path = path;
+    [self setResourcePath:resourcePath];
     
-    FBMovieError errCode = [self openInput:path];
+    FBMovieError errCode = [self openInput:resourcePath];
     
     if (errCode == FBMovieErrorNone) {
         
         FBMovieError videoErr = [self openVideoStream];
         FBMovieError audioErr = [self openAudioStream];
         
-        _subtitleStream = -1;
+        self.subtitleStream = -1;
         
         if (videoErr != FBMovieErrorNone &&
             audioErr != FBMovieErrorNone) {
@@ -736,7 +748,7 @@ static int interrupt_callback(void *ctx);
             
         } else {
             
-            _subtitleStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_SUBTITLE);
+            self.subtitleStreams = collectStreams(self.formatCtx, AVMEDIA_TYPE_SUBTITLE);
         }
     }
     
@@ -744,7 +756,7 @@ static int interrupt_callback(void *ctx);
         
         [self closeFile];
         NSString *errMsg = errorMessage(errCode);
-        LoggerStream(0, @"%@, %@", errMsg, path.lastPathComponent);
+        LoggerStream(0, @"%@, %@", errMsg, [[self resourcePath] lastPathComponent]);
         if (perror) {
             *perror = FBMovieErrorConstructor(errCode, errMsg);
         }
@@ -758,7 +770,7 @@ static int interrupt_callback(void *ctx);
     
     AVFormatContext *formatCtx = NULL;
     
-    if (_interruptCallback) {
+    if (self.interruptCallback) {
         
         formatCtx = avformat_alloc_context();
         if (!formatCtx)
@@ -783,21 +795,21 @@ static int interrupt_callback(void *ctx);
     
     av_dump_format(formatCtx, 0, [path.lastPathComponent cStringUsingEncoding:NSUTF8StringEncoding], false);
     
-    _formatCtx = formatCtx;
+    self.formatCtx = formatCtx;
     return FBMovieErrorNone;
 }
 
 - (FBMovieError)openVideoStream{
     
     FBMovieError errCode = FBMovieErrorStreamNotFound;
-    _videoStream = -1;
-    _artworkStream = -1;
-    _videoStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_VIDEO);
-    for (NSNumber *n in _videoStreams) {
+    self.videoStream = -1;
+    self.artworkStream = -1;
+    self.videoStreams = collectStreams(self.formatCtx, AVMEDIA_TYPE_VIDEO);
+    for (NSNumber *n in self.videoStreams) {
         
         const int iStream = n.intValue;
         
-        if (0 == (_formatCtx->streams[iStream]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
+        if (0 == (self.formatCtx->streams[iStream]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
             
             errCode = [self openVideoStream:iStream];
             if (errCode == FBMovieErrorNone)
@@ -805,7 +817,7 @@ static int interrupt_callback(void *ctx);
             
         } else {
             
-            _artworkStream = iStream;
+            self.artworkStream = iStream;
         }
     }
     
@@ -815,7 +827,7 @@ static int interrupt_callback(void *ctx);
 - (FBMovieError)openVideoStream:(int)videoStream{
     
     // get a pointer to the codec context for the video stream
-    AVCodecContext *codecCtx = _formatCtx->streams[videoStream]->codec;
+    AVCodecContext *codecCtx = self.formatCtx->streams[videoStream]->codec;
     
     // find the decoder for the video stream
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
@@ -825,34 +837,34 @@ static int interrupt_callback(void *ctx);
     // inform the codec that we can handle truncated bitstreams -- i.e.,
     // bitstreams where frame boundaries can fall in the middle of packets
     //if(codec->capabilities & CODEC_CAP_TRUNCATED)
-    //    _codecCtx->flags |= CODEC_FLAG_TRUNCATED;
+    //    self.codecCtx->flags |= CODEC_FLAG_TRUNCATED;
     
     // open codec
     if (avcodec_open2(codecCtx, codec, NULL)< 0)
         return FBMovieErrorOpenCodec;
     
-    _videoFrame = av_frame_alloc();
+    self.videoFrame = av_frame_alloc();
     
-    if (!_videoFrame) {
+    if (!self.videoFrame) {
         avcodec_close(codecCtx);
         return FBMovieErrorAllocateFrame;
     }
     
-    _videoStream = videoStream;
-    _videoCodecCtx = codecCtx;
+    self.videoStream = videoStream;
+    self.videoCodecCtx = codecCtx;
     
     // determine fps
     
-    AVStream *st = _formatCtx->streams[_videoStream];
+    AVStream *st = self.formatCtx->streams[self.videoStream];
     avStreamFPSTimeBase(st, 0.04, &_fps, &_videoTimeBase);
     
     LoggerVideo(1, @"video codec size:%d:%d fps:%.3f tb:%f",
                 self.frameWidth,
                 self.frameHeight,
-                _fps,
-                _videoTimeBase);
+                self.fps,
+                self.videoTimeBase);
     
-    LoggerVideo(1, @"video start time %f", st->start_time * _videoTimeBase);
+    LoggerVideo(1, @"video start time %f", st->start_time * self.videoTimeBase);
     LoggerVideo(1, @"video disposition %d", st->disposition);
     
     return FBMovieErrorNone;
@@ -861,9 +873,9 @@ static int interrupt_callback(void *ctx);
 - (FBMovieError)openAudioStream{
     
     FBMovieError errCode = FBMovieErrorStreamNotFound;
-    _audioStream = -1;
-    _audioStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_AUDIO);
-    for (NSNumber *n in _audioStreams) {
+    self.audioStream = -1;
+    self.audioStreams = collectStreams(self.formatCtx, AVMEDIA_TYPE_AUDIO);
+    for (NSNumber *n in self.audioStreams) {
         
         errCode = [self openAudioStream:n.intValue];
         if (errCode == FBMovieErrorNone)
@@ -874,7 +886,7 @@ static int interrupt_callback(void *ctx);
 
 - (FBMovieError)openAudioStream:(int)audioStream{
     
-    AVCodecContext *codecCtx = _formatCtx->streams[audioStream]->codec;
+    AVCodecContext *codecCtx = self.formatCtx->streams[audioStream]->codec;
     SwrContext *swrContext = NULL;
     
     FBAudioPlayer *audioPlayer = [self audioPlayer];
@@ -908,35 +920,35 @@ static int interrupt_callback(void *ctx);
         }
     }
     
-    _audioFrame = av_frame_alloc();
+    self.audioFrame = av_frame_alloc();
     
-    if (!_audioFrame) {
+    if (!self.audioFrame) {
         if (swrContext)
             swr_free(&swrContext);
         avcodec_close(codecCtx);
         return FBMovieErrorAllocateFrame;
     }
     
-    _audioStream = audioStream;
-    _audioCodecCtx = codecCtx;
-    _swrContext = swrContext;
+    self.audioStream = audioStream;
+    self.audioCodecCtx = codecCtx;
+    self.swrContext = swrContext;
     
-    AVStream *st = _formatCtx->streams[_audioStream];
+    AVStream *st = self.formatCtx->streams[self.audioStream];
     avStreamFPSTimeBase(st, 0.025, 0, &_audioTimeBase);
     
     LoggerAudio(1, @"audio codec smr:%.d fmt:%d chn:%d tb:%f %@",
-                _audioCodecCtx->sample_rate,
-                _audioCodecCtx->sample_fmt,
-                _audioCodecCtx->channels,
-                _audioTimeBase,
-                _swrContext ? @"resample" :@"");
+                self.audioCodecCtx->sample_rate,
+                self.audioCodecCtx->sample_fmt,
+                self.audioCodecCtx->channels,
+                self.audioTimeBase,
+                self.swrContext ? @"resample" :@"");
     
     return FBMovieErrorNone;
 }
 
 - (FBMovieError)openSubtitleStream:(int)subtitleStream{
     
-    AVCodecContext *codecCtx = _formatCtx->streams[subtitleStream]->codec;
+    AVCodecContext *codecCtx = self.formatCtx->streams[subtitleStream]->codec;
     
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
     if(!codec)
@@ -951,15 +963,18 @@ static int interrupt_callback(void *ctx);
     if (avcodec_open2(codecCtx, codec, NULL)< 0)
         return FBMovieErrorOpenCodec;
     
-    _subtitleStream = subtitleStream;
-    _subtitleCodecCtx = codecCtx;
+    self.subtitleStream = subtitleStream;
+    self.subtitleCodecCtx = codecCtx;
     
-    LoggerStream(1, @"subtitle codec:'%s' mode:%d enc:%s",
-                 codecDesc->name,
-                 codecCtx->sub_charenc_mode,
-                 codecCtx->sub_charenc);
+    if (codecDesc) {
+        
+        LoggerStream(1, @"subtitle codec:'%s' mode:%d enc:%s",
+                     codecDesc->name,
+                     codecCtx->sub_charenc_mode,
+                     codecCtx->sub_charenc);
+    }
     
-    _subtitleASSEvents = -1;
+    self.subtitleASSEvents = -1;
     
     if (codecCtx->subtitle_header_size) {
         
@@ -971,7 +986,7 @@ static int interrupt_callback(void *ctx);
             
             NSArray *fields = [FBMovieSubtitleASSParser parseEvents:s];
             if (fields.count && [fields.lastObject isEqualToString:@"Text"]) {
-                _subtitleASSEvents = fields.count;
+                self.subtitleASSEvents = fields.count;
                 LoggerStream(2, @"subtitle ass events:%@", [fields componentsJoinedByString:@","]);
             }
         }
@@ -986,90 +1001,91 @@ static int interrupt_callback(void *ctx);
     [self closeVideoStream];
     [self closeSubtitleStream];
     
-    _videoStreams = nil;
-    _audioStreams = nil;
-    _subtitleStreams = nil;
+    self.videoStreams = nil;
+    self.audioStreams = nil;
+    self.subtitleStreams = nil;
     
-    if (_formatCtx) {
+    if (self.formatCtx) {
         
-        _formatCtx->interrupt_callback.opaque = NULL;
-        _formatCtx->interrupt_callback.callback = NULL;
+        self.formatCtx->interrupt_callback.opaque = NULL;
+        self.formatCtx->interrupt_callback.callback = NULL;
         
         avformat_close_input(&_formatCtx);
-        _formatCtx = NULL;
+        
+        self.formatCtx = NULL;
     }
 }
 
 - (void)closeVideoStream{
     
-    _videoStream = -1;
+    self.videoStream = -1;
     
     [self closeScaler];
     
-    if (_videoFrame) {
+    if (self.videoFrame) {
         
-        av_free(_videoFrame);
-        _videoFrame = NULL;
+        av_free(self.videoFrame);
+        self.videoFrame = NULL;
     }
     
-    if (_videoCodecCtx) {
+    if (self.videoCodecCtx) {
         
-        avcodec_close(_videoCodecCtx);
-        _videoCodecCtx = NULL;
+        avcodec_close(self.videoCodecCtx);
+        self.videoCodecCtx = NULL;
     }
 }
 
 - (void)closeAudioStream{
     
-    _audioStream = -1;
+    self.audioStream = -1;
     
-    if (_swrBuffer) {
+    if (self.swrBuffer) {
         
-        free(_swrBuffer);
-        _swrBuffer = NULL;
-        _swrBufferSize = 0;
+        free(self.swrBuffer);
+        self.swrBuffer = NULL;
+        self.swrBufferSize = 0;
     }
     
-    if (_swrContext) {
+    if (self.swrContext) {
         
         swr_free(&_swrContext);
-        _swrContext = NULL;
+        self.swrContext = NULL;
     }
     
-    if (_audioFrame) {
+    if (self.audioFrame) {
         
-        av_free(_audioFrame);
-        _audioFrame = NULL;
+        av_free(self.audioFrame);
+        self.audioFrame = NULL;
     }
     
-    if (_audioCodecCtx) {
+    if (self.audioCodecCtx) {
         
-        avcodec_close(_audioCodecCtx);
-        _audioCodecCtx = NULL;
+        avcodec_close(self.audioCodecCtx);
+        self.audioCodecCtx = NULL;
     }
 }
 
 - (void)closeSubtitleStream{
     
-    _subtitleStream = -1;
+    self.subtitleStream = -1;
     
-    if (_subtitleCodecCtx) {
+    if (self.subtitleCodecCtx) {
         
-        avcodec_close(_subtitleCodecCtx);
-        _subtitleCodecCtx = NULL;
+        avcodec_close(self.subtitleCodecCtx);
+        self.subtitleCodecCtx = NULL;
     }
 }
 
 - (void)closeScaler{
     
-    if (_swsContext) {
-        sws_freeContext(_swsContext);
-        _swsContext = NULL;
+    if (self.swsContext) {
+        sws_freeContext(self.swsContext);
+        self.swsContext = NULL;
     }
     
-    if (_pictureValid) {
+    if (self.pictureValid) {
         avpicture_free(&_picture);
-        _pictureValid = NO;
+        self.pictureValid = NO;
     }
 }
 
@@ -1077,107 +1093,107 @@ static int interrupt_callback(void *ctx);
     
     [self closeScaler];
     
-    _pictureValid = avpicture_alloc(&_picture,
+    self.pictureValid = avpicture_alloc(&_picture,
                                     PIX_FMT_RGB24,
-                                    _videoCodecCtx->width,
-                                    _videoCodecCtx->height)== 0;
+                                    self.videoCodecCtx->width,
+                                    self.videoCodecCtx->height)== 0;
     
-    if (!_pictureValid)
+    if (!self.pictureValid)
         return NO;
     
-    _swsContext = sws_getCachedContext(_swsContext,
-                                       _videoCodecCtx->width,
-                                       _videoCodecCtx->height,
-                                       _videoCodecCtx->pix_fmt,
-                                       _videoCodecCtx->width,
-                                       _videoCodecCtx->height,
+    self.swsContext = sws_getCachedContext(self.swsContext,
+                                       self.videoCodecCtx->width,
+                                       self.videoCodecCtx->height,
+                                       self.videoCodecCtx->pix_fmt,
+                                       self.videoCodecCtx->width,
+                                       self.videoCodecCtx->height,
                                        PIX_FMT_RGB24,
                                        SWS_FAST_BILINEAR,
                                        NULL, NULL, NULL);
     
-    return _swsContext != NULL;
+    return self.swsContext != NULL;
 }
 
 - (FBVideoFrame *)handleVideoFrame{
     
-    if (!_videoFrame->data[0])
+    if (!self.videoFrame->data[0])
         return nil;
     
     FBVideoFrame *frame;
     
-    if (_videoFrameFormat == FBVideoFrameFormatYUV) {
+    if (self.videoFrameFormat == FBVideoFrameFormatYUV) {
         
         FBVideoFrameYUV * yuvFrame = [[FBVideoFrameYUV alloc] init];
         
-        yuvFrame.luma = copyFrameData(_videoFrame->data[0],
-                                      _videoFrame->linesize[0],
-                                      _videoCodecCtx->width,
-                                      _videoCodecCtx->height);
+        yuvFrame.luma = copyFrameData(self.videoFrame->data[0],
+                                      self.videoFrame->linesize[0],
+                                      self.videoCodecCtx->width,
+                                      self.videoCodecCtx->height);
         
-        yuvFrame.chromaB = copyFrameData(_videoFrame->data[1],
-                                         _videoFrame->linesize[1],
-                                         _videoCodecCtx->width / 2,
-                                         _videoCodecCtx->height / 2);
+        yuvFrame.chromaB = copyFrameData(self.videoFrame->data[1],
+                                         self.videoFrame->linesize[1],
+                                         self.videoCodecCtx->width / 2,
+                                         self.videoCodecCtx->height / 2);
         
-        yuvFrame.chromaR = copyFrameData(_videoFrame->data[2],
-                                         _videoFrame->linesize[2],
-                                         _videoCodecCtx->width / 2,
-                                         _videoCodecCtx->height / 2);
+        yuvFrame.chromaR = copyFrameData(self.videoFrame->data[2],
+                                         self.videoFrame->linesize[2],
+                                         self.videoCodecCtx->width / 2,
+                                         self.videoCodecCtx->height / 2);
         
         frame = yuvFrame;
         
     } else {
         
-        if (!_swsContext &&
+        if (!self.swsContext &&
             ![self setupScaler]) {
             
             LoggerVideo(0, @"fail setup video scaler");
             return nil;
         }
         
-        sws_scale(_swsContext,
-                  (const uint8_t **)_videoFrame->data,
-                  _videoFrame->linesize,
+        sws_scale(self.swsContext,
+                  (const uint8_t **)self.videoFrame->data,
+                  self.videoFrame->linesize,
                   0,
-                  _videoCodecCtx->height,
-                  _picture.data,
-                  _picture.linesize);
+                  self.videoCodecCtx->height,
+                  self.picture.data,
+                  self.picture.linesize);
         
         
         FBVideoFrameRGB *rgbFrame = [[FBVideoFrameRGB alloc] init];
         
-        rgbFrame.linesize = _picture.linesize[0];
-        rgbFrame.rgb = [NSData dataWithBytes:_picture.data[0]
-                                      length:rgbFrame.linesize * _videoCodecCtx->height];
+        rgbFrame.linesize = self.picture.linesize[0];
+        rgbFrame.rgb = [NSData dataWithBytes:self.picture.data[0]
+                                      length:rgbFrame.linesize * self.videoCodecCtx->height];
         frame = rgbFrame;
     }
     
-    frame.width = _videoCodecCtx->width;
-    frame.height = _videoCodecCtx->height;
-    frame.position = av_frame_get_best_effort_timestamp(_videoFrame)* _videoTimeBase;
+    frame.width = self.videoCodecCtx->width;
+    frame.height = self.videoCodecCtx->height;
+    frame.position = av_frame_get_best_effort_timestamp(self.videoFrame)* self.videoTimeBase;
     
-    const int64_t frameDuration = av_frame_get_pkt_duration(_videoFrame);
+    const int64_t frameDuration = av_frame_get_pkt_duration(self.videoFrame);
     if (frameDuration) {
         
-        frame.duration = frameDuration * _videoTimeBase;
-        frame.duration += _videoFrame->repeat_pict * _videoTimeBase * 0.5;
+        frame.duration = frameDuration * self.videoTimeBase;
+        frame.duration += self.videoFrame->repeat_pict * self.videoTimeBase * 0.5;
         
-        //if (_videoFrame->repeat_pict > 0) {
-        //    LoggerVideo(0, @"_videoFrame.repeat_pict %d", _videoFrame->repeat_pict);
+        //if (self.videoFrame->repeat_pict > 0) {
+        //    LoggerVideo(0, @"self.videoFrame.repeat_pict %d", self.videoFrame->repeat_pict);
         //}
         
     } else {
         
         // sometimes, ffmpeg unable to determine a frame duration
         // as example yuvj420p stream from web camera
-        frame.duration = 1.0 / _fps;
+        frame.duration = 1.0 / self.fps;
     }
     
 #if 0
     LoggerVideo(2, @"VFD:%.4f %.4f | %lld ",
                 frame.position,
                 frame.duration,
-                av_frame_get_pkt_pos(_videoFrame));
+                av_frame_get_pkt_pos(self.videoFrame));
 #endif
     
     return frame;
@@ -1185,7 +1201,7 @@ static int interrupt_callback(void *ctx);
 
 - (FBAudioFrame *)handleAudioFrame{
     
-    if (!_audioFrame->data[0])
+    if (!self.audioFrame->data[0])
         return nil;
     
     FBAudioPlayer *audioPlayer = [self audioPlayer];
@@ -1195,50 +1211,50 @@ static int interrupt_callback(void *ctx);
     
     void * audioData;
     
-    if (_swrContext) {
+    if (self.swrContext) {
         
-        const int ratio = MAX(1, audioPlayer.samplingRate / _audioCodecCtx->sample_rate)*
-        MAX(1, audioPlayer.numOutputChannels / _audioCodecCtx->channels)* 2;
+        const int ratio = MAX(1, audioPlayer.samplingRate / self.audioCodecCtx->sample_rate)*
+        MAX(1, audioPlayer.numOutputChannels / self.audioCodecCtx->channels)* 2;
         
         const int bufSize = av_samples_get_buffer_size(NULL,
                                                        audioPlayer.numOutputChannels,
-                                                       _audioFrame->nb_samples * ratio,
+                                                       self.audioFrame->nb_samples * ratio,
                                                        AV_SAMPLE_FMT_S16,
                                                        1);
         
-        if (!_swrBuffer || _swrBufferSize < bufSize) {
-            _swrBufferSize = bufSize;
-            _swrBuffer = realloc(_swrBuffer, _swrBufferSize);
+        if (!self.swrBuffer || self.swrBufferSize < bufSize) {
+            self.swrBufferSize = bufSize;
+            self.swrBuffer = realloc(self.swrBuffer, self.swrBufferSize);
         }
         
-        Byte *outbuf[2] = { _swrBuffer, 0 };
+        Byte *outbuf[2] = { self.swrBuffer, 0 };
         
-        numFrames = swr_convert(_swrContext,
+        numFrames = swr_convert(self.swrContext,
                                 outbuf,
-                                _audioFrame->nb_samples * ratio,
-                                (const uint8_t **)_audioFrame->data,
-                                _audioFrame->nb_samples);
+                                self.audioFrame->nb_samples * ratio,
+                                (const uint8_t **)self.audioFrame->data,
+                                self.audioFrame->nb_samples);
         
         if (numFrames < 0) {
             LoggerAudio(0, @"fail resample audio");
             return nil;
         }
         
-        //int64_t delay = swr_get_delay(_swrContext, audioManager.samplingRate);
+        //int64_t delay = swr_get_delay(self.swrContext, audioManager.samplingRate);
         //if (delay > 0)
         //    LoggerAudio(0, @"resample delay %lld", delay);
         
-        audioData = _swrBuffer;
+        audioData = self.swrBuffer;
         
     } else {
         
-        if (_audioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
+        if (self.audioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
             NSAssert(false, @"bucheck, audio format is invalid");
             return nil;
         }
         
-        audioData = _audioFrame->data[0];
-        numFrames = _audioFrame->nb_samples;
+        audioData = self.audioFrame->data[0];
+        numFrames = self.audioFrame->nb_samples;
     }
     
     const NSUInteger numElements = numFrames * numChannels;
@@ -1249,8 +1265,8 @@ static int interrupt_callback(void *ctx);
     vDSP_vsmul(data.mutableBytes, 1, &scale, data.mutableBytes, 1, numElements);
     
     FBAudioFrame *frame = [[FBAudioFrame alloc] init];
-    frame.position = av_frame_get_best_effort_timestamp(_audioFrame)* _audioTimeBase;
-    frame.duration = av_frame_get_pkt_duration(_audioFrame)* _audioTimeBase;
+    frame.position = av_frame_get_best_effort_timestamp(self.audioFrame)* self.audioTimeBase;
+    frame.duration = av_frame_get_pkt_duration(self.audioFrame)* self.audioTimeBase;
     frame.samples = data;
     
     if (frame.duration == 0) {
@@ -1284,12 +1300,12 @@ static int interrupt_callback(void *ctx);
                 NSString *s = [NSString stringWithUTF8String:rect->text];
                 if (s.length)[ms appendString:s];
                 
-            } else if (rect->ass && _subtitleASSEvents != -1) {
+            } else if (rect->ass && self.subtitleASSEvents != -1) {
                 
                 NSString *s = [NSString stringWithUTF8String:rect->ass];
                 if (s.length) {
                     
-                    NSArray *fields = [FBMovieSubtitleASSParser parseDialogue:s numFields:_subtitleASSEvents];
+                    NSArray *fields = [FBMovieSubtitleASSParser parseDialogue:s numFields:self.subtitleASSEvents];
                     if (fields.count && [fields.lastObject length]) {
                         
                         s = [FBMovieSubtitleASSParser removeCommandsFromEventText:fields.lastObject];
@@ -1320,8 +1336,8 @@ static int interrupt_callback(void *ctx);
 
 - (BOOL)interruptDecoder{
     
-    if (_interruptCallback)
-        return _interruptCallback();
+    if (self.interruptCallback)
+        return self.interruptCallback();
     return NO;
 }
 
@@ -1330,21 +1346,21 @@ static int interrupt_callback(void *ctx);
 - (BOOL)setupVideoFrameFormat:(FBVideoFrameFormat)format{
     
     if (format == FBVideoFrameFormatYUV &&
-        _videoCodecCtx &&
-        (_videoCodecCtx->pix_fmt == AV_PIX_FMT_YUV420P || _videoCodecCtx->pix_fmt == AV_PIX_FMT_YUVJ420P)) {
+        self.videoCodecCtx &&
+        (self.videoCodecCtx->pix_fmt == AV_PIX_FMT_YUV420P || self.videoCodecCtx->pix_fmt == AV_PIX_FMT_YUVJ420P)) {
         
-        _videoFrameFormat = FBVideoFrameFormatYUV;
+        self.videoFrameFormat = FBVideoFrameFormatYUV;
         return YES;
     }
     
-    _videoFrameFormat = FBVideoFrameFormatRGB;
-    return _videoFrameFormat == format;
+    self.videoFrameFormat = FBVideoFrameFormatRGB;
+    return self.videoFrameFormat == format;
 }
 
 - (NSArray *)decodeFrames:(CGFloat)minDuration{
     
-    if (_videoStream == -1 &&
-        _audioStream == -1)
+    if (self.videoStream == -1 &&
+        self.audioStream == -1)
         return nil;
     
     NSMutableArray *result = [NSMutableArray array];
@@ -1357,20 +1373,20 @@ static int interrupt_callback(void *ctx);
     
     while (!finished) {
         
-        if (av_read_frame(_formatCtx, &packet)< 0) {
-            _isEOF = YES;
+        if (av_read_frame(self.formatCtx, &packet)< 0) {
+            self.isEOF = YES;
             break;
         }
         
-        if (packet.stream_index ==_videoStream) {
+        if (packet.stream_index ==self.videoStream) {
             
             int pktSize = packet.size;
             
             while (pktSize > 0) {
                 
                 int gotframe = 0;
-                int len = avcodec_decode_video2(_videoCodecCtx,
-                                                _videoFrame,
+                int len = avcodec_decode_video2(self.videoCodecCtx,
+                                                self.videoFrame,
                                                 &gotframe,
                                                 &packet);
                 
@@ -1381,14 +1397,14 @@ static int interrupt_callback(void *ctx);
                 
                 if (gotframe) {
                     
-                    if (_deinterlacingEnable &&
-                        _videoFrame->interlaced_frame) {
+                    if (self.deinterlacingEnable &&
+                        self.videoFrame->interlaced_frame) {
                         
-                        avpicture_deinterlace((AVPicture*)_videoFrame,
-                                              (AVPicture*)_videoFrame,
-                                              _videoCodecCtx->pix_fmt,
-                                              _videoCodecCtx->width,
-                                              _videoCodecCtx->height);
+                        avpicture_deinterlace((AVPicture*)self.videoFrame,
+                                              (AVPicture*)self.videoFrame,
+                                              self.videoCodecCtx->pix_fmt,
+                                              self.videoCodecCtx->width,
+                                              self.videoCodecCtx->height);
                     }
                     
                     FBVideoFrame *frame = [self handleVideoFrame];
@@ -1409,15 +1425,15 @@ static int interrupt_callback(void *ctx);
                 pktSize -= len;
             }
             
-        } else if (packet.stream_index == _audioStream) {
+        } else if (packet.stream_index == self.audioStream) {
             
             int pktSize = packet.size;
             
             while (pktSize > 0) {
                 
                 int gotframe = 0;
-                int len = avcodec_decode_audio4(_audioCodecCtx,
-                                                _audioFrame,
+                int len = avcodec_decode_audio4(self.audioCodecCtx,
+                                                self.audioFrame,
                                                 &gotframe,
                                                 &packet);
                 
@@ -1433,7 +1449,7 @@ static int interrupt_callback(void *ctx);
                         
                         [result addObject:frame];
                         
-                        if (_videoStream == -1) {
+                        if (self.videoStream == -1) {
                             
                             _position = frame.position;
                             decodedDuration += frame.duration;
@@ -1449,7 +1465,7 @@ static int interrupt_callback(void *ctx);
                 pktSize -= len;
             }
             
-        } else if (packet.stream_index == _artworkStream) {
+        } else if (packet.stream_index == self.artworkStream) {
             
             if (packet.size) {
                 
@@ -1458,7 +1474,7 @@ static int interrupt_callback(void *ctx);
                 [result addObject:frame];
             }
             
-        } else if (packet.stream_index == _subtitleStream) {
+        } else if (packet.stream_index == self.subtitleStream) {
             
             int pktSize = packet.size;
             
@@ -1466,7 +1482,7 @@ static int interrupt_callback(void *ctx);
                 
                 AVSubtitle subtitle;
                 int gotsubtitle = 0;
-                int len = avcodec_decode_subtitle2(_subtitleCodecCtx,
+                int len = avcodec_decode_subtitle2(self.subtitleCodecCtx,
                                                    &subtitle,
                                                    &gotsubtitle,
                                                    &packet);

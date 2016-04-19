@@ -63,7 +63,7 @@ enum {
 
 @property(nonatomic, assign, readonly, getter=evIsPlaying) BOOL evPlay;
 
-@property(nonatomic, strong, readonly) NSString              *evResourcePath;
+@property(nonatomic, copy  , readonly) NSString              *evResourcePath;
 
 @property(nonatomic, strong, readonly) FBMovieParameter      *evParameter;
 

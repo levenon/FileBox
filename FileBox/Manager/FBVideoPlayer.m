@@ -42,7 +42,7 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
 
 @property(nonatomic, assign) id<FBMovieRenderView>      evvRenderContent;
 
-@property(nonatomic, strong) NSString                   *evResourcePath;
+@property(nonatomic, copy  ) NSString                   *evResourcePath;
 
 @property(nonatomic, strong) FBMovieParameter           *evParameter;
 
@@ -323,6 +323,8 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self setEvDelegates:nil];
     
+    [self setEvAudioPlayer:nil];
+    
     [self setEvDecoder:nil];
     
     [self setEvvRenderContent:nil];
@@ -413,6 +415,8 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     if ([[self evDecoder] validAudio]) {
         [self _efUpdateAudioStatus:YES];
     }
+    
+    [self efRegisterNotification];
     LoggerStream(1, @"efPlay movie");
 }
 
@@ -426,12 +430,21 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self _efUpdateAudioStatus:NO];
     
+    if ([self evPosition] == 0 || [[self evDecoder] isEOF]) {
+        [[[self class] shareMovieHistoryCache] removeObjectForKey:[self evResourcePath]];
+    }
+    else if (![[self evDecoder] isNetwork]) {
+        [[[self class] shareMovieHistoryCache] setValue:[NSNumber numberWithFloat:_evPosition]
+                                                 forKey:[self evResourcePath]];
+    }
+    
+    [self efDeregisterNotification];
     LoggerStream(1, @"efPause movie");
 }
 
 - (void)restorePlay{
     
-    NSNumber *etHistoryProgress = [[[self class] shareMovieHistoryCache] valueForKey:[[self evDecoder] path]];
+    NSNumber *etHistoryProgress = [[[self class] shareMovieHistoryCache] valueForKey:[[self evDecoder] resourcePath]];
     
     if (etHistoryProgress) {
         

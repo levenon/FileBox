@@ -29,13 +29,11 @@
 
 @property(nonatomic, strong) FBMovieParameter *evParameter;
 
-@property(nonatomic, strong) NSString *evResourcePath;
+@property(nonatomic, copy  ) NSString *evResourcePath;
 
 @property(nonatomic, assign) BOOL evIdleTimerDisabled;
 
-@property (nonatomic, assign, getter=evIsPlaying) BOOL evPlay;
-
-@property (nonatomic, assign, getter=evIsPlayingAtLastTime) BOOL evPlayAtLastTime;
+@property(nonatomic, assign, getter=evIsPlayingAtLastTime) BOOL evPlayAtLastTime;
 
 @end
 
@@ -53,6 +51,8 @@
     if (self) {
         
         NSAssert(path.length, @"empty path");
+        
+        [self setTitle:[path lastPathComponent]];
         
         [self setEvParameter:parameter];
         [self setEvResourcePath:path];
@@ -117,6 +117,26 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) ;
 }
 
+- (BOOL)prefersStatusBarHidden{
+    
+    return YES;
+}
+
+- (void)dealloc{
+    
+    [[self evVideoPlayer] efPause];
+    
+    [self setEvvVideoPlayerControl:nil];
+    
+    [self setEvvRenderContent:nil];
+    
+    [self setEvVideoPlayer:nil];
+    
+    [self setEvParameter:nil];
+    
+    [self setEvResourcePath:nil];
+}
+
 #pragma mark - accessory
 
 - (FBMovieGLView *)evvRenderContent{
@@ -130,6 +150,15 @@
     return _evvRenderContent;
 }
 
+- (FBVideoPlayerControlView *)evvVideoPlayerControl{
+    
+    if (!_evvVideoPlayerControl) {
+        
+        _evvVideoPlayerControl = [[FBVideoPlayerControlView alloc] initWithPlayer:[self evVideoPlayer]];
+    }
+    return _evvVideoPlayerControl;
+}
+
 - (FBVideoPlayer *)evVideoPlayer{
     
     if (!_evVideoPlayer) {
@@ -141,23 +170,9 @@
     return _evVideoPlayer;
 }
 
-- (FBVideoPlayerControlView *)evvVideoPlayerControl{
-    
-    if (!_evvVideoPlayerControl) {
-        
-        _evvVideoPlayerControl = [[FBVideoPlayerControlView alloc] initWithPlayer:[self evVideoPlayer]];
-    }
-    return _evvVideoPlayerControl;
-}
-
 - (BOOL)evIsPlaying{
     
     return [[self evVideoPlayer] evIsPlaying];
-}
-
-- (UIImage *)evNavigationBarBackgroundImage{
-    
-    return [UIImage new];
 }
 
 #pragma mark - private

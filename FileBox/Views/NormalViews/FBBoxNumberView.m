@@ -15,13 +15,14 @@
     if (self) {
         
         [self setEvNumberOfBoxes:1];
+        [self setEvCurrentNumber:1];
     }
     return self;
 }
 
-- (void)setEvNumberOfBoxes:(NSInteger)evNumberOfBoxes{
+- (void)setEvCurrentNumber:(NSInteger)evCurrentNumber{
     
-    _evCurrentNumber = MAX(evNumberOfBoxes, 1);
+    _evCurrentNumber = MAX(evCurrentNumber, 0);
     
     [self setNeedsDisplay];
 }
@@ -32,7 +33,7 @@
     
     CGFloat etInteritemSpacing = 1.f;
     
-    CGFloat etItemWidth = (CGRectGetWidth(rect) - etInteritemSpacing) / [self evNumberOfBoxes];
+    CGFloat etItemWidth = (CGRectGetWidth(rect) - etInteritemSpacing) / [self evNumberOfBoxes] - etInteritemSpacing;
     
     CGFloat etItemHeight = CGRectGetHeight(rect) - etInteritemSpacing * 2;
     

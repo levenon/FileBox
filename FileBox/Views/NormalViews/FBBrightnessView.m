@@ -81,7 +81,11 @@
 
 - (void)epConfigSubViewsDefault{
     
+    [self setAlpha:0];
     [self setUserInteractionEnabled:NO];
+    
+    [[self layer] setCornerRadius:5];
+    [[self layer] setMasksToBounds:YES];
     
     [[self evimgvBackground] setImage:[UIImage imageWithColor:[UIColor colorWithRed:0.9 green:0.91 blue:0.92 alpha:1]]];
     
@@ -93,7 +97,7 @@
     
     [[self evvBrightnessValue] setTintColor:[UIColor whiteColor]];
     [[self evvBrightnessValue] setBackgroundColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.42 alpha:1]];
-    [[self evvBrightnessValue] setEvNumberOfBoxes:15];
+    [[self evvBrightnessValue] setEvNumberOfBoxes:16];
 }
 
 - (void)epInstallConstraints{
@@ -155,6 +159,10 @@
 }
 
 - (void)_efDisplayConent{
+    
+    if ([self alpha]) {
+        return;
+    }
     
     [self setAlpha:0];
     
@@ -233,9 +241,9 @@
     
     [self _efDisplayConent];
     
-    NSInteger level = [change[@"new"] floatValue] *  15;
+    NSInteger level = [change[@"new"] floatValue] * 15;
     
-    [[self evvBrightnessValue] setEvCurrentNumber:level];
+    [[self evvBrightnessValue] setEvCurrentNumber:level + 1];
     
     [self _efScheduleDisplayTimeoutTimer];
 }
