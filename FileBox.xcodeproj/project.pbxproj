@@ -12,17 +12,6 @@
 		332EA55D1CBE75C500FFA60E /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA55C1CBE75C500FFA60E /* libstdc++.6.0.9.tbd */; };
 		332EA55F1CBE75CD00FFA60E /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA55E1CBE75CD00FFA60E /* libz.1.2.5.tbd */; };
 		332EA5611CBE75D400FFA60E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5601CBE75D400FFA60E /* libsqlite3.0.tbd */; };
-		332EA56D1CBE760100FFA60E /* libASIKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5621CBE760100FFA60E /* libASIKit.a */; };
-		332EA56E1CBE760100FFA60E /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5631CBE760100FFA60E /* libMasonry.a */; };
-		332EA56F1CBE760100FFA60E /* libNSLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5641CBE760100FFA60E /* libNSLogger.a */; };
-		332EA5701CBE760100FFA60E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5651CBE760100FFA60E /* libPods.a */; };
-		332EA5711CBE760100FFA60E /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5661CBE760100FFA60E /* libSDWebImage.a */; };
-		332EA5721CBE760100FFA60E /* libXLFBaseHttpRequestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5671CBE760100FFA60E /* libXLFBaseHttpRequestKit.a */; };
-		332EA5731CBE760100FFA60E /* libXLFBaseModelKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5681CBE760100FFA60E /* libXLFBaseModelKit.a */; };
-		332EA5741CBE760100FFA60E /* libXLFBaseViewControllerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA5691CBE760100FFA60E /* libXLFBaseViewControllerKit.a */; };
-		332EA5751CBE760100FFA60E /* libXLFCommonKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA56A1CBE760100FFA60E /* libXLFCommonKit.a */; };
-		332EA5761CBE760100FFA60E /* libXLFKeyboardManagerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA56B1CBE760100FFA60E /* libXLFKeyboardManagerKit.a */; };
-		332EA5771CBE760100FFA60E /* libXLFPinInputViewControllerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 332EA56C1CBE760100FFA60E /* libXLFPinInputViewControllerKit.a */; };
 		332EA60A1CBE7DCF00FFA60E /* FBBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA57B1CBE7DCF00FFA60E /* FBBluetoothManager.m */; };
 		332EA60B1CBE7DCF00FFA60E /* FBFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA57D1CBE7DCF00FFA60E /* FBFileManager.m */; };
 		332EA60C1CBE7DCF00FFA60E /* FBLockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 332EA57F1CBE7DCF00FFA60E /* FBLockManager.m */; };
@@ -77,6 +66,14 @@
 		B33DD7F11CC0C507001F095B /* FBMovie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B33DD7F01CC0C507001F095B /* FBMovie.bundle */; };
 		B33DD7F41CC0CF32001F095B /* FBBoxNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7F31CC0CF32001F095B /* FBBoxNumberView.m */; };
 		B33DD7F71CC0E03B001F095B /* FBVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B33DD7F61CC0E03B001F095B /* FBVideoPlayer.m */; };
+		B35B715A1CEAC0D400CE4F4A /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71521CEAC0D400CE4F4A /* libMasonry.a */; };
+		B35B715B1CEAC0D400CE4F4A /* libNSLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71531CEAC0D400CE4F4A /* libNSLogger.a */; };
+		B35B715C1CEAC0D400CE4F4A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71541CEAC0D400CE4F4A /* libPods.a */; };
+		B35B715D1CEAC0D400CE4F4A /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71551CEAC0D400CE4F4A /* libSDWebImage.a */; };
+		B35B715E1CEAC0D400CE4F4A /* libXLFBaseViewControllerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71561CEAC0D400CE4F4A /* libXLFBaseViewControllerKit.a */; };
+		B35B715F1CEAC0D400CE4F4A /* libXLFCommonKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71571CEAC0D400CE4F4A /* libXLFCommonKit.a */; };
+		B35B71601CEAC0D400CE4F4A /* libXLFKeyboardManagerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71581CEAC0D400CE4F4A /* libXLFKeyboardManagerKit.a */; };
+		B35B71611CEAC0D400CE4F4A /* libXLFPinInputViewControllerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B71591CEAC0D400CE4F4A /* libXLFPinInputViewControllerKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,17 +82,6 @@
 		332EA55C1CBE75C500FFA60E /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		332EA55E1CBE75CD00FFA60E /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		332EA5601CBE75D400FFA60E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		332EA5621CBE760100FFA60E /* libASIKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libASIKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libASIKit.a"; sourceTree = "<group>"; };
-		332EA5631CBE760100FFA60E /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libMasonry.a"; sourceTree = "<group>"; };
-		332EA5641CBE760100FFA60E /* libNSLogger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNSLogger.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libNSLogger.a"; sourceTree = "<group>"; };
-		332EA5651CBE760100FFA60E /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		332EA5661CBE760100FFA60E /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libSDWebImage.a"; sourceTree = "<group>"; };
-		332EA5671CBE760100FFA60E /* libXLFBaseHttpRequestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFBaseHttpRequestKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFBaseHttpRequestKit.a"; sourceTree = "<group>"; };
-		332EA5681CBE760100FFA60E /* libXLFBaseModelKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFBaseModelKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFBaseModelKit.a"; sourceTree = "<group>"; };
-		332EA5691CBE760100FFA60E /* libXLFBaseViewControllerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFBaseViewControllerKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFBaseViewControllerKit.a"; sourceTree = "<group>"; };
-		332EA56A1CBE760100FFA60E /* libXLFCommonKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFCommonKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFCommonKit.a"; sourceTree = "<group>"; };
-		332EA56B1CBE760100FFA60E /* libXLFKeyboardManagerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFKeyboardManagerKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFKeyboardManagerKit.a"; sourceTree = "<group>"; };
-		332EA56C1CBE760100FFA60E /* libXLFPinInputViewControllerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFPinInputViewControllerKit.a; path = "../../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-dxexmuclwvqhongatitqrzpiflhn/Build/Products/Debug-iphoneos/libXLFPinInputViewControllerKit.a"; sourceTree = "<group>"; };
 		332EA5781CBE774200FFA60E /* FileBox-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileBox-Prefix.pch"; sourceTree = "<group>"; };
 		332EA57A1CBE7DCF00FFA60E /* FBBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBBluetoothManager.h; sourceTree = "<group>"; };
 		332EA57B1CBE7DCF00FFA60E /* FBBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBBluetoothManager.m; sourceTree = "<group>"; };
@@ -267,6 +253,14 @@
 		B33DD7F51CC0E03B001F095B /* FBVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideoPlayer.h; sourceTree = "<group>"; };
 		B33DD7F61CC0E03B001F095B /* FBVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBVideoPlayer.m; sourceTree = "<group>"; };
 		B33DD7F81CC0E3A9001F095B /* FBMovieRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMovieRenderView.h; sourceTree = "<group>"; };
+		B35B71521CEAC0D400CE4F4A /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libMasonry.a"; sourceTree = "<group>"; };
+		B35B71531CEAC0D400CE4F4A /* libNSLogger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNSLogger.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libNSLogger.a"; sourceTree = "<group>"; };
+		B35B71541CEAC0D400CE4F4A /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		B35B71551CEAC0D400CE4F4A /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libSDWebImage.a"; sourceTree = "<group>"; };
+		B35B71561CEAC0D400CE4F4A /* libXLFBaseViewControllerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFBaseViewControllerKit.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libXLFBaseViewControllerKit.a"; sourceTree = "<group>"; };
+		B35B71571CEAC0D400CE4F4A /* libXLFCommonKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFCommonKit.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libXLFCommonKit.a"; sourceTree = "<group>"; };
+		B35B71581CEAC0D400CE4F4A /* libXLFKeyboardManagerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFKeyboardManagerKit.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libXLFKeyboardManagerKit.a"; sourceTree = "<group>"; };
+		B35B71591CEAC0D400CE4F4A /* libXLFPinInputViewControllerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXLFPinInputViewControllerKit.a; path = "../../../../Users/marikejave/Library/Developer/Xcode/DerivedData/FileBox-diqatluexjxiyehkxozdllqjwyhg/Build/Products/Release-iphoneos/libXLFPinInputViewControllerKit.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,18 +268,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35B715A1CEAC0D400CE4F4A /* libMasonry.a in Frameworks */,
+				B35B715B1CEAC0D400CE4F4A /* libNSLogger.a in Frameworks */,
+				B35B715C1CEAC0D400CE4F4A /* libPods.a in Frameworks */,
+				B35B715D1CEAC0D400CE4F4A /* libSDWebImage.a in Frameworks */,
+				B35B715E1CEAC0D400CE4F4A /* libXLFBaseViewControllerKit.a in Frameworks */,
+				B35B715F1CEAC0D400CE4F4A /* libXLFCommonKit.a in Frameworks */,
+				B35B71601CEAC0D400CE4F4A /* libXLFKeyboardManagerKit.a in Frameworks */,
+				B35B71611CEAC0D400CE4F4A /* libXLFPinInputViewControllerKit.a in Frameworks */,
 				332EA6271CBE7F0900FFA60E /* libbz2.1.0.tbd in Frameworks */,
-				332EA56D1CBE760100FFA60E /* libASIKit.a in Frameworks */,
-				332EA56E1CBE760100FFA60E /* libMasonry.a in Frameworks */,
-				332EA56F1CBE760100FFA60E /* libNSLogger.a in Frameworks */,
-				332EA5701CBE760100FFA60E /* libPods.a in Frameworks */,
-				332EA5711CBE760100FFA60E /* libSDWebImage.a in Frameworks */,
-				332EA5721CBE760100FFA60E /* libXLFBaseHttpRequestKit.a in Frameworks */,
-				332EA5731CBE760100FFA60E /* libXLFBaseModelKit.a in Frameworks */,
-				332EA5741CBE760100FFA60E /* libXLFBaseViewControllerKit.a in Frameworks */,
-				332EA5751CBE760100FFA60E /* libXLFCommonKit.a in Frameworks */,
-				332EA5761CBE760100FFA60E /* libXLFKeyboardManagerKit.a in Frameworks */,
-				332EA5771CBE760100FFA60E /* libXLFPinInputViewControllerKit.a in Frameworks */,
 				332EA5611CBE75D400FFA60E /* libsqlite3.0.tbd in Frameworks */,
 				332EA60E1CBE7DCF00FFA60E /* libavdevice.a in Frameworks */,
 				332EA55F1CBE75CD00FFA60E /* libz.1.2.5.tbd in Frameworks */,
@@ -600,18 +591,15 @@
 		339724021A88FC0900582B6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B35B71521CEAC0D400CE4F4A /* libMasonry.a */,
+				B35B71531CEAC0D400CE4F4A /* libNSLogger.a */,
+				B35B71541CEAC0D400CE4F4A /* libPods.a */,
+				B35B71551CEAC0D400CE4F4A /* libSDWebImage.a */,
+				B35B71561CEAC0D400CE4F4A /* libXLFBaseViewControllerKit.a */,
+				B35B71571CEAC0D400CE4F4A /* libXLFCommonKit.a */,
+				B35B71581CEAC0D400CE4F4A /* libXLFKeyboardManagerKit.a */,
+				B35B71591CEAC0D400CE4F4A /* libXLFPinInputViewControllerKit.a */,
 				332EA6261CBE7F0900FFA60E /* libbz2.1.0.tbd */,
-				332EA5621CBE760100FFA60E /* libASIKit.a */,
-				332EA5631CBE760100FFA60E /* libMasonry.a */,
-				332EA5641CBE760100FFA60E /* libNSLogger.a */,
-				332EA5651CBE760100FFA60E /* libPods.a */,
-				332EA5661CBE760100FFA60E /* libSDWebImage.a */,
-				332EA5671CBE760100FFA60E /* libXLFBaseHttpRequestKit.a */,
-				332EA5681CBE760100FFA60E /* libXLFBaseModelKit.a */,
-				332EA5691CBE760100FFA60E /* libXLFBaseViewControllerKit.a */,
-				332EA56A1CBE760100FFA60E /* libXLFCommonKit.a */,
-				332EA56B1CBE760100FFA60E /* libXLFKeyboardManagerKit.a */,
-				332EA56C1CBE760100FFA60E /* libXLFPinInputViewControllerKit.a */,
 				332EA5601CBE75D400FFA60E /* libsqlite3.0.tbd */,
 				332EA55E1CBE75CD00FFA60E /* libz.1.2.5.tbd */,
 				332EA55C1CBE75C500FFA60E /* libstdc++.6.0.9.tbd */,
