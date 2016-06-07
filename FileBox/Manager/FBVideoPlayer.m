@@ -190,12 +190,17 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     BOOL etIsPlaying = [self evIsPlaying];
     
     [self setEvPlay:NO];
+    [[self evAudioPlayer] pause];
     
-    [self _efUpdateAudioStatus:NO];
+    LoggerAudio(2, @"audio device smr:%d fmt:%d chn:%d",
+                (int)[self evAudioPlayer].samplingRate,
+                (int)[self evAudioPlayer].numBytesPerSample,
+                (int)[self evAudioPlayer].numOutputChannels);
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
+    @weakify(self);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        
+        @strongify(self);
         [self _efUpdatePosition:evPosition playMode:etIsPlaying];
     });
 }
@@ -211,11 +216,10 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         @strongify(self);
-        
         NSError *error = nil;
         if (![[self evDecoder] openFile:[self evResourcePath] error:&error] || error) {
-            
             dispatch_sync(dispatch_get_main_queue(), ^{
+                @strongify(self);
                 [self _efFailedSetupDecoderWithError:error];
             });
         }
@@ -238,7 +242,6 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     @weakify(self);
     [[self evAudioPlayer] setOutputBlock:^(float *outData, UInt32 numFrames, UInt32 numChannels) {
         @strongify(self);
-        
         [self efAudioCallbackFillData:outData numFrames:numFrames numChannels:numChannels];
     }];
 }
@@ -283,12 +286,10 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
 - (void)_efFailedSetupDecoderWithError:(NSError *)error{
     
     if ([self evDelegates] && [[self evDelegates] hasDelegateThatRespondsToSelector:@selector(epVideoPlayer:didFailedSetupWithError:)]) {
-        
         [[self evDelegates] epVideoPlayer:self didFailedSetupWithError:error];
     }
     
     if ([self evvRenderContent] && [[self evvRenderContent] respondsToSelector:@selector(epDecoder:didFailedSetupWithError:)]) {
-        
         [[self evvRenderContent] epDecoder:[self evDecoder] didFailedSetupWithError:error];
     }
 }
@@ -319,21 +320,24 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self efPause];
     
+    [[self evDecoder] closeFile];
+    [[self evDecoder] setAudioPlayer:nil];
+    [self setEvDecoder:nil];
+    
+    [self setEvAsynDecodeQueue:nil];
+    
+    [[self evAudioPlayer] pause];
+    [self setEvAudioPlayer:nil];
+    
     [self efDeregisterNotification];
     
     [self setEvDelegates:nil];
-    
-    [self setEvAudioPlayer:nil];
-    
-    [self setEvDecoder:nil];
     
     [self setEvvRenderContent:nil];
     
     [self setEvResourcePath:nil];
     
     [self setEvParameter:nil];
-    
-    [self setEvAsynDecodeQueue:nil];
     
     [self setEvArtworkFrame:nil];
     
@@ -407,17 +411,27 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self _efAsyncDecodeFrames];
     
+    @weakify(self);
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+        @strongify(self);
+        
         [self tick];
     });
     
     if ([[self evDecoder] validAudio]) {
-        [self _efUpdateAudioStatus:YES];
+        [[self evAudioPlayer] play];
+        
+        LoggerAudio(2, @"audio device smr:%d fmt:%d chn:%d",
+                    (int)[self evAudioPlayer].samplingRate,
+                    (int)[self evAudioPlayer].numBytesPerSample,
+                    (int)[self evAudioPlayer].numOutputChannels);
     }
     
     [self efRegisterNotification];
     LoggerStream(1, @"efPlay movie");
+    
+    [self _efDidUpdatePlayState:YES];
 }
 
 - (void)efPause{
@@ -428,7 +442,7 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self setEvPlay:NO];
     
-    [self _efUpdateAudioStatus:NO];
+    [[self evAudioPlayer] pause];
     
     if ([self evPosition] == 0 || [[self evDecoder] isEOF]) {
         [[[self class] shareMovieHistoryCache] removeObjectForKey:[self evResourcePath]];
@@ -440,6 +454,8 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     
     [self efDeregisterNotification];
     LoggerStream(1, @"efPause movie");
+    
+    [self _efDidUpdatePlayState:NO];
 }
 
 - (void)restorePlay{
@@ -454,6 +470,8 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
         
         [self efPlay];
     }
+    
+    [self _efDidUpdatePlayState:YES];
 }
 
 - (void)efAudioCallbackFillData:(float *)outData
@@ -538,25 +556,6 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
                 break;
             }
         }
-    }
-}
-
-- (void)_efUpdateAudioStatus:(BOOL)play{
-    
-    FBAudioPlayer *audioPlayer = [self evAudioPlayer];
-    
-    if (play && [[self evDecoder] validAudio]) {
-        
-        [audioPlayer play];
-        
-        LoggerAudio(2, @"audio device smr:%d fmt:%d chn:%d",
-                    (int)audioPlayer.samplingRate,
-                    (int)audioPlayer.numBytesPerSample,
-                    (int)audioPlayer.numOutputChannels);
-        
-    } else {
-        
-        [audioPlayer pause];
     }
 }
 
@@ -652,6 +651,10 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
         return;
     }
     
+    if (![self evAsynDecodeQueue]) {
+        return;
+    }
+    
     @weakify(self);
     dispatch_async([self evAsynDecodeQueue], ^{
         @strongify(self);
@@ -660,7 +663,7 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
             return;
         }
         dispatch_sync(dispatch_get_main_queue(), ^{
-            
+            @strongify(self);
             [self _efWillAsyncDecodeFrames];
         });
         
@@ -682,7 +685,6 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
                     NSArray *etDecodedFrames = [etMovieDecoder decodeFrames:etBeginDuration];
                     
                     if ([etDecodedFrames count]) {
-                        
                         etContinueDecode = [self _efAppendFrames:etDecodedFrames];
                     }
                 }
@@ -693,10 +695,16 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
     });
 }
 
+- (void)_efDidUpdatePlayState:(BOOL)playState{
+    
+    if ([self evDelegates] && [[self evDelegates] hasDelegateThatRespondsToSelector:@selector(epVideoPlayer:didUpdatePlayState:)]) {
+        [[self evDelegates] epVideoPlayer:self didUpdatePlayState:playState];
+    }
+}
+
 - (void)_efWillLoadBuffers{
     
     if ([self evDelegates] && [[self evDelegates] hasDelegateThatRespondsToSelector:@selector(epWillBeginLoadingBuffersInVideoPlayer:)]) {
-        
         [[self evDelegates] epWillBeginLoadingBuffersInVideoPlayer:self];
     }
 }
@@ -704,7 +712,6 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
 - (void)_efDidLoadedBuffers{
     
     if ([self evDelegates] && [[self evDelegates] hasDelegateThatRespondsToSelector:@selector(epDidEndLoadingBuffersInVideoPlayer:)]) {
-        
         [[self evDelegates] epDidEndLoadingBuffersInVideoPlayer:self];
     }
 }
@@ -755,15 +762,15 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
         
         if (!allFramesBufferCount ||
             !([self evBufferedDuration] > [[self evParameter] evMinBufferedDuration]) ) {
-            
             [self _efAsyncDecodeFrames];
         }
         
         const NSTimeInterval correction = [self tickCorrection];
         const NSTimeInterval time = MAX(interval + correction, 0.01);
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, time * NSEC_PER_SEC);
+        @weakify(self);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-            
+            @strongify(self);
             [self tick];
         });
     }
@@ -914,6 +921,7 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
         if (playMode) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
                 
                 _evPosition = position;
                 [self efPlay];
@@ -924,6 +932,7 @@ const char * FBVideoPlayerDecodeQueueIdentifier = "com.marikejave.filebox.videoP
             [self _efBeginDecodeFrames];
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
                 
                 _evPosition = position;
                 

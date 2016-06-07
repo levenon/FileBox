@@ -24,7 +24,7 @@ typedef void (^FBAudioPlayerOutputBlock)(float *data, UInt32 numFrames, UInt32 n
 @property (nonatomic, readonly, assign)  BOOL               playing;
 @property (nonatomic, readonly, strong)  NSString           *audioRoute;
 
-@property (nonatomic, copy  )FBAudioPlayerOutputBlock outputBlock;
+@property (nonatomic, copy  )            FBAudioPlayerOutputBlock outputBlock;
 
 - (BOOL)activateAudioSession;
 - (void)deactivateAudioSession;

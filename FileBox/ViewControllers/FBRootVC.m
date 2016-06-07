@@ -39,6 +39,14 @@ static NSString* const kDidShowWarnningAlertForVerifyFailed = @"kDidShowWarnning
 
 @implementation FBRootVC
 
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        [self setTitle:@"首页"];
+    }
+    return self;
+}
+
 - (void)dealloc{
     
     [self efDeregisterNotification];

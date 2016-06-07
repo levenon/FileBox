@@ -9,6 +9,8 @@
 #import <QuickLook/QuickLook.h>
 #import "FBFolderPreviewVC.h"
 #import "FBFolderSelectorVC.h"
+#import "FBMovieViewController.h"
+#import "FBVideoPlayer.h"
 #import "FBFileManager.h"
 
 #import "FBFileSummaryCell.h"
@@ -294,24 +296,42 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     NSString *filePath = [[self evPath] stringByAppendingPathComponent:[[self evFiles] objectAtIndex:[indexPath row]]];
     BOOL isDirectory = NO;
     BOOL isExist = [NSFileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
-
+    
     if (isExist && isDirectory) {
-
+        
         FBFolderPreviewVC *folderVC = [[FBFolderPreviewVC alloc] init];
         [folderVC setEvPath:filePath];
-
+        
         [[self navigationController] pushViewController:folderVC animated:YES];
     }
-    else{
-
+    else if ([FBFileManager efFileTypeWithFilePath:filePath] == FBFileTypeVideo) {
+        
+        FBMovieParameter *parameter = [[FBMovieParameter alloc] init];
+        
+        // increase buffering for .wmv, it solves problem with delaying audio frames
+        if ([[filePath pathExtension] isEqualToString:@"wmv"]) {
+            [parameter setEvMinBufferedDuration:5.0];
+        }
+        
+        // disable deinterlacing for iPhone, because it's complex operation can cause stuttering
+        if (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPhone) {
+            [parameter setEvDeinterlacingEnable:NO];
+        }
+        
+        FBMovieViewController *etMovieVC = [FBMovieViewController movieViewControllerWithContentPath:filePath parameter:parameter];
+        
+        [[self navigationController] pushViewController:etMovieVC animated:YES];
+    }
+    else {
+        
         QLPreviewController *previewController = [[QLPreviewController alloc] init];
         previewController.dataSource = self;
         previewController.delegate = self;
-
+        
         // start previewing the document at the current section index
         previewController.currentPreviewItemIndex = [indexPath row];
         [[self navigationController] pushViewController:previewController animated:YES];

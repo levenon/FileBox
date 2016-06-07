@@ -109,7 +109,7 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
 @property (readwrite, nonatomic        ) BOOL                            deinterlacingEnable;
 @property (readwrite, nonatomic, strong) FBMovieDecoderInterruptCallback interruptCallback;
 
-@property (nonatomic, strong) FBAudioPlayer *audioPlayer;
+@property (nonatomic, assign) FBAudioPlayer *audioPlayer;
 
 + (id)movieDecoderWithContentPath:(NSString *)resourcePath
                       audioPlayer:(FBAudioPlayer *)audioPlayer
@@ -117,8 +117,8 @@ typedef BOOL(^FBMovieDecoderInterruptCallback)();
 
 
 - (id)initWithContentPath:(NSString *)resourcePath
-          audioPlayer:(FBAudioPlayer *)audioPlayer
-                error:(NSError **)error;
+              audioPlayer:(FBAudioPlayer *)audioPlayer
+                    error:(NSError **)error;
 
 - (BOOL)openFile:(NSString *)resourcePath
            error:(NSError **)perror;

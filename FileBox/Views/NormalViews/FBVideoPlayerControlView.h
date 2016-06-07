@@ -12,8 +12,8 @@
 
 @property(nonatomic, assign, getter = evIsLockedScreen)     BOOL          evLockedScreen;
 
-@property(nonatomic, strong, readonly) FBVideoPlayer  *evPlayer;
+@property(nonatomic, assign, readonly) FBVideoPlayer  *evVideoPlayer;
 
-- (instancetype)initWithPlayer:(FBVideoPlayer *)player;
+- (instancetype)initWithVideoPlayer:(FBVideoPlayer *)videoPlayer;
 
 @end

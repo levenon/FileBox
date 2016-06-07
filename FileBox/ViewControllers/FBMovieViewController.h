@@ -17,7 +17,7 @@
 
 @interface FBMovieViewController :FBBaseViewController
 
-+ (id)movieViewControllerWithContentPath:(NSString *)path
++ (id)movieViewControllerWithContentPath:(NSString *)contentPath
                                parameter:(FBMovieParameter *)parameter;
 
 @property (nonatomic, assign, readonly, getter=evIsPlaying) BOOL evPlay;

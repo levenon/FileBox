@@ -39,23 +39,23 @@
 
 @implementation FBMovieViewController
 
-+ (id)movieViewControllerWithContentPath:(NSString *)path
++ (id)movieViewControllerWithContentPath:(NSString *)contentPath
                                parameter:(FBMovieParameter *)parameter;{
     
-    return [[FBMovieViewController alloc] initWithContentPath:path parameter:parameter];
+    return [[FBMovieViewController alloc] initWithContentPath:contentPath parameter:parameter];
 }
 
-- (id)initWithContentPath:(NSString *)path
+- (id)initWithContentPath:(NSString *)contentPath
                 parameter:(FBMovieParameter *)parameter;{
     self = [super init];
     if (self) {
         
-        NSAssert(path.length, @"empty path");
+        NSParameterAssert([contentPath length]);
         
-        [self setTitle:[path lastPathComponent]];
+        [self setTitle:[contentPath lastPathComponent]];
         
         [self setEvParameter:parameter];
-        [self setEvResourcePath:path];
+        [self setEvResourcePath:contentPath];
         
         [self setEvPlayAtLastTime:YES];
     }
@@ -76,10 +76,6 @@
     [self _efInstallConstraints];
 }
 
-- (void)viewDidLoad{
-    [super viewDidLoad];
-}
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -97,13 +93,14 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:[self evIdleTimerDisabled]];
     
     [self setEvPlayAtLastTime:[[self evVideoPlayer] evIsPlaying]];
     
     [[self evVideoPlayer] efPause];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -123,6 +120,8 @@
 }
 
 - (void)dealloc{
+    
+    [[[self evVideoPlayer] evDelegates] removeDelegate:[self evvVideoPlayerControl]];
     
     [[self evVideoPlayer] efPause];
     
@@ -150,15 +149,6 @@
     return _evvRenderContent;
 }
 
-- (FBVideoPlayerControlView *)evvVideoPlayerControl{
-    
-    if (!_evvVideoPlayerControl) {
-        
-        _evvVideoPlayerControl = [[FBVideoPlayerControlView alloc] initWithPlayer:[self evVideoPlayer]];
-    }
-    return _evvVideoPlayerControl;
-}
-
 - (FBVideoPlayer *)evVideoPlayer{
     
     if (!_evVideoPlayer) {
@@ -168,6 +158,17 @@
                                                   renderView:[self evvRenderContent]];
     }
     return _evVideoPlayer;
+}
+
+- (FBVideoPlayerControlView *)evvVideoPlayerControl{
+    
+    if (!_evvVideoPlayerControl) {
+        
+        _evvVideoPlayerControl = [[FBVideoPlayerControlView alloc] initWithVideoPlayer:[self evVideoPlayer]];
+        
+        [[[self evVideoPlayer] evDelegates] addDelegate:_evvVideoPlayerControl];
+    }
+    return _evvVideoPlayerControl;
 }
 
 - (BOOL)evIsPlaying{

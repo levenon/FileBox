@@ -45,6 +45,8 @@ enum {
 
 - (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didFailedSetupWithError:(NSError *)error;
 
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePlayState:(BOOL)playState;
+
 - (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position;
 
 - (void)epWillBeginLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;

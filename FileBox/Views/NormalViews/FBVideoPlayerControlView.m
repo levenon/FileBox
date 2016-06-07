@@ -1,8 +1,9 @@
-    //
+//
 //  FBVideoPlayerControlView
 //
 
 #import <MediaPlayer/MediaPlayer.h>
+#import <QuickLook/QuickLook.h>
 
 #import "FBVideoPlayerControlView.h"
 
@@ -42,11 +43,15 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     FBMoviePanControlTypeBrightness = 1 << 2,
 };
 
-@interface FBVideoPlayerControlView ()<XLFViewConstructor, FBVideoPlayerDelegate, UIGestureRecognizerDelegate>
+@interface FBVideoPlayerControlView ()<XLFViewConstructor, FBVideoPlayerDelegate, UIGestureRecognizerDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
-@property(nonatomic, strong) FBVideoPlayer           *evPlayer;
+@property(nonatomic, assign) FBVideoPlayer  *evVideoPlayer;
 
 @property(nonatomic, strong) UIView                  *evvContent;
+
+@property(nonatomic, strong) UILabel                 *evlbTitle;
+
+@property(nonatomic, strong) UIButton                *evbtnShare;
 
 @property(nonatomic, strong) UIButton                *evbtnStart;
 
@@ -80,9 +85,9 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 - (void)dealloc{
     
-    [[[self evPlayer] evDelegates] removeDelegate:self];
-    
-    [self setEvPlayer:nil];
+    [self setEvVideoPlayer:nil];
+    [self setEvlbTitle:nil];
+    [self setEvbtnShare:nil];
     [self setEvbtnStart:nil];
     [self setEvlbCurrentTime:nil];
     [self setEvlbTotalTime:nil];
@@ -99,13 +104,12 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     [self setEvvContent:nil];
 }
 
-- (instancetype)initWithPlayer:(FBVideoPlayer *)player;{
+- (instancetype)initWithVideoPlayer:(FBVideoPlayer *)videoPlayer;{
     self = [super initWithFrame:CGRectZero];
-
+    
     if (self) {
         
-        [self setEvPlayer:player];
-        [[player evDelegates] addDelegate:self];
+        [self setEvVideoPlayer:videoPlayer];
         
         [self epCreateSubViews];
         [self epConfigSubViewsDefault];
@@ -117,6 +121,8 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 - (void)epCreateSubViews{
     
     [self setEvvContent:[UIView emptyFrameView]];
+    [self setEvlbTitle:[UILabel emptyFrameView]];
+    [self setEvbtnShare:[UIButton emptyFrameView]];
     [self setEvbtnStart:[UIButton emptyFrameView]];
     [self setEvlbCurrentTime:[UILabel emptyFrameView]];
     [self setEvlbTotalTime:[UILabel emptyFrameView]];
@@ -133,6 +139,8 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     
     [[self evvContent] addSubview:[self evimgvTopGradientBackground]];
     [[self evvContent] addSubview:[self evimgvBottomGradientBackground]];
+    [[self evvContent] addSubview:[self evlbTitle]];
+    [[self evvContent] addSubview:[self evbtnShare]];
     [[self evvContent] addSubview:[self evbtnStart]];
     [[self evvContent] addSubview:[self evlbCurrentTime]];
     [[self evvContent] addSubview:[self evlbTotalTime]];
@@ -151,7 +159,15 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     [self setBackgroundColor:[UIColor clearColor]];
     [[self evvContent] setBackgroundColor:[UIColor clearColor]];
     
-    [[[self evPlayer] evDelegates] addDelegate:self];
+    [[[self evVideoPlayer] evDelegates] addDelegate:self];
+    
+    [[self evlbTitle] setTextColor:[UIColor whiteColor]];
+    [[self evlbTitle] setFont:[UIFont systemFontOfSize:13]];
+    [[self evlbTitle] setTextAlignment:NSTextAlignmentCenter];
+    [[self evlbTitle] setText:[[[self evVideoPlayer] evResourcePath] lastPathComponent]];
+    
+    [[self evbtnShare] setImage:[UIImage imageNamed:@"btn_share_normal"] forState:UIControlStateNormal];
+    [[self evbtnShare] addTarget:self action:@selector(didClickShare:) forControlEvents:UIControlEventTouchUpInside];
     
     [[self evbtnStepBackward] setImage:[UIImage imageNamed:@"FBMovie.bundle/play_back_full"] forState:UIControlStateNormal];
     [[self evbtnStepBackward] addTarget:self action:@selector(didClickStepBackward:) forControlEvents:UIControlEventTouchUpInside];
@@ -207,8 +223,24 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         @strongify(self);
         
         make.leading.equalTo(self.evvContent.mas_leading).offset(15);
-        make.top.equalTo(self.evvContent.mas_top).offset(5);
-        make.width.height.mas_equalTo(40);
+        make.top.equalTo(self.evvContent.mas_top).offset(10);
+        make.width.height.mas_equalTo(33);
+    }];
+    
+    [[self evbtnShare] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        
+        make.right.equalTo(self.evvContent.mas_right).offset(-15);
+        make.centerY.equalTo(self.evbtnStepBackward.mas_centerY).offset(0);
+        make.width.height.mas_equalTo(33);
+    }];
+    
+    [[self evlbTitle] mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        
+        make.left.equalTo(self.evbtnStepBackward.mas_right).offset(0);
+        make.right.equalTo(self.evbtnShare.mas_left).offset(0);
+        make.centerY.equalTo(self.evbtnStepBackward.mas_centerY).offset(0);
     }];
     
     [self.evimgvTopGradientBackground mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -292,6 +324,18 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     [[FBBrightnessView shareInstance] efDeregisterObserver];
 }
 
+- (void)startLoading{
+    [super startLoading];
+    
+    [[self evbtnStart] setSelected:NO];
+}
+
+- (void)stopLoading{
+    [super stopLoading];
+    
+    [[self evbtnStart] setSelected:YES];
+}
+
 #pragma mark - accessory
 
 - (BOOL)evIsControlDisplay{
@@ -346,7 +390,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 
 - (void)_efWillUpdatePlayPositionOffset:(CGFloat)positionOffset{
     
-    NSInteger etDuration = [[self evPlayer] evDuration];
+    NSInteger etDuration = [[self evVideoPlayer] evDuration];
     
     NSInteger etDestinatePosition = [self _efDestinatePositionWithPositionOffset:positionOffset];
     
@@ -359,14 +403,14 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     
     NSInteger etDestinatePosition = [self _efDestinatePositionWithPositionOffset:positionOffset];
     
-    [[self evPlayer] setEvPosition:etDestinatePosition];
+    [[self evVideoPlayer] setEvPosition:etDestinatePosition];
 }
 
 - (CGFloat)_efDestinatePositionWithPositionOffset:(CGFloat)positionOffset{
     
-    NSInteger etDestinatePosition = [[self evPlayer] evPosition] + positionOffset;
+    NSInteger etDestinatePosition = [[self evVideoPlayer] evPosition] + positionOffset;
     
-    NSInteger etDuration = [[self evPlayer] evDuration];
+    NSInteger etDuration = [[self evVideoPlayer] evDuration];
     
     etDestinatePosition = MIN(etDuration, MAX(etDestinatePosition, 0));
     
@@ -385,6 +429,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
         
         [[self evvContent] setAlpha:display];
     } completion:^(BOOL finished) {
+        @strongify(self);
         
         [[self evvContent] setHidden:!display];
     }];
@@ -396,7 +441,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     
     CGPoint etLocation = [touch locationInView:self];
     
-    return ![self evIsLockedScreen] && ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] || (etLocation.y < (CGRectGetHeight([self bounds]) - 40) && ![[self evPlayer] evIsOver]));
+    return ![self evIsLockedScreen] && ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] || (etLocation.y < (CGRectGetHeight([self bounds]) - 40) && ![[self evVideoPlayer] evIsOver]));
 }
 
 #pragma mark - actions
@@ -404,7 +449,13 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 - (IBAction)didTapInContent:(id)sender{
     
     if (![self evIsLockedScreen]) {
-        [self _efUpdateContentDisplay:![self evIsControlDisplay]];
+        BOOL etDisplayState = [self evIsControlDisplay];
+        [self _efUpdateContentDisplay:!etDisplayState];
+        @weakify(self);
+        [UIView animateWithDuration:0.3 animations:^{
+            @strongify(self);
+            [[self evbtnLockScreen] setAlpha:!etDisplayState];
+        }];
     }
 }
 
@@ -446,7 +497,7 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
             if ([self evMoviePanControlType] & FBMoviePanControlTypeProgress) {
                 
                 const CGFloat etPositionOffset = fabs(etTranslationOffset.x) * 0.33 * MAX(0.1, log10( fabs( etVeloctyPoint.x )) - 1.0);
-        
+                
                 if (etPositionOffset > 10) {
                     
                     [self _efWillUpdatePlayPositionOffset:(-1 + 2 * (etTranslationOffset.x > 0)) * MIN(etPositionOffset, 600.0)];
@@ -502,24 +553,58 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     if ([self evIsLockedScreen]) {
         [self _efUpdateContentDisplay:NO];
     }
+    else {
+        if (![self evIsControlDisplay]) {
+            @weakify(self);
+            [UIView animateWithDuration:0.3 animations:^{
+                @strongify(self);
+                [[self evbtnLockScreen] setAlpha:0];
+            }];
+        }
+    }
 }
 
 - (IBAction)didClickStart:(UIButton *)sender{
     [sender setSelected:![sender isSelected]];
     
-    if ([[self evPlayer] evIsPlaying]) {
+    if ([[self evVideoPlayer] evIsPlaying]) {
         
-        [[self evPlayer] efPause];
+        [[self evVideoPlayer] efPause];
     }
     else{
         
-        [[self evPlayer] efPlay];
+        [[self evVideoPlayer] efPlay];
     }
 }
 
 - (IBAction)didChangedPlayProgress:(UISlider *)sender{
     
-    [[self evPlayer] setEvPosition:[[self evPlayer] evDuration] * [sender value]];
+    [[self evVideoPlayer] setEvPosition:[[self evVideoPlayer] evDuration] * [sender value]];
+}
+
+- (IBAction)didClickShare:(id)sender{
+    
+    QLPreviewController *previewController = [[QLPreviewController alloc] init];
+    previewController.dataSource = self;
+    previewController.delegate = self;
+    
+    // start previewing the document at the current section index
+    previewController.currentPreviewItemIndex = 0;
+    
+    [[[self evVisibleViewController] navigationController] pushViewController:previewController animated:YES];
+//    
+//    NSURL *fileUrl = [NSURL fileURLWithPath:[[self evVideoPlayer] evResourcePath]];
+//
+//    UIActivityViewController *etActivityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[fileUrl, [NSData dataWithContentsOfURL:fileUrl], [[[self evVideoPlayer] evResourcePath] pathExtension], ] applicationActivities:nil];
+//    [etActivityViewController setValue:@"Video" forKey:@"subject"];
+//
+//    UIPopoverPresentationController *popover = [etActivityViewController popoverPresentationController];
+//    if (popover) {
+//        popover.sourceView = sender;
+//        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+//    }
+//    
+//    [[self evVisibleViewController] presentViewController:etActivityViewController animated:YES completion:nil];
 }
 
 #pragma mark - FBVideoPlayerDelegate
@@ -529,6 +614,11 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
     if ([self superview]) {
         [self stopLoading];
     }
+}
+
+- (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePlayState:(BOOL)playState;{
+    
+    [[self evbtnStart] setSelected:playState];
 }
 
 - (void)epVideoPlayer:(FBVideoPlayer *)videoPlayer didUpdatePosition:(CGFloat)position;{
@@ -545,13 +635,28 @@ typedef NS_OPTIONS(NSInteger, FBMoviePanControlType) {
 }
 
 - (void)epWillBeginLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;{
-
+    
     [self startLoading];
 }
 
 - (void)epDidEndLoadingBuffersInVideoPlayer:(FBVideoPlayer *)videoPlayer;{
     
     [self stopLoading];
+    
 }
+
+#pragma mark - QLPreviewControllerDataSource
+
+// Returns the number of items that the preview controller should preview
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)previewController{
+    
+    return 1;
+}
+
+- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index;{
+    
+    return [NSURL fileURLWithPath:[[self evVideoPlayer] evResourcePath]];
+}
+
 
 @end

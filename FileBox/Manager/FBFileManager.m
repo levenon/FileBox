@@ -299,7 +299,7 @@
         return FBFileTypeAudio;
     }
     
-    if ([[NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^(wmv)|(wm)|(asf)|(asx)|(rm)|(ra)|(rmvb)|(rma)|(mpg)|(mpeg)|(mpe)|(vob)|(mov)|(3gp)|(mp4)|(m4v)|(avi)|(flv)|(dat)|(f4v)$"] evaluateWithObject:etExtension]) {
+    if ([[NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^(wmv)|(mkv)|(wm)|(asf)|(asx)|(rm)|(ra)|(rmvb)|(rma)|(mpg)|(mpeg)|(mpe)|(vob)|(mov)|(3gp)|(mp4)|(m4v)|(avi)|(flv)|(dat)|(f4v)$"] evaluateWithObject:etExtension]) {
         
         return FBFileTypeVideo;
     }

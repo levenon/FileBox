@@ -175,7 +175,7 @@
 
 - (UIBarButtonItem *)evbbiSelectCurrentFolder{
     if (!_evbbiSelectCurrentFolder) {
-        _evbbiSelectCurrentFolder =  [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"14", @"Current Folder")style:UIBarButtonItemStyleDone target:self action:@selector(didClickSelectCurrentPath:)];
+        _evbbiSelectCurrentFolder =  [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"14", @"Current Folder") style:UIBarButtonItemStyleDone target:self action:@selector(didClickSelectCurrentPath:)];
     }
     return _evbbiSelectCurrentFolder;
 }

@@ -356,11 +356,13 @@ enum {
 
 @property(nonatomic, strong) id<FBMovieGLRenderer> renderer;
 
+@property(nonatomic, strong) EAGLContext     *context;
+
 @end
 
 @implementation FBMovieGLView {
     
-    EAGLContext     *_context;
+    ;
     GLuint          _framebuffer;
     GLuint          _renderbuffer;
     GLint           _backingWidth;
@@ -377,9 +379,7 @@ enum {
 
 - (void)dealloc{
     
-    [self setDecoder:nil];
-    
-    [self setRenderer:nil];
+    [[self decoder] closeFile];
 
     if (_framebuffer) {
         glDeleteFramebuffers(1, &_framebuffer);
@@ -400,11 +400,15 @@ enum {
 		[EAGLContext setCurrentContext:nil];
 	}
     
-	_context = nil;
+	[self setContext:nil];
+    
+    [self setDecoder:nil];
+    
+    [self setRenderer:nil];
 }
 
 - (void)layoutSubviews{
-    
+
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
     [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)[self layer]];
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
@@ -412,11 +416,9 @@ enum {
 	
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		
         LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
         
 	} else {
-        
         LoggerVideo(1, @"OK setup GL framebuffer %d:%d", _backingWidth, _backingHeight);
     }
     
