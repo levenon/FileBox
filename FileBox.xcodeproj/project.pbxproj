@@ -715,6 +715,7 @@
 				333260AB1A81FF5A0050B267 /* Resources */,
 				47295BB401A91FB008514264 /* 📦 Embed Pods Frameworks */,
 				CFD006F2CBEFCDB5A7CBE505 /* 📦 Copy Pods Resources */,
+				CE4766D93655297CD56A2F35 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -795,6 +796,21 @@
 			inputPaths = (
 			);
 			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FileBox/Pods-FileBox-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE4766D93655297CD56A2F35 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
