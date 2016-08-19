@@ -1,2 +1,0 @@
-# FileBox
-open source application

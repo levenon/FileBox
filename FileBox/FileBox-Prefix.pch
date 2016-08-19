@@ -10,10 +10,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "XLFCommonKit.h"
-#import "XLFPinInputViewControllerKit.h"
-#import "XLFBaseViewControllerKit.h"
-#import "Masonry.h"
-#import "XLFKeyboardManagerKit.h"
+#import <XLFCommonKit/XLFCommonKit.h>
+#import <XLFPinInputViewControllerKit/XLFPinInputViewControllerKit.h>
+#import <XLFBaseViewControllerKit/XLFBaseViewControllerKit.h>
+#import <Masonry/Masonry.h>
+#import <XLFKeyboardManagerKit/XLFKeyboardManagerKit.h>
+#import "EXTScope.h"
 
 #endif
