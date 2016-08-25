@@ -132,7 +132,7 @@
     NSDictionary *etItem = [[[self evMutItems] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     NSString *etSelectorName = [etItem objectForKey:@"destination"];
 
-    if ([etSelectorName length]) {
+    if ([etSelectorName length] && [indexPath row]) {
 
         SEL etSelector = NSSelectorFromString(etSelectorName);
         [self performSelector:etSelector withObject:etItem];
