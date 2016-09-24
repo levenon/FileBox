@@ -1023,7 +1023,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marikejave.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = FileBox;
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wno-arc-performSelector-leaks";
 			};
 			name = Debug;
@@ -1071,7 +1071,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marikejave.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = FileBox;
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wno-arc-performSelector-leaks";
 			};
 			name = Release;
